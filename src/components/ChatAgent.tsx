@@ -66,7 +66,7 @@ const Avatar = ({ size = 36 }: { size?: number }) => (
       style={{ background: '#000000', backdropFilter: 'blur(8px)' }}
     >
       <Image
-        src="/Nawwi-logo.png"
+        src="/HBSlogo.png"
         alt="Nawwi AI"
         width={size - 6}
         height={size - 6}
@@ -289,7 +289,7 @@ const ChatAgent = () => {
               transition={{ repeat: Infinity, duration: 2.8, ease: 'easeInOut' }}
             />
             <span className="relative text-xl md:text-2xl">
-              <Image src="/Nawwi-logo.png" alt="Nawwi" width={28} height={28} className="rounded-full" />
+              <Image src="/HBSlogo.png" alt="Nawwi" width={28} height={28} className="rounded-full" />
             </span>
             <div className="absolute -top-0.5 -right-0.5 w-3 h-3 md:w-4 md:h-4 bg-[#b47878] rounded-full border-2 border-white" />
           </motion.button>

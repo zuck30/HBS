@@ -65,7 +65,7 @@ export const FinalCTAAndFooter = () => {
           
           {/* Logo element */}
           <div className="mb-8">
-            <img src="/Nawwi-logo.png" alt="Nawwi Logo" className="h-13 w-13 object-contain mix-blend-multiply mx-auto" />
+            <img src="/HBSlogo.png" alt="Nawwi Logo" className="h-13 w-13 object-contain mix-blend-multiply mx-auto" />
           </div>
 
           {/* Clean inline navigation directory links */}

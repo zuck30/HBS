@@ -111,7 +111,7 @@ export default function LoginPage() {
         className="max-w-md w-full bg-white border-4 border-black p-10 shadow-[12px_12px_0px_0px_#000000]"
       >
         <div className="flex flex-col items-center mb-10 text-center">
-          <img src="/Nawwi-logo.png" alt="Nawwi Logo" className="h-12 w-auto mb-4" />
+          <img src="/HBSlogo.png" alt="Nawwi Logo" className="h-12 w-auto mb-4" />
           <h1 className="text-2xl font-serif">{isRegistering ? 'Create Your Account' : 'Welcome Back'}</h1>
           <p className="text-xs text-neutral-400 mt-2">Join the Nawwi Wellness community.</p>
         </div>

@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   title: "Nawwi Wellness",
   description: "Scent-led wellness brand from Tanzania",
   icons: {
-    icon: "/Nawwi-logo.png",
+    icon: "/HBSlogo.png",
   },
 };
 
