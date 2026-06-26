@@ -339,15 +339,27 @@ const ChatAgent = () => {
                 )}
               </div>
 
-              <div className="relative z-10 p-4 bg-white/80 border-t border-black/5 flex gap-2 shrink-0">
-                <input
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
-                  className="flex-1 bg-transparent text-sm outline-none placeholder:text-black/30"
-                  placeholder="Type your message..."
-                />
-                <button onClick={() => handleSendMessage()} className="p-2 bg-[#B331F1] text-white rounded-full"><Send size={14} /></button>
+              {/* Updated Input Area - Normal Rounded */}
+              <div className="relative z-10 p-3 bg-white/90 border-t border-black/5 flex gap-2 shrink-0">
+                <div className="flex-1 flex items-center bg-white rounded-full border border-gray-200 px-4 py-1.5 focus-within:border-[#B331F1] focus-within:ring-2 focus-within:ring-[#B331F1]/20 transition-all">
+                  <input
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
+                    className="flex-1 bg-transparent text-sm outline-none placeholder:text-gray-400 py-1"
+                    placeholder="Type your message..."
+                  />
+                  <button 
+                    onClick={() => handleSendMessage()} 
+                    className={cn(
+                      "p-1.5 rounded-full transition-all ml-1",
+                      input.trim() ? "bg-[#B331F1] text-white hover:bg-[#9a2ad1]" : "bg-gray-100 text-gray-400 cursor-not-allowed"
+                    )}
+                    disabled={!input.trim()}
+                  >
+                    <Send size={16} className="shrink-0" />
+                  </button>
+                </div>
               </div>
 
               <div className="relative z-10 px-4 pt-3 shrink-0" style={{ background: 'rgba(255,255,255,0.6)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(0,0,0,0.07)', paddingBottom: 'max(12px, env(safe-area-inset-bottom, 12px))' }}>
