@@ -25,7 +25,7 @@ const TypingDots = () => (
       <motion.div
         key={i}
         className="w-[7px] h-[7px] rounded-full"
-        style={{ background: '#D4AF37' }}
+        style={{ background: '#B331F1' }}
         animate={{ y: [0, -5, 0], opacity: [0.4, 1, 0.4] }}
         transition={{ repeat: Infinity, duration: 0.9, delay: i * 0.15, ease: 'easeInOut' }}
       />
@@ -37,13 +37,13 @@ const Avatar = ({ size = 36 }: { size?: number }) => (
   <div className="relative shrink-0" style={{ width: size, height: size }}>
     <motion.div
       className="absolute inset-0 rounded-full"
-      style={{ background: 'conic-gradient(from 0deg, #000080 0%, #D4AF37 50%, #000080 100%)' }}
+      style={{ background: 'conic-gradient(from 0deg, #000000 0%, #B331F1 50%, #000000 100%)' }}
       animate={{ rotate: 360 }}
       transition={{ repeat: Infinity, duration: 4, ease: 'linear' }}
     />
     <div
       className="absolute inset-[2px] rounded-full flex items-center justify-center overflow-hidden"
-      style={{ background: '#000080', backdropFilter: 'blur(8px)' }}
+      style={{ background: '#000000', backdropFilter: 'blur(8px)' }}
     >
       <Image
         src="/HBSlogo.png"
@@ -73,13 +73,13 @@ const Bubble = ({ msg, isLast }: { msg: Msg; isLast: boolean }) => {
           style={
             isUser
               ? {
-                  background: '#000080',
+                  background: '#B331F1',
                   color: 'white',
                   borderRadius: '20px 20px 5px 20px',
                 }
               : {
                   background: 'transparent',
-                  color: '#000080',
+                  color: '#1a1108',
                   borderRadius: '20px 20px 20px 5px',
                   padding: '4px 4px 4px 0',
                 }
@@ -95,7 +95,7 @@ const Bubble = ({ msg, isLast }: { msg: Msg; isLast: boolean }) => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
               className="text-[10px]"
-              style={{ color: '#D4AF37' }}
+              style={{ color: '#B331F1' }}
             >✓✓</motion.span>
           )}
         </div>
@@ -111,17 +111,6 @@ const ChatAgent = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [clockTime, setClockTime] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const tick = () => setClockTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
-    tick();
-    const t = setInterval(tick, 30000);
-    return () => clearInterval(t);
-  }, []);
-
-  useEffect(() => {
-    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
-  }, [messages, isLoading]);
 
   const hbsKnowledgeBase = `
     Hannah Bennie Schools (HBS) is a nursery and primary school in Dar es Salaam, Tanzania.
@@ -139,6 +128,17 @@ const ChatAgent = () => {
     Contact: +255 762 224 224, hbs.admin@hbs.ac.tz
   `;
 
+  useEffect(() => {
+    const tick = () => setClockTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+    tick();
+    const t = setInterval(tick, 30000);
+    return () => clearInterval(t);
+  }, []);
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
+  }, [messages, isLoading]);
+
   const handleSendMessage = async (text: string = input) => {
     const msgText = text || input;
     if (!msgText.trim() || isLoading) return;
@@ -151,7 +151,7 @@ const ChatAgent = () => {
 
     try {
       const chatHistory = nextMessages.map(m => ({
-        role: m.role,
+        role: m.role === 'user' ? 'user' : 'assistant',
         content: m.text
       }));
 
@@ -205,110 +205,159 @@ const ChatAgent = () => {
               initChat();
             }}
             className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 w-14 h-14 md:w-16 md:h-16 rounded-full shadow-2xl flex items-center justify-center"
-            style={{ background: '#000080' }}
+            style={{ background: '#000000' }}
           >
             <motion.div
               className="absolute inset-0 rounded-full"
-              style={{ background: '#D4AF37' }}
+              style={{ background: '#B331F1' }}
               animate={{ scale: [1, 1.35, 1], opacity: [0.5, 0, 0.5] }}
               transition={{ repeat: Infinity, duration: 2.8, ease: 'easeInOut' }}
             />
             <span className="relative text-xl md:text-2xl">
               <Image src="/HBSlogo.png" alt="HBS" width={28} height={28} className="rounded-full" />
             </span>
+            <div className="absolute -top-0.5 -right-0.5 w-3 h-3 md:w-4 md:h-4 bg-[#B331F1] rounded-full border-2 border-white" />
           </motion.button>
         )}
       </AnimatePresence>
 
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            key="chat"
-            initial={{ opacity: 0, scale: 0.85, y: 60 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.85, y: 60 }}
-            className="chat-window fixed bottom-0 left-0 right-0 md:bottom-8 md:right-8 md:left-auto z-50 flex flex-col overflow-hidden mx-auto"
-            style={{
-              width: '100%',
-              maxWidth: '100%',
-              height: '90vh',
-              maxHeight: '90vh',
-              borderTopLeftRadius: 32,
-              borderTopRightRadius: 32,
-              borderBottomLeftRadius: 0,
-              borderBottomRightRadius: 0,
-              boxShadow: '0 -10px 40px rgba(0,0,0,0.2)',
-              background: 'rgba(255,255,255,0.95)',
-              backdropFilter: 'blur(40px)',
-            }}
-          >
-             <style>{`
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsOpen(false)}
+              className="fixed inset-0 z-40 bg-black/20 md:hidden"
+            />
+
+            <motion.div
+              key="chat"
+              initial={{ opacity: 0, scale: 0.85, y: 60 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.85, y: 60 }}
+              transition={{ type: 'spring', damping: 26, stiffness: 300 }}
+              className="chat-window fixed bottom-0 left-0 right-0 md:bottom-8 md:right-8 md:left-auto z-50 flex flex-col overflow-hidden mx-auto"
+              style={{
+                width: '100%',
+                maxWidth: '100%',
+                height: '90vh',
+                maxHeight: '90vh',
+                borderTopLeftRadius: 32,
+                borderTopRightRadius: 32,
+                borderBottomLeftRadius: 0,
+                borderBottomRightRadius: 0,
+                border: 'none',
+                boxShadow: '0 -10px 40px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.06) inset',
+                background: 'rgba(255,255,255,0.55)',
+                backdropFilter: 'blur(40px)',
+                WebkitBackdropFilter: 'blur(40px)',
+              }}
+            >
+              <style>{`
                 @media (min-width: 768px) {
                   .chat-window {
                     width: 390px !important;
-                    height: 600px !important;
-                    border-radius: 40px !important;
+                    max-width: 390px !important;
+                    height: min(780px, calc(100vh - 7rem)) !important;
+                    max-height: min(780px, calc(100vh - 7rem)) !important;
+                    border-radius: 52px !important;
+                    border: 10px solid #0F0F0F !important;
+                    box-shadow: 0 0 0 1px rgba(255,255,255,0.08) inset, 0 50px 120px rgba(0,0,0,0.6), 0 20px 60px rgba(0,0,0,0.35) !important;
                     bottom: 2rem !important;
                     right: 2rem !important;
+                    left: auto !important;
+                    top: auto !important;
+                    margin: 0 !important;
+                    overflow: hidden !important;
                   }
                 }
               `}</style>
 
-              <div className="flex items-center justify-between px-6 py-4 bg-[#000080] text-white">
-                <div className="flex items-center gap-3">
-                  <Avatar size={32} />
-                  <div className="flex flex-col">
-                    <span className="text-xs font-bold uppercase tracking-widest">HBS Assistant</span>
-                    <span className="text-[10px] opacity-70">Online</span>
-                  </div>
-                </div>
-                <button onClick={() => setIsOpen(false)} className="p-2 hover:bg-white/10 rounded-full transition-colors">
-                  <ChevronDown />
-                </button>
+              <div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ borderRadius: 'inherit', zIndex: 0 }}>
+                <div className="absolute -top-8 -left-8 w-48 h-48 rounded-full opacity-15" style={{ background: '#B331F1', filter: 'blur(40px)' }} />
+                <div className="absolute -bottom-8 -right-8 w-56 h-56 rounded-full opacity-10" style={{ background: '#000000', filter: 'blur(50px)' }} />
               </div>
 
-              <div ref={scrollRef} className="flex-1 overflow-y-auto px-6 py-6 space-y-4" style={{ scrollbarWidth: 'none' }}>
+              <div className="relative z-10 flex justify-center pt-3 pb-1 shrink-0">
+                <div className="flex items-center justify-between px-4" style={{ width: 126, height: 34, background: '#000000', borderRadius: 20 }}>
+                  <div className="w-2 h-2 rounded-full bg-white/20" />
+                  <motion.div className="w-1.5 h-1.5 rounded-full bg-[#B331F1]" animate={{ opacity: [1, 0.3, 1] }} transition={{ repeat: Infinity, duration: 2 }} />
+                </div>
+              </div>
+
+              <div className="relative z-10 flex items-center justify-between px-7 py-1 shrink-0">
+                <span className="text-black text-[12px] font-bold tracking-tight">{clockTime}</span>
+                <div className="flex items-center gap-1.5">
+                  <Signal size={12} style={{ color: '#000000' }} />
+                  <Wifi size={12} style={{ color: '#000000' }} />
+                  <Battery size={14} style={{ color: '#000000' }} />
+                </div>
+              </div>
+
+              <div ref={scrollRef} className="relative z-10 flex-1 overflow-y-auto px-4 py-4 space-y-3" style={{ scrollbarWidth: 'none' }}>
+                <div className="flex justify-end mb-2">
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => setIsOpen(false)}
+                    className="w-8 h-8 rounded-full flex items-center justify-center transition-all"
+                    style={{ background: 'rgba(0,0,0,0.07)' }}
+                  >
+                    <ChevronDown size={16} style={{ color: '#000000' }} />
+                  </motion.button>
+                </div>
+
                 {messages.map((msg, idx) => (
                   <Bubble key={idx} msg={msg} isLast={idx === messages.length - 1} />
                 ))}
+
                 {isLoading && (
-                  <div className="flex items-end gap-2">
+                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-end gap-2">
                     <Avatar size={28} />
-                    <TypingDots />
-                  </div>
+                    <div className="px-2 py-2">
+                      <TypingDots />
+                    </div>
+                  </motion.div>
                 )}
 
-                {messages.length === 1 && (
-                  <div className="flex flex-col gap-2 pt-4">
+                {messages.length === 1 && !isLoading && (
+                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col gap-2 ml-10 mt-2">
                     {quickPrompts.map((prompt, i) => (
-                      <button
+                      <motion.button
                         key={i}
+                        whileHover={{ scale: 1.02, background: 'rgba(179,49,241,0.1)' }}
+                        whileTap={{ scale: 0.98 }}
                         onClick={() => handleSendMessage(prompt)}
-                        className="text-left p-3 text-xs font-bold border border-neutral-100 rounded-2xl bg-white hover:bg-[#D4AF37]/5 hover:border-[#D4AF37] transition-all text-[#000080]"
+                        className="px-4 py-2.5 text-left text-[13px] font-medium border border-[#B331F1]/30 rounded-xl bg-white/50 backdrop-blur-sm transition-all text-black"
                       >
                         {prompt}
-                      </button>
+                      </motion.button>
                     ))}
-                  </div>
+                  </motion.div>
                 )}
               </div>
 
-              <div className="p-4 bg-white border-t border-neutral-100 flex gap-2">
+              <div className="relative z-10 p-4 bg-white/80 border-t border-black/5 flex gap-2 shrink-0">
                 <input
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
-                  className="flex-1 bg-neutral-50 p-4 rounded-2xl text-xs font-medium outline-none focus:ring-1 focus:ring-[#D4AF37]"
-                  placeholder="Ask me anything..."
+                  className="flex-1 bg-transparent text-sm outline-none placeholder:text-black/30"
+                  placeholder="Type your message..."
                 />
-                <button
-                  onClick={() => handleSendMessage()}
-                  className="w-12 h-12 bg-[#000080] text-[#D4AF37] rounded-2xl flex items-center justify-center hover:bg-[#D4AF37] hover:text-white transition-all"
-                >
-                  <Send size={18} />
-                </button>
+                <button onClick={() => handleSendMessage()} className="p-2 bg-[#B331F1] text-white rounded-full"><Send size={14} /></button>
               </div>
-          </motion.div>
+
+              <div className="relative z-10 px-4 pt-3 shrink-0" style={{ background: 'rgba(255,255,255,0.6)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(0,0,0,0.07)', paddingBottom: 'max(12px, env(safe-area-inset-bottom, 12px))' }}>
+                <p className="text-[10px] text-center text-gray-400 mb-2 font-mono tracking-tighter uppercase font-bold">HBS AI Assistant</p>
+                <div className="flex justify-center mt-1 mb-1">
+                  <div className="w-28 h-[5px] rounded-full" style={{ background: 'rgba(0,0,0,0.18)' }} />
+                </div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>

@@ -39,10 +39,10 @@ export default function NewBlogPost() {
       <div className="max-w-5xl mx-auto">
         <header className="flex justify-between items-end mb-12">
           <div className="flex flex-col gap-2">
-            <Link href="/admin/blogs" className="flex items-center gap-2 text-[10px] font-bold text-neutral-400 uppercase tracking-[0.2em] hover:text-[#000080] transition-colors mb-4">
+            <Link href="/admin/blogs" className="flex items-center gap-2 text-[10px] font-bold text-neutral-400 uppercase tracking-[0.2em] hover:text-[#44ACFF] transition-colors mb-4">
                <ChevronLeft size={12} /> Back to Articles
             </Link>
-            <h1 className="text-4xl font-bold text-[#000080] uppercase">New Article</h1>
+            <h1 className="text-4xl font-bold text-[#44ACFF] uppercase">New Article</h1>
             <p className="text-neutral-500 font-medium">Share what's happening at Hannah Bennie Schools.</p>
           </div>
         </header>
@@ -56,7 +56,7 @@ export default function NewBlogPost() {
                       required
                       type="text"
                       placeholder="e.g. HBS Ranks No.1 in NECTA 2024"
-                      className="w-full bg-neutral-50 border border-neutral-100 p-5 rounded-2xl text-xl font-bold text-[#000080] focus:outline-none focus:ring-1 focus:ring-[#000080]"
+                      className="w-full bg-neutral-50 border border-neutral-100 p-5 rounded-2xl text-xl font-bold text-[#44ACFF] focus:outline-none focus:ring-1 focus:ring-[#44ACFF]"
                       value={formData.title}
                       onChange={e => setFormData({...formData, title: e.target.value})}
                     />
@@ -67,7 +67,7 @@ export default function NewBlogPost() {
                       required
                       rows={20}
                       placeholder="Write your article here..."
-                      className="w-full bg-neutral-50 border border-neutral-100 p-8 rounded-3xl text-sm font-medium focus:outline-none focus:ring-1 focus:ring-[#000080] resize-none leading-relaxed"
+                      className="w-full bg-neutral-50 border border-neutral-100 p-8 rounded-3xl text-sm font-medium focus:outline-none focus:ring-1 focus:ring-[#44ACFF] resize-none leading-relaxed"
                       value={formData.content}
                       onChange={e => setFormData({...formData, content: e.target.value})}
                     />
@@ -77,12 +77,12 @@ export default function NewBlogPost() {
 
            <div className="lg:col-span-4 flex flex-col gap-8">
               <div className="bg-white p-8 rounded-[40px] shadow-sm border border-neutral-100 flex flex-col gap-8">
-                 <h3 className="text-sm font-bold text-[#000080] uppercase tracking-widest border-b border-neutral-50 pb-4">Publishing Options</h3>
+                 <h3 className="text-sm font-bold text-[#44ACFF] uppercase tracking-widest border-b border-neutral-50 pb-4">Publishing Options</h3>
 
                  <div className="flex flex-col gap-3">
                     <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Status</label>
                     <select
-                      className="bg-neutral-50 border border-neutral-100 p-4 rounded-2xl text-xs font-bold focus:outline-none focus:ring-1 focus:ring-[#000080] appearance-none"
+                      className="bg-neutral-50 border border-neutral-100 p-4 rounded-2xl text-xs font-bold focus:outline-none focus:ring-1 focus:ring-[#44ACFF] appearance-none"
                       value={formData.status}
                       onChange={e => setFormData({...formData, status: e.target.value})}
                     >
@@ -94,7 +94,7 @@ export default function NewBlogPost() {
                  <div className="flex flex-col gap-3">
                     <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Category</label>
                     <select
-                      className="bg-neutral-50 border border-neutral-100 p-4 rounded-2xl text-xs font-bold focus:outline-none focus:ring-1 focus:ring-[#000080] appearance-none"
+                      className="bg-neutral-50 border border-neutral-100 p-4 rounded-2xl text-xs font-bold focus:outline-none focus:ring-1 focus:ring-[#44ACFF] appearance-none"
                       value={formData.category}
                       onChange={e => setFormData({...formData, category: e.target.value})}
                     >
@@ -113,7 +113,7 @@ export default function NewBlogPost() {
                        <input
                          type="text"
                          placeholder="https://..."
-                         className="w-full bg-neutral-50 border border-neutral-100 py-4 pl-12 pr-6 rounded-2xl text-xs font-medium focus:outline-none focus:ring-1 focus:ring-[#000080]"
+                         className="w-full bg-neutral-50 border border-neutral-100 py-4 pl-12 pr-6 rounded-2xl text-xs font-medium focus:outline-none focus:ring-1 focus:ring-[#44ACFF]"
                          value={formData.featured_image}
                          onChange={e => setFormData({...formData, featured_image: e.target.value})}
                        />
@@ -123,7 +123,7 @@ export default function NewBlogPost() {
                  <button
                   type="submit"
                   disabled={saving}
-                  className="w-full py-5 bg-[#000080] text-white rounded-2xl font-bold uppercase tracking-widest hover:bg-[#D4AF37] transition-all shadow-xl shadow-[#000080]/20 flex items-center justify-center gap-3"
+                  className="w-full py-5 bg-[#44ACFF] text-white rounded-2xl font-bold uppercase tracking-widest hover:bg-[#ECB65F] transition-all shadow-xl shadow-[#44ACFF]/20 flex items-center justify-center gap-3"
                  >
                    <Save size={18} /> {saving ? 'Saving...' : 'Save Article'}
                  </button>

@@ -69,15 +69,15 @@ export default function AdminJobs() {
       <div className="max-w-7xl mx-auto">
         <header className="flex justify-between items-end mb-12">
           <div className="flex flex-col gap-2">
-            <Link href="/admin" className="flex items-center gap-2 text-[10px] font-bold text-neutral-400 uppercase tracking-[0.2em] hover:text-[#000080] transition-colors mb-4">
+            <Link href="/admin" className="flex items-center gap-2 text-[10px] font-bold text-neutral-400 uppercase tracking-[0.2em] hover:text-[#44ACFF] transition-colors mb-4">
                <ChevronLeft size={12} /> Back to Dashboard
             </Link>
-            <h1 className="text-4xl font-bold text-[#000080] uppercase">Job Postings</h1>
+            <h1 className="text-4xl font-bold text-[#44ACFF] uppercase">Job Postings</h1>
             <p className="text-neutral-500 font-medium">Manage and create AI-powered job listings for HBS.</p>
           </div>
           <button
             onClick={() => setIsAdding(true)}
-            className="px-8 py-4 bg-[#000080] text-white rounded-2xl text-xs font-bold uppercase tracking-widest hover:bg-[#000060] transition-all shadow-lg flex items-center gap-3"
+            className="px-8 py-4 bg-[#44ACFF] text-white rounded-2xl text-xs font-bold uppercase tracking-widest hover:bg-[#3b9ae0] transition-all shadow-lg flex items-center gap-3"
           >
             <Plus size={18} /> Post New Job
           </button>
@@ -88,9 +88,9 @@ export default function AdminJobs() {
            <div className="flex items-center gap-6 flex-1">
              <div className="relative flex-1 max-w-md">
                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 w-4 h-4" />
-               <input type="text" placeholder="Search postings..." className="w-full bg-neutral-50 border border-neutral-100 py-3 pl-12 pr-4 rounded-xl text-xs font-medium focus:outline-none focus:ring-1 focus:ring-[#000080]" />
+               <input type="text" placeholder="Search postings..." className="w-full bg-neutral-50 border border-neutral-100 py-3 pl-12 pr-4 rounded-xl text-xs font-medium focus:outline-none focus:ring-1 focus:ring-[#44ACFF]" />
              </div>
-             <button className="flex items-center gap-2 text-xs font-bold text-neutral-500 uppercase tracking-widest hover:text-[#000080] transition-colors">
+             <button className="flex items-center gap-2 text-xs font-bold text-neutral-500 uppercase tracking-widest hover:text-[#44ACFF] transition-colors">
                <Filter size={16} /> Filters
              </button>
            </div>
@@ -106,9 +106,9 @@ export default function AdminJobs() {
                 {[1,2,3].map(i => <div key={i} className="h-24 bg-neutral-200 rounded-3xl" />)}
              </div>
            ) : jobs.map((job) => (
-             <div key={job.id} className="bg-white p-6 rounded-[32px] border border-neutral-100 shadow-sm flex items-center justify-between group hover:border-[#000080] transition-all">
+             <div key={job.id} className="bg-white p-6 rounded-[32px] border border-neutral-100 shadow-sm flex items-center justify-between group hover:border-[#44ACFF] transition-all">
                 <div className="flex items-center gap-6">
-                   <div className="w-14 h-14 rounded-2xl bg-[#000080]/5 flex items-center justify-center text-[#000080]">
+                   <div className="w-14 h-14 rounded-2xl bg-[#44ACFF]/5 flex items-center justify-center text-[#44ACFF]">
                       <Briefcase size={24} />
                    </div>
                    <div className="flex flex-col gap-1">
@@ -128,11 +128,11 @@ export default function AdminJobs() {
 
                 <div className="flex items-center gap-8">
                    <div className="flex flex-col items-center gap-1">
-                      <span className="text-xl font-bold text-[#000080]">12</span>
+                      <span className="text-xl font-bold text-[#44ACFF]">12</span>
                       <span className="text-[9px] font-bold text-neutral-400 uppercase tracking-widest">Applications</span>
                    </div>
                    <div className="flex items-center gap-2">
-                      <button className="p-3 text-neutral-400 hover:text-[#000080] hover:bg-[#000080]/5 rounded-xl transition-all"><Edit size={18} /></button>
+                      <button className="p-3 text-neutral-400 hover:text-[#44ACFF] hover:bg-[#44ACFF]/5 rounded-xl transition-all"><Edit size={18} /></button>
                       <button className="p-3 text-neutral-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all"><Trash2 size={18} /></button>
                    </div>
                 </div>
@@ -143,7 +143,7 @@ export default function AdminJobs() {
 
       {/* Modal Add Job */}
       {isAdding && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-[#000080]/20 backdrop-blur-sm overflow-y-auto">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-[#44ACFF]/20 backdrop-blur-sm overflow-y-auto">
            <motion.div
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -151,7 +151,7 @@ export default function AdminJobs() {
            >
               <div className="p-10 border-b border-neutral-50 flex justify-between items-center">
                  <div className="flex flex-col gap-1">
-                    <h2 className="text-2xl font-bold text-[#000080] uppercase">Create Job Posting</h2>
+                    <h2 className="text-2xl font-bold text-[#44ACFF] uppercase">Create Job Posting</h2>
                     <p className="text-xs font-medium text-neutral-400">Fill in the details or use AI to generate the description.</p>
                  </div>
                  <button onClick={() => setIsAdding(false)} className="text-neutral-400 hover:text-black font-bold uppercase text-[10px] tracking-widest">Cancel [X]</button>
@@ -166,7 +166,7 @@ export default function AdminJobs() {
                           required
                           type="text"
                           placeholder="e.g. Senior ICT Teacher"
-                          className="w-full bg-neutral-50 border border-neutral-100 p-4 rounded-2xl text-sm font-bold focus:outline-none focus:ring-1 focus:ring-[#000080]"
+                          className="w-full bg-neutral-50 border border-neutral-100 p-4 rounded-2xl text-sm font-bold focus:outline-none focus:ring-1 focus:ring-[#44ACFF]"
                           value={formData.title}
                           onChange={e => setFormData({...formData, title: e.target.value})}
                         />
@@ -174,7 +174,7 @@ export default function AdminJobs() {
                           type="button"
                           onClick={handleGenerateDescription}
                           disabled={generating}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-[#000080] text-white rounded-xl hover:bg-[#D4AF37] transition-all disabled:opacity-50"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-[#44ACFF] text-white rounded-xl hover:bg-[#ECB65F] transition-all disabled:opacity-50"
                           title="Generate description with AI"
                         >
                           <Brain size={16} className={generating ? "animate-pulse" : ""} />
@@ -184,7 +184,7 @@ export default function AdminJobs() {
                     <div className="flex flex-col gap-3">
                        <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Department</label>
                        <select
-                        className="bg-neutral-50 border border-neutral-100 p-4 rounded-2xl text-sm font-bold focus:outline-none focus:ring-1 focus:ring-[#000080]"
+                        className="bg-neutral-50 border border-neutral-100 p-4 rounded-2xl text-sm font-bold focus:outline-none focus:ring-1 focus:ring-[#44ACFF]"
                         value={formData.department}
                         onChange={e => setFormData({...formData, department: e.target.value})}
                        >
@@ -205,7 +205,7 @@ export default function AdminJobs() {
                     <div className="flex flex-col gap-3">
                        <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Type</label>
                        <select
-                        className="bg-neutral-50 border border-neutral-100 p-4 rounded-2xl text-sm font-bold focus:outline-none focus:ring-1 focus:ring-[#000080]"
+                        className="bg-neutral-50 border border-neutral-100 p-4 rounded-2xl text-sm font-bold focus:outline-none focus:ring-1 focus:ring-[#44ACFF]"
                         value={formData.type}
                         onChange={e => setFormData({...formData, type: e.target.value})}
                        >
@@ -218,7 +218,7 @@ export default function AdminJobs() {
                        <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Location</label>
                        <input
                         type="text"
-                        className="bg-neutral-50 border border-neutral-100 p-4 rounded-2xl text-sm font-bold focus:outline-none focus:ring-1 focus:ring-[#000080]"
+                        className="bg-neutral-50 border border-neutral-100 p-4 rounded-2xl text-sm font-bold focus:outline-none focus:ring-1 focus:ring-[#44ACFF]"
                         value={formData.location}
                         onChange={e => setFormData({...formData, location: e.target.value})}
                        />
@@ -228,7 +228,7 @@ export default function AdminJobs() {
                        <input
                         type="text"
                         placeholder="e.g. 1.2M - 1.8M TZS"
-                        className="bg-neutral-50 border border-neutral-100 p-4 rounded-2xl text-sm font-bold focus:outline-none focus:ring-1 focus:ring-[#000080]"
+                        className="bg-neutral-50 border border-neutral-100 p-4 rounded-2xl text-sm font-bold focus:outline-none focus:ring-1 focus:ring-[#44ACFF]"
                         value={formData.salary_range}
                         onChange={e => setFormData({...formData, salary_range: e.target.value})}
                        />
@@ -240,7 +240,7 @@ export default function AdminJobs() {
                     <textarea
                       required
                       rows={8}
-                      className="bg-neutral-50 border border-neutral-100 p-6 rounded-3xl text-sm font-medium focus:outline-none focus:ring-1 focus:ring-[#000080] resize-none leading-relaxed"
+                      className="bg-neutral-50 border border-neutral-100 p-6 rounded-3xl text-sm font-medium focus:outline-none focus:ring-1 focus:ring-[#44ACFF] resize-none leading-relaxed"
                       value={formData.description}
                       onChange={e => setFormData({...formData, description: e.target.value})}
                     />
@@ -251,7 +251,7 @@ export default function AdminJobs() {
                     <input
                       required
                       type="date"
-                      className="bg-neutral-50 border border-neutral-100 p-4 rounded-2xl text-sm font-bold focus:outline-none focus:ring-1 focus:ring-[#000080]"
+                      className="bg-neutral-50 border border-neutral-100 p-4 rounded-2xl text-sm font-bold focus:outline-none focus:ring-1 focus:ring-[#44ACFF]"
                       value={formData.deadline}
                       onChange={e => setFormData({...formData, deadline: e.target.value})}
                     />
@@ -259,7 +259,7 @@ export default function AdminJobs() {
 
                  <button
                   type="submit"
-                  className="w-full py-6 bg-[#000080] text-white rounded-2xl font-bold uppercase tracking-widest hover:bg-[#D4AF37] transition-all shadow-xl shadow-[#000080]/20"
+                  className="w-full py-6 bg-[#44ACFF] text-white rounded-2xl font-bold uppercase tracking-widest hover:bg-[#ECB65F] transition-all shadow-xl shadow-[#44ACFF]/20"
                  >
                    Publish Job Posting
                  </button>

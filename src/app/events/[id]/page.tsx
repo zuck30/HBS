@@ -34,7 +34,7 @@ export default function EventDetailsPage({ params }: { params: Promise<{ id: str
     <main className="pt-16 bg-[#f6f5f1] min-h-screen font-sans">
       <section className="py-24 px-6">
         <div className="max-w-7xl mx-auto">
-          <Link href="/events" className="flex items-center gap-2 text-[10px] font-bold text-neutral-400 uppercase tracking-[0.2em] hover:text-[#000080] transition-colors mb-12">
+          <Link href="/events" className="flex items-center gap-2 text-[10px] font-bold text-neutral-400 uppercase tracking-[0.2em] hover:text-[#44ACFF] transition-colors mb-12">
             <ChevronLeft size={12} /> Back to Calendar
           </Link>
 
@@ -45,13 +45,13 @@ export default function EventDetailsPage({ params }: { params: Promise<{ id: str
                  {event.image ? (
                    <Image src={event.image} alt={event.title} fill className="object-cover" />
                  ) : (
-                   <div className="w-full h-full bg-[#000080] flex items-center justify-center">
+                   <div className="w-full h-full bg-[#44ACFF] flex items-center justify-center">
                      <Image src="/HBSlogo.png" alt="HBS" width={120} height={120} className="opacity-20" />
                    </div>
                  )}
                </div>
                <div className="flex flex-col gap-8">
-                  <h1 className="text-4xl md:text-6xl font-bold text-[#000080] uppercase leading-[1.1]">{event.title}</h1>
+                  <h1 className="text-4xl md:text-6xl font-bold text-[#44ACFF] uppercase leading-[1.1]">{event.title}</h1>
                   <div className="prose prose-lg max-w-none text-neutral-600 font-medium leading-relaxed">
                     {event.description}
                   </div>
@@ -63,44 +63,44 @@ export default function EventDetailsPage({ params }: { params: Promise<{ id: str
                <div className="bg-white p-10 rounded-[40px] shadow-xl border border-neutral-100 flex flex-col gap-10 sticky top-32">
                   <div className="flex flex-col gap-6">
                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-2xl bg-[#000080]/5 flex items-center justify-center text-[#D4AF37]">
+                        <div className="w-12 h-12 rounded-2xl bg-[#44ACFF]/5 flex items-center justify-center text-[#ECB65F]">
                            <Calendar size={24} />
                         </div>
                         <div className="flex flex-col">
                            <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Date</span>
-                           <span className="text-sm font-bold text-[#000080] uppercase">{new Date(event.date).toLocaleDateString('default', { dateStyle: 'full' })}</span>
+                           <span className="text-sm font-bold text-[#44ACFF] uppercase">{new Date(event.date).toLocaleDateString('default', { dateStyle: 'full' })}</span>
                         </div>
                      </div>
                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-2xl bg-[#000080]/5 flex items-center justify-center text-[#D4AF37]">
+                        <div className="w-12 h-12 rounded-2xl bg-[#44ACFF]/5 flex items-center justify-center text-[#ECB65F]">
                            <Clock size={24} />
                         </div>
                         <div className="flex flex-col">
                            <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Time</span>
-                           <span className="text-sm font-bold text-[#000080] uppercase">{event.time}</span>
+                           <span className="text-sm font-bold text-[#44ACFF] uppercase">{event.time}</span>
                         </div>
                      </div>
                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-2xl bg-[#000080]/5 flex items-center justify-center text-[#D4AF37]">
+                        <div className="w-12 h-12 rounded-2xl bg-[#44ACFF]/5 flex items-center justify-center text-[#ECB65F]">
                            <MapPin size={24} />
                         </div>
                         <div className="flex flex-col">
                            <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Location</span>
-                           <span className="text-sm font-bold text-[#000080] uppercase">{event.location}</span>
+                           <span className="text-sm font-bold text-[#44ACFF] uppercase">{event.location}</span>
                         </div>
                      </div>
                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-2xl bg-[#000080]/5 flex items-center justify-center text-[#D4AF37]">
+                        <div className="w-12 h-12 rounded-2xl bg-[#44ACFF]/5 flex items-center justify-center text-[#ECB65F]">
                            <Users size={24} />
                         </div>
                         <div className="flex flex-col">
                            <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Capacity</span>
-                           <span className="text-sm font-bold text-[#000080] uppercase">{event.rsvp_count || 0} / {event.capacity || 'Unlimited'}</span>
+                           <span className="text-sm font-bold text-[#44ACFF] uppercase">{event.rsvp_count || 0} / {event.capacity || 'Unlimited'}</span>
                         </div>
                      </div>
                   </div>
 
-                  <button className="w-full py-6 bg-[#000080] text-white rounded-3xl font-bold uppercase tracking-widest hover:bg-[#D4AF37] transition-all shadow-xl shadow-[#000080]/20 flex items-center justify-center gap-3">
+                  <button className="w-full py-6 bg-[#44ACFF] text-white rounded-3xl font-bold uppercase tracking-widest hover:bg-[#ECB65F] transition-all shadow-xl shadow-[#44ACFF]/20 flex items-center justify-center gap-3">
                      RSVP For Event
                      <ArrowRight size={18} />
                   </button>

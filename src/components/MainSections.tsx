@@ -1,74 +1,125 @@
 'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { useLanguage } from '@/context/LanguageContext';
 
-// Import images
+// Import HBS images
 import school1 from '../assets/school-1.png';
 import school2 from '../assets/school-2.png';
 import football from '../assets/sports-club.png';
 import pools from '../assets/shot.png';
-import playground from '../assets/Classrooms-designed-for-learning.png';
-import transport from '../assets/school-bus.png';
-import boarding from '../assets/dorms.png';
-import labs from '../assets/practical-hands-on.png';
-import arts from '../assets/cultural-heritage.png';
 
 export const TrustSection = () => {
-  const { t } = useLanguage();
-  const facilities = [
-    { name: 'Full-size football pitch', image: football },
-    { name: 'Two swimming pools', image: pools },
-    { name: 'Modern playground', image: playground },
-    { name: 'School transport fleet', image: transport },
-    { name: 'Boarding houses', image: boarding },
-    { name: 'Science & computer labs', image: labs },
-    { name: 'Library & arts spaces', image: arts },
+  const cards = [
+    { image: school1, rotate: -12, x: -70, y: 15, zIndex: 10, variantRotate: -16 },
+    { image: school2, rotate: -6, x: -25, y: 5, zIndex: 20, variantRotate: -4 },
+    { image: football, rotate: 4, x: 25, y: -5, zIndex: 30, variantRotate: 8 },
+    { image: pools, rotate: 12, x: 70, y: 10, zIndex: 10, variantRotate: 16 },
   ];
 
   return (
-    <section className="bg-[#fcfcfc] py-28 px-6 overflow-hidden relative selection:bg-[#000080] selection:text-white">
-      <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
+    <section className="bg-[#fcfcfc] py-28 px-6 overflow-hidden relative selection:bg-[#44ACFF] selection:text-white">
+      <div className="max-w-5xl mx-auto flex flex-col items-center text-center">
         
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-4xl mb-16"
+          className="max-w-4xl"
         >
-          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4AF37] mb-4 block">Our Campus</span>
-          <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-[#000080] leading-[1.1] mb-8 font-sans uppercase">
-            ONE CAMPUS · EVERY FACILITY
-          </h2>
-          <p className="text-neutral-500 text-lg md:text-xl font-medium">
-            Where every child has room to learn, play, and grow.
-          </p>
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-normal tracking-tight text-gray-900 leading-[1.1] mb-8 font-sans uppercase">
+            One Campus <br className="hidden md:inline" />
+            <span className="relative inline-block">
+              Every Facility.
+              <motion.span
+                whileHover={{ scale: 1.1, rotate: -12 }}
+                transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                className="absolute -top-8 -left-16 bg-[#6D9E51] text-white px-4 py-1.5 rounded-full text-xs font-medium tracking-wide shadow-md transform -rotate-6 hidden md:block cursor-grab active:cursor-grabbing"
+              >
+                @excellence
+              </motion.span>
+              <motion.span
+                whileHover={{ scale: 1.1, rotate: 12 }}
+                transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                className="absolute -bottom-6 -right-16 bg-[#ECB65F] text-white px-4 py-1.5 rounded-full text-xs font-medium tracking-wide shadow-md transform rotate-6 hidden md:block cursor-grab active:cursor-grabbing"
+              >
+                @community
+              </motion.span>
+            </span>
+          </h1>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 w-full">
-          {facilities.map((facility, i) => (
+        <motion.div
+          className="relative w-full max-w-3xl h-64 md:h-80 my-20 flex items-center justify-center select-none"
+          initial="rest"
+          whileInView="animate"
+          viewport={{ once: true }}
+        >
+          {cards.map((card, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
-              whileHover={{ y: -10 }}
-              className="flex flex-col gap-3 group"
+              drag
+              dragConstraints={{ left: -100, right: 100, top: -50, bottom: 50 }}
+              dragElastic={0.6}
+              dragTransition={{ bounceStiffness: 300, bounceDamping: 20 }}
+              variants={{
+                rest: { opacity: 0, scale: 0.7, y: 60, rotate: 0 },
+                animate: {
+                  opacity: 1,
+                  scale: 1,
+                  x: card.x,
+                  y: card.y,
+                  rotate: card.rotate,
+                  transition: { delay: i * 0.08, duration: 0.9, ease: [0.16, 1, 0.3, 1] }
+                }
+              }}
+              whileHover={{
+                scale: 1.08,
+                rotate: card.variantRotate,
+                y: card.y - 15,
+                zIndex: 60,
+                transition: { type: 'spring', stiffness: 350, damping: 20 }
+              }}
+              style={{ zIndex: card.zIndex }}
+              className="absolute w-40 h-52 md:w-52 md:h-64 rounded-2xl overflow-hidden bg-gray-100 shadow-xl border-4 border-white cursor-grab active:cursor-grabbing touch-none will-change-transform"
             >
-              <div className="relative aspect-square rounded-2xl overflow-hidden bg-neutral-100 border border-neutral-200 shadow-sm">
-                <Image
-                  src={facility.image}
-                  alt={facility.name}
-                  fill
-                  className="object-cover transition-transform group-hover:scale-110"
-                />
-              </div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#000080] group-hover:text-[#D4AF37] transition-colors">{facility.name}</span>
+              <Image
+                src={card.image}
+                alt="School facility"
+                fill
+                className="object-cover pointer-events-none"
+                sizes="(max-w-768px) 160px, 208px"
+              />
+            </motion.div>
+          ))}
+        </motion.div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4, duration: 0.6 }}
+          className="text-gray-500 text-xs md:text-sm max-w-xl leading-relaxed tracking-wide font-light mb-10"
+        >
+          Where every child has room to learn, play, and grow. Our campus is equipped with everything your child needs to thrive academically and physically.
+        </motion.p>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-24 w-full border-t border-gray-100 pt-16 text-left">
+          {[
+            { title: 'Sports & Arts', desc: 'Full-size football pitch, two swimming pools, modern playground, and dedicated library and arts spaces.' },
+            { title: 'Safe Transport', desc: 'Our own school transport fleet and LATRA-compliant buses ensure a safe journey for every child.' },
+            { title: 'Boarding Facilities', desc: 'Secure and comfortable boarding houses with 24/7 supervision and dedicated study spaces.' }
+          ].map((item, i) => (
+            <motion.div
+              key={item.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ delay: i * 0.12, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-3">{item.title}</h3>
+              <p className="text-gray-500 text-sm leading-relaxed font-light">{item.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -79,94 +130,151 @@ export const TrustSection = () => {
 };
 
 export const ServicesSection = () => {
-  const { t } = useLanguage();
-
-  const programs = [
-    {
-      title: 'Toddler Class',
-      age: '18 MO – 3 YRS',
-      desc: 'Purposeful activities that develop wonder, natural curiosity, motor and social skills, self-esteem, and the cognitive processes that prepare children for everything to come.',
-      image: '/assets/toddler-class.png'
-    },
-    {
-      title: 'Preschool',
-      age: '3 – 6 YRS',
-      desc: 'Through carefully prepared materials and activities, children grow in independence, concentration, self-motivation, and develop a genuine love of learning.',
-      image: '/assets/pre-school.png'
-    },
-    {
-      title: 'Primary School',
-      age: '6 – 14 YRS',
-      desc: 'Our graduates are prepared for higher education with the tools to succeed — while maintaining a passion for learning and the drive to explore, create, and collaborate.',
-      image: '/assets/primary-school.png'
-    },
-    {
-      title: 'Enrichment Activities',
-      age: 'ALL AGES',
-      desc: 'Music, fitness, art, performing arts, mindfulness, and many other programs that develop the whole child — woven into every school day.',
-      image: '/assets/enrichment-activities.png'
+  const bentoContainerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.06, delayChildren: 0.1 }
     }
-  ];
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, scale: 0.94, y: 20 },
+    show: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: { type: 'spring', stiffness: 260, damping: 22 }
+    }
+  };
 
   return (
     <section className="bg-white py-28 px-6 border-t border-gray-100 overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16">
-          <div className="max-w-2xl">
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4AF37] mb-4 block">Academic excellence</span>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-[#000080] leading-[1.15] font-sans uppercase">
-              OUR PROGRAMS
-            </h2>
-            <p className="text-neutral-500 text-lg font-medium mt-4">
-              Carefully designed for every stage of early learning. From the first explorations of toddlerhood to the foundations of upper primary, our four programs grow with your child.
-            </p>
-          </div>
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+
+        <div className="lg:col-span-5 flex flex-col justify-between h-full py-4">
           <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <Link href="/programs" className="px-8 py-4 bg-[#000080] text-white rounded-lg text-sm font-bold uppercase tracking-widest hover:bg-[#000060] transition-colors">
-              Explore All Programs
-            </Link>
+            <div className="w-16 h-10 mb-8 flex flex-col justify-between opacity-40">
+              <motion.div initial={{ width: 0 }} whileInView={{ width: "100%" }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.2 }} className="h-[2px] bg-[#B331F1] rounded-full" />
+              <motion.div initial={{ width: 0 }} whileInView={{ width: "75%" }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.3 }} className="h-[2px] bg-[#44ACFF] rounded-full" />
+              <motion.div initial={{ width: 0 }} whileInView={{ width: "50%" }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.4 }} className="h-[2px] bg-[#6D9E51] rounded-full" />
+            </div>
+
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 leading-[1.15] mb-6 font-sans uppercase">
+              Our <br />Programs
+            </h2>
+
+            <p className="text-gray-500 text-base leading-relaxed font-light mb-8 max-w-md">
+              Carefully designed for every stage of early learning. From toddler explorations to the foundations of upper primary, our programs grow with your child.
+            </p>
+
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
+              className="px-8 py-3.5 bg-[#44ACFF] text-white rounded-full text-sm font-medium hover:bg-[#3b9ae0] transition-colors shadow-md uppercase tracking-widest font-bold"
+            >
+              Explore Programs
+            </motion.button>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="mt-16 p-6 border border-gray-200 rounded-lg bg-white shadow-[4px_4px_0px_0px_rgba(179,49,241,0.1)] relative"
+          >
+            <p className="text-xs font-mono italic text-gray-600 leading-relaxed uppercase">
+              "We enrich young minds and inspire children to be creative, mindful, and influential to their communities and the world."
+            </p>
+
+            <div className="flex gap-3 mt-6 text-gray-400">
+              {[0, 1, 2].map((idx) => (
+                <motion.span
+                  key={idx}
+                  whileHover={{ y: -3, backgroundColor: '#ECB65F' }}
+                  className="w-4 h-4 rounded-full bg-gray-200 inline-block cursor-pointer transition-colors"
+                />
+              ))}
+            </div>
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {programs.map((program, i) => (
+        <motion.div
+          variants={bentoContainerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-60px' }}
+          className="lg:col-span-7 grid grid-cols-3 grid-rows-3 gap-3 aspect-square w-full max-w-xl mx-auto"
+        >
+
+          <motion.div variants={itemVariants} className="bg-[#ECB65F] opacity-90 rounded-none flex items-center justify-center p-4 relative overflow-hidden group">
+            <div className="w-20 h-20 rounded-full border-2 border-dashed border-white/40 flex items-center justify-center animate-spin-slow">
+              <span className="text-white text-[10px] tracking-widest uppercase font-bold text-center">Grow</span>
+            </div>
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="col-span-2 relative overflow-hidden bg-gray-100 group rounded-none">
+            <Image src="/assets/toddler-class.png" alt="Toddler Class" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+            <motion.span whileHover={{ y: -2 }} className="absolute top-3 right-3 bg-white px-3 py-1 rounded-full text-[10px] font-medium tracking-wide shadow-sm text-black pointer-events-none uppercase font-bold">
+              18MO – 3YRS
+            </motion.span>
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="row-span-2 relative overflow-hidden bg-gray-100 group rounded-none">
+            <Image src="/assets/pre-school.png" alt="Preschool" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+            <motion.span whileHover={{ y: -2 }} className="absolute top-3 right-3 bg-white px-3 py-1 rounded-full text-[10px] font-medium tracking-wide shadow-sm text-black pointer-events-none uppercase font-bold">
+              3 – 6 YRS
+            </motion.span>
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="col-span-2 relative overflow-hidden bg-gray-100 group rounded-none">
+            <Image src="/assets/primary-school.png" alt="Primary School" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+            <motion.span whileHover={{ y: -2 }} className="absolute top-3 right-3 bg-white px-3 py-1 rounded-full text-[10px] font-medium tracking-wide shadow-sm text-black pointer-events-none uppercase font-bold">
+              6 – 14 YRS
+            </motion.span>
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="relative overflow-hidden bg-gray-100 group rounded-none">
+            <Image src="/assets/enrichment-activities.png" alt="Enrichment" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+            <motion.span whileHover={{ y: -2 }} className="absolute bottom-3 left-3 bg-white px-3 py-1 rounded-full text-[10px] font-medium tracking-wide shadow-sm text-black pointer-events-none uppercase font-bold">
+              All Ages
+            </motion.span>
+          </motion.div>
+
+          <motion.div
+            variants={itemVariants}
+            whileHover={{ rotate: 90 }}
+            transition={{ type: 'spring', stiffness: 200, damping: 10 }}
+            className="bg-[#B331F1] flex items-center justify-center p-4 cursor-pointer"
+          >
+            <span className="text-white text-4xl font-extralight select-none">✦</span>
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="relative overflow-hidden bg-gray-100 group rounded-none">
+            <Image src="/assets/Classrooms-designed-for-learning.png" alt="Classrooms" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="bg-[#6D9E51] flex items-center justify-center relative overflow-hidden group">
             <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="flex flex-col gap-6 group"
-            >
-              <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-neutral-100 shadow-lg">
-                <Image
-                  src={program.image}
-                  alt={program.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute top-4 left-4">
-                  <span className="bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-[#000080] uppercase tracking-widest">
-                    {program.age}
-                  </span>
-                </div>
-              </div>
-              <div className="flex flex-col gap-3">
-                <h3 className="text-xl font-bold text-[#000080] group-hover:text-[#D4AF37] transition-colors">{program.title}</h3>
-                <p className="text-sm text-neutral-500 leading-relaxed line-clamp-3">
-                  {program.desc}
-                </p>
-                <Link href="/programs" className="text-xs font-bold text-[#000080] uppercase tracking-widest flex items-center gap-2 group/link">
-                  {t('common.learn_more')}
-                  <ArrowRight className="w-3 h-3 transition-transform group-hover/link:translate-x-1" />
-                </Link>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+              whileHover={{ x: 10 }}
+              transition={{ type: 'spring', stiffness: 150 }}
+              className="w-16 h-16 bg-white rounded-full mix-blend-screen opacity-40 translate-x-4"
+            />
+            <motion.div
+              whileHover={{ x: -10 }}
+              transition={{ type: 'spring', stiffness: 150 }}
+              className="w-16 h-16 bg-white rounded-full mix-blend-screen opacity-40 -translate-x-4"
+            />
+          </motion.div>
+
+        </motion.div>
+
       </div>
     </section>
   );

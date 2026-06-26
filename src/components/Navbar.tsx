@@ -4,7 +4,7 @@ import { Menu, X, Globe, User, ArrowRight } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useLanguage } from '@/context/LanguageContext'
+import { useLanguage } from '../context/LanguageContext'
 
 export const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -35,7 +35,7 @@ export const Navbar = () => {
           
           <div className="flex items-stretch">
             <Link href="/" className="flex items-center gap-3 px-6 border-r border-neutral-200/80 hover:bg-neutral-50 transition-colors">
-              <img src="/HBSlogo.png" alt="HBS Logo" className="h-12 w-auto object-contain" />
+              <img src="/HBSlogo.png" alt="HBS Logo" className="h-16 w-16 object-contain" />
             </Link>
 
             <div className="hidden lg:flex items-stretch">
@@ -44,7 +44,7 @@ export const Navbar = () => {
                   key={link.name}
                   href={link.href}
                   className={`px-4 border-r border-neutral-200/80 transition-colors flex items-center whitespace-nowrap ${
-                    pathname === link.href ? 'bg-[#000080] text-white' : 'text-black hover:bg-neutral-50'
+                    pathname === link.href ? 'bg-[#44ACFF] text-white' : 'text-black hover:bg-neutral-50'
                   }`}
                 >
                   {link.name}
@@ -79,7 +79,7 @@ export const Navbar = () => {
                           setShowLangs(false)
                         }}
                         className={`w-full px-4 py-2.5 text-left text-xs font-bold transition-colors ${
-                          language === lang.code ? 'bg-[#000080] text-white' : 'text-black hover:bg-neutral-50'
+                          language === lang.code ? 'bg-[#44ACFF] text-white' : 'text-black hover:bg-neutral-50'
                         }`}
                       >
                         {lang.code}
@@ -94,7 +94,7 @@ export const Navbar = () => {
               <User size={18} />
             </Link>
             
-            <Link href="/contact" className="px-6 bg-[#D4AF37] text-white font-bold flex items-center justify-center hover:bg-[#B8962E] border-l border-neutral-200/80 transition-colors gap-2 relative group">
+            <Link href="/contact" className="px-6 bg-[#6D9E51] text-white font-bold flex items-center justify-center hover:bg-[#5a8a42] border-l border-neutral-200/80 transition-colors gap-2 relative group">
               <span>{t('nav.enroll')}</span>
               <ArrowRight className="w-4 h-4 stroke-[2.5px]" />
             </Link>
@@ -123,7 +123,7 @@ export const Navbar = () => {
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`px-6 py-4 hover:bg-neutral-50 ${pathname === link.href ? 'bg-[#000080] text-white' : ''}`}
+                  className={`px-6 py-4 hover:bg-neutral-50 ${pathname === link.href ? 'bg-[#44ACFF] text-white' : ''}`}
                 >
                   {link.name}
                 </Link>
@@ -135,7 +135,7 @@ export const Navbar = () => {
               <Link 
                 href="/contact"
                 onClick={() => setIsMobileMenuOpen(false)} 
-                className="p-4 font-bold text-center bg-[#D4AF37] text-white hover:bg-[#B8962E] transition-colors"
+                className="p-4 font-bold text-center bg-[#6D9E51] text-white hover:bg-[#5a8a42] transition-colors"
               >
                 {t('nav.enroll')}
               </Link>

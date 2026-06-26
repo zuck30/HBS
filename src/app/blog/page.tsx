@@ -39,8 +39,8 @@ export default function BlogPage() {
       <section className="py-24 px-6 border-b border-neutral-200 bg-white">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-end gap-12">
           <div className="max-w-2xl flex flex-col gap-6">
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4AF37]">JOURNAL</span>
-            <h1 className="text-4xl md:text-7xl font-bold text-[#000080] uppercase leading-[0.9]">
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#ECB65F]">JOURNAL</span>
+            <h1 className="text-4xl md:text-7xl font-bold text-[#44ACFF] uppercase leading-[0.9]">
               What's happening at HBS.
             </h1>
           </div>
@@ -49,7 +49,7 @@ export default function BlogPage() {
             <input
               type="text"
               placeholder="Search articles..."
-              className="w-full bg-neutral-50 border border-neutral-200 py-4 pl-14 pr-6 rounded-2xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#D4AF37] transition-all"
+              className="w-full bg-neutral-50 border border-neutral-200 py-4 pl-14 pr-6 rounded-2xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#ECB65F] transition-all"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -69,18 +69,18 @@ export default function BlogPage() {
                 <Link
                   href={`/blog/${post.id}`}
                   key={post.id}
-                  className="flex flex-col bg-white rounded-[40px] overflow-hidden border border-neutral-200 shadow-sm group hover:border-[#D4AF37] transition-all"
+                  className="flex flex-col bg-white rounded-[40px] overflow-hidden border border-neutral-200 shadow-sm group hover:border-[#ECB65F] transition-all"
                 >
                   <div className="relative aspect-video overflow-hidden">
                     {post.featured_image ? (
                       <Image src={post.featured_image} alt={post.title} fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
                     ) : (
-                      <div className="w-full h-full bg-[#000080]/5 flex items-center justify-center">
+                      <div className="w-full h-full bg-[#44ACFF]/5 flex items-center justify-center">
                         <Image src="/HBSlogo.png" alt="HBS" width={80} height={80} className="opacity-20" />
                       </div>
                     )}
                     <div className="absolute top-6 left-6">
-                      <span className="bg-[#D4AF37] text-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full">
+                      <span className="bg-[#ECB65F] text-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full">
                         {post.category || 'School Life'}
                       </span>
                     </div>
@@ -91,18 +91,18 @@ export default function BlogPage() {
                         <span className="flex items-center gap-1.5"><Calendar className="w-3 h-3" /> {new Date(post.published_at).toLocaleDateString()}</span>
                         <span className="flex items-center gap-1.5"><Clock className="w-3 h-3" /> 5 min read</span>
                       </div>
-                      <h3 className="text-xl font-bold text-[#000080] group-hover:text-[#D4AF37] transition-colors line-clamp-2 uppercase">
+                      <h3 className="text-xl font-bold text-[#44ACFF] group-hover:text-[#ECB65F] transition-colors line-clamp-2 uppercase">
                         {post.title}
                       </h3>
                     </div>
                     <div className="mt-auto pt-6 border-t border-neutral-50 flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-full bg-[#000080]/10 flex items-center justify-center">
-                          <User className="w-3 h-3 text-[#000080]" />
+                        <div className="w-6 h-6 rounded-full bg-[#44ACFF]/10 flex items-center justify-center">
+                          <User className="w-3 h-3 text-[#44ACFF]" />
                         </div>
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-[#000080]">{post.profiles?.full_name || 'HBS Admin'}</span>
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-[#44ACFF]">{post.profiles?.full_name || 'HBS Admin'}</span>
                       </div>
-                      <ArrowRight className="w-4 h-4 text-[#D4AF37] transform group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="w-4 h-4 text-[#ECB65F] transform group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
                 </Link>

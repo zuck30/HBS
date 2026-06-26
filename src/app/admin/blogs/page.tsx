@@ -30,15 +30,15 @@ export default function AdminBlogs() {
       <div className="max-w-7xl mx-auto">
         <header className="flex justify-between items-end mb-12">
           <div className="flex flex-col gap-2">
-            <Link href="/admin" className="flex items-center gap-2 text-[10px] font-bold text-neutral-400 uppercase tracking-[0.2em] hover:text-[#000080] transition-colors mb-4">
+            <Link href="/admin" className="flex items-center gap-2 text-[10px] font-bold text-neutral-400 uppercase tracking-[0.2em] hover:text-[#44ACFF] transition-colors mb-4">
                <ChevronLeft size={12} /> Back to Dashboard
             </Link>
-            <h1 className="text-4xl font-bold text-[#000080] uppercase">Blog Management</h1>
+            <h1 className="text-4xl font-bold text-[#44ACFF] uppercase">Blog Management</h1>
             <p className="text-neutral-500 font-medium">Create and manage HBS news and articles.</p>
           </div>
           <Link
             href="/admin/blogs/new"
-            className="px-8 py-4 bg-[#000080] text-white rounded-2xl text-xs font-bold uppercase tracking-widest hover:bg-[#000060] transition-all shadow-lg flex items-center gap-3"
+            className="px-8 py-4 bg-[#44ACFF] text-white rounded-2xl text-xs font-bold uppercase tracking-widest hover:bg-[#3b9ae0] transition-all shadow-lg flex items-center gap-3"
           >
             <Plus size={18} /> New Article
           </Link>
@@ -48,12 +48,12 @@ export default function AdminBlogs() {
            <div className="flex items-center gap-6 flex-1">
              <div className="relative flex-1 max-w-md">
                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 w-4 h-4" />
-               <input type="text" placeholder="Search articles..." className="w-full bg-neutral-50 border border-neutral-100 py-3 pl-12 pr-4 rounded-xl text-xs font-medium focus:outline-none focus:ring-1 focus:ring-[#000080]" />
+               <input type="text" placeholder="Search articles..." className="w-full bg-neutral-50 border border-neutral-100 py-3 pl-12 pr-4 rounded-xl text-xs font-medium focus:outline-none focus:ring-1 focus:ring-[#44ACFF]" />
              </div>
              <div className="h-8 w-px bg-neutral-100 mx-2" />
              <div className="flex bg-neutral-50 p-1 rounded-xl">
-                <button className="p-2 bg-white rounded-lg shadow-sm text-[#000080]"><LayoutGrid size={16} /></button>
-                <button className="p-2 text-neutral-400 hover:text-[#000080] transition-colors"><List size={16} /></button>
+                <button className="p-2 bg-white rounded-lg shadow-sm text-[#44ACFF]"><LayoutGrid size={16} /></button>
+                <button className="p-2 text-neutral-400 hover:text-[#44ACFF] transition-colors"><List size={16} /></button>
              </div>
            </div>
            <div className="flex items-center gap-2">
@@ -73,7 +73,7 @@ export default function AdminBlogs() {
                     {post.featured_image ? (
                        <Image src={post.featured_image} alt={post.title} fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
                     ) : (
-                       <div className="w-full h-full bg-[#000080]/5 flex items-center justify-center">
+                       <div className="w-full h-full bg-[#44ACFF]/5 flex items-center justify-center">
                           <Image src="/HBSlogo.png" alt="HBS" width={60} height={60} className="opacity-20" />
                        </div>
                     )}
@@ -87,8 +87,8 @@ export default function AdminBlogs() {
                     </div>
                  </div>
                  <div className="p-8 flex flex-col gap-4 flex-1">
-                    <span className="text-[9px] font-bold text-[#D4AF37] uppercase tracking-widest">{post.category || 'School News'}</span>
-                    <h3 className="text-lg font-bold text-[#000080] uppercase tracking-tight line-clamp-2">{post.title}</h3>
+                    <span className="text-[9px] font-bold text-[#ECB65F] uppercase tracking-widest">{post.category || 'School News'}</span>
+                    <h3 className="text-lg font-bold text-[#44ACFF] uppercase tracking-tight line-clamp-2">{post.title}</h3>
                     <div className="mt-auto pt-6 flex items-center justify-between border-t border-neutral-50">
                        <div className="flex items-center gap-4">
                           <div className="flex flex-col gap-1">
@@ -96,7 +96,7 @@ export default function AdminBlogs() {
                           </div>
                        </div>
                        <div className="flex items-center gap-2">
-                          <button className="p-2 text-neutral-400 hover:text-[#000080] transition-colors"><Edit size={16} /></button>
+                          <button className="p-2 text-neutral-400 hover:text-[#44ACFF] transition-colors"><Edit size={16} /></button>
                           <button className="p-2 text-neutral-400 hover:text-red-500 transition-colors"><Trash2 size={16} /></button>
                        </div>
                     </div>

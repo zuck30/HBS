@@ -23,8 +23,8 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Nawwi Wellness",
-  description: "Scent-led wellness brand from Tanzania",
+  title: "Hannah Bennie Schools",
+  description: "Nursery & Primary School in Dar es Salaam",
   icons: {
     icon: "/HBSlogo.png",
   },

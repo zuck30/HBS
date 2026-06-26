@@ -56,13 +56,13 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] flex font-sans selection:bg-[#000080] selection:text-white">
+    <div className="min-h-screen bg-[#f8f9fa] flex font-sans selection:bg-[#44ACFF] selection:text-white">
       {/* Sidebar */}
       <aside className="w-72 bg-white border-r border-neutral-200 flex flex-col sticky top-0 h-screen">
         <div className="p-8 border-b border-neutral-100 flex items-center gap-3">
           <img src="/HBSlogo.png" alt="HBS" className="w-10 h-10" />
           <div className="flex flex-col">
-            <span className="text-xs font-bold text-[#000080] uppercase tracking-widest">HBS Admin</span>
+            <span className="text-xs font-bold text-[#44ACFF] uppercase tracking-widest">HBS Admin</span>
             <span className="text-[10px] text-neutral-400 font-bold uppercase">Control Panel</span>
           </div>
         </div>
@@ -74,7 +74,7 @@ export default function AdminDashboard() {
               href={item.href}
               className={cn(
                 "flex items-center gap-4 px-4 py-3 rounded-2xl text-sm font-bold transition-all",
-                item.active ? "bg-[#000080] text-white shadow-lg shadow-[#000080]/20" : "text-neutral-500 hover:bg-neutral-50 hover:text-[#000080]"
+                item.active ? "bg-[#44ACFF] text-white shadow-lg shadow-[#44ACFF]/20" : "text-neutral-500 hover:bg-neutral-50 hover:text-[#44ACFF]"
               )}
             >
               <item.icon size={18} />
@@ -96,14 +96,14 @@ export default function AdminDashboard() {
       <main className="flex-1 p-12 overflow-y-auto">
         <header className="flex justify-between items-end mb-12">
           <div className="flex flex-col gap-2">
-            <h1 className="text-4xl font-bold text-[#000080] uppercase">Dashboard Overview</h1>
+            <h1 className="text-4xl font-bold text-[#44ACFF] uppercase">Dashboard Overview</h1>
             <p className="text-neutral-500 font-medium">Welcome back, Administrator. Here's what's happening today.</p>
           </div>
           <div className="flex gap-4">
-             <Link href="/admin/blogs/new" className="px-6 py-3 bg-white border border-neutral-200 text-[#000080] rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-neutral-50 transition-all flex items-center gap-2">
+             <Link href="/admin/blogs/new" className="px-6 py-3 bg-white border border-neutral-200 text-[#44ACFF] rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-neutral-50 transition-all flex items-center gap-2">
                <Plus size={16} /> New Post
              </Link>
-             <Link href="/admin/jobs/new" className="px-6 py-3 bg-[#000080] text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-[#000060] transition-all shadow-lg shadow-[#000080]/20 flex items-center gap-2">
+             <Link href="/admin/jobs/new" className="px-6 py-3 bg-[#44ACFF] text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-[#3b9ae0] transition-all shadow-lg shadow-[#44ACFF]/20 flex items-center gap-2">
                <Plus size={16} /> Create Job
              </Link>
           </div>
@@ -128,7 +128,7 @@ export default function AdminDashboard() {
                  </div>
                </div>
                <div className="flex flex-col">
-                 <span className="text-3xl font-bold text-[#000080]">{stat.value}</span>
+                 <span className="text-3xl font-bold text-[#44ACFF]">{stat.value}</span>
                  <span className="text-xs font-bold text-neutral-400 uppercase tracking-widest">{stat.label}</span>
                </div>
              </div>
@@ -139,8 +139,8 @@ export default function AdminDashboard() {
            {/* Recent Activity */}
            <div className="lg:col-span-2 bg-white rounded-[40px] border border-neutral-100 shadow-sm overflow-hidden">
               <div className="p-8 border-b border-neutral-50 flex justify-between items-center">
-                 <h3 className="text-lg font-bold text-[#000080] uppercase tracking-widest">Recent Applications</h3>
-                 <Link href="/admin/applications" className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-widest hover:underline">View All</Link>
+                 <h3 className="text-lg font-bold text-[#44ACFF] uppercase tracking-widest">Recent Applications</h3>
+                 <Link href="/admin/applications" className="text-[10px] font-bold text-[#ECB65F] uppercase tracking-widest hover:underline">View All</Link>
               </div>
               <div className="p-0">
                  <table className="w-full text-left">
@@ -157,7 +157,7 @@ export default function AdminDashboard() {
                         <tr key={i} className="group hover:bg-neutral-50/50 transition-colors">
                           <td className="px-8 py-5">
                             <div className="flex items-center gap-3">
-                              <div className="w-8 h-8 rounded-full bg-[#000080]/5 flex items-center justify-center text-[10px] font-bold text-[#000080]">JD</div>
+                              <div className="w-8 h-8 rounded-full bg-[#44ACFF]/5 flex items-center justify-center text-[10px] font-bold text-[#44ACFF]">JD</div>
                               <div className="flex flex-col">
                                 <span className="text-sm font-bold text-neutral-900">John Doe</span>
                                 <span className="text-[10px] text-neutral-400">john@example.com</span>
@@ -165,7 +165,7 @@ export default function AdminDashboard() {
                             </div>
                           </td>
                           <td className="px-8 py-5">
-                            <span className="text-xs font-bold text-[#000080] uppercase tracking-tight">Primary Teacher</span>
+                            <span className="text-xs font-bold text-[#44ACFF] uppercase tracking-tight">Primary Teacher</span>
                           </td>
                           <td className="px-8 py-5">
                              <div className="flex items-center gap-2">
@@ -176,7 +176,7 @@ export default function AdminDashboard() {
                              </div>
                           </td>
                           <td className="px-8 py-5 text-right">
-                            <button className="text-neutral-400 hover:text-[#000080] transition-colors"><ArrowUpRight size={16} /></button>
+                            <button className="text-neutral-400 hover:text-[#44ACFF] transition-colors"><ArrowUpRight size={16} /></button>
                           </td>
                         </tr>
                       ))}
@@ -187,15 +187,15 @@ export default function AdminDashboard() {
 
            {/* Quick Actions / AI Insights */}
            <div className="flex flex-col gap-8">
-              <div className="bg-[#000080] p-8 rounded-[40px] text-white flex flex-col gap-6 shadow-xl relative overflow-hidden">
-                 <div className="absolute top-0 right-0 w-24 h-24 bg-[#D4AF37]/20 rounded-bl-full" />
+              <div className="bg-[#44ACFF] p-8 rounded-[40px] text-white flex flex-col gap-6 shadow-xl relative overflow-hidden">
+                 <div className="absolute top-0 right-0 w-24 h-24 bg-[#ECB65F]/20 rounded-bl-full" />
                  <h3 className="text-lg font-bold uppercase tracking-widest">AI Insights</h3>
                  <p className="text-blue-100/70 text-xs leading-relaxed font-medium">You have 12 new applications today. AI ranking suggests focusing on the ICT Department positions first.</p>
-                 <button className="mt-2 w-full py-4 bg-[#D4AF37] text-white rounded-2xl text-xs font-bold uppercase tracking-widest hover:bg-[#B8962E] transition-all">Run Ranking Engine</button>
+                 <button className="mt-2 w-full py-4 bg-[#ECB65F] text-white rounded-2xl text-xs font-bold uppercase tracking-widest hover:bg-[#d4a04d] transition-all">Run Ranking Engine</button>
               </div>
 
               <div className="bg-white p-8 rounded-[40px] border border-neutral-100 shadow-sm flex flex-col gap-6">
-                 <h3 className="text-lg font-bold text-[#000080] uppercase tracking-widest">System Status</h3>
+                 <h3 className="text-lg font-bold text-[#44ACFF] uppercase tracking-widest">System Status</h3>
                  <div className="flex flex-col gap-4">
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-medium text-neutral-500">DeepSeek API</span>

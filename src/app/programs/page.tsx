@@ -49,8 +49,8 @@ export default function ProgramsPage() {
       {/* Hero */}
       <section className="py-24 px-6 border-b border-neutral-200">
         <div className="max-w-7xl mx-auto">
-          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4AF37] mb-4 block">PROGRAMMES</span>
-          <h1 className="text-4xl md:text-7xl font-bold text-[#000080] uppercase leading-[0.9] mb-8 max-w-4xl">
+          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#ECB65F] mb-4 block">PROGRAMMES</span>
+          <h1 className="text-4xl md:text-7xl font-bold text-[#44ACFF] uppercase leading-[0.9] mb-8 max-w-4xl">
             Programmes for every stage — from first steps to PSLE.
           </h1>
           <p className="text-xl text-neutral-600 font-medium leading-relaxed max-w-3xl">
@@ -68,7 +68,7 @@ export default function ProgramsPage() {
                 <div className="relative aspect-[4/5] rounded-[60px] overflow-hidden shadow-2xl">
                   <Image src={program.image} alt={program.title} fill className="object-cover" />
                   <div className="absolute top-8 left-8">
-                    <span className="bg-white/90 backdrop-blur-md px-4 py-2 rounded-full text-xs font-bold text-[#000080] uppercase tracking-widest shadow-lg">
+                    <span className="bg-white/90 backdrop-blur-md px-4 py-2 rounded-full text-xs font-bold text-[#44ACFF] uppercase tracking-widest shadow-lg">
                       {program.age}
                     </span>
                   </div>
@@ -76,15 +76,15 @@ export default function ProgramsPage() {
               </div>
               <div className="w-full lg:w-1/2 flex flex-col gap-8">
                 <div className="space-y-4">
-                  <h2 className="text-4xl font-bold text-[#000080] uppercase">{program.title}</h2>
-                  <h3 className="text-xl font-bold text-[#D4AF37] leading-tight">{program.subtitle}</h3>
+                  <h2 className="text-4xl font-bold text-[#44ACFF] uppercase">{program.title}</h2>
+                  <h3 className="text-xl font-bold text-[#ECB65F] leading-tight">{program.subtitle}</h3>
                 </div>
                 <p className="text-neutral-600 font-medium leading-relaxed">{program.desc}</p>
 
                 <div className="grid grid-cols-2 gap-x-8 gap-y-4">
                   {program.points.map((point, j) => (
                     <div key={j} className="flex items-center gap-3">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#ECB65F]" />
                       <span className="text-sm font-bold uppercase tracking-wide text-neutral-500">{point}</span>
                     </div>
                   ))}
@@ -92,7 +92,7 @@ export default function ProgramsPage() {
 
                 {program.schedule && (
                   <div className="bg-white p-8 rounded-[40px] border border-neutral-200">
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#000080] mb-4 block">A typical schedule:</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#44ACFF] mb-4 block">A typical schedule:</span>
                     <p className="text-xs font-bold text-neutral-400 leading-loose uppercase tracking-tighter">
                       {program.schedule}
                     </p>
@@ -105,10 +105,10 @@ export default function ProgramsPage() {
       </section>
 
       {/* Framework */}
-      <section className="py-32 px-6 bg-[#000080]">
+      <section className="py-32 px-6 bg-[#44ACFF]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-24">
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4AF37] mb-4 block">CURRICULUM FRAMEWORK</span>
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#ECB65F] mb-4 block">CURRICULUM FRAMEWORK</span>
             <h2 className="text-4xl md:text-6xl font-bold text-white uppercase">National standards, international thinking, personal pace.</h2>
           </div>
 
@@ -128,7 +128,7 @@ export default function ProgramsPage() {
               }
             ].map((f, i) => (
               <div key={i} className="flex flex-col gap-6">
-                <div className="w-12 h-1 bg-[#D4AF37]" />
+                <div className="w-12 h-1 bg-[#ECB65F]" />
                 <h3 className="text-2xl font-bold text-white">{f.title}</h3>
                 <p className="text-blue-100/70 font-medium leading-relaxed">{f.desc}</p>
               </div>

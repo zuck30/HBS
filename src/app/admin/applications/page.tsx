@@ -48,16 +48,16 @@ export default function AdminApplications() {
       <div className="max-w-7xl mx-auto">
         <header className="flex justify-between items-end mb-12">
           <div className="flex flex-col gap-2">
-            <Link href="/admin" className="flex items-center gap-2 text-[10px] font-bold text-neutral-400 uppercase tracking-[0.2em] hover:text-[#000080] transition-colors mb-4">
+            <Link href="/admin" className="flex items-center gap-2 text-[10px] font-bold text-neutral-400 uppercase tracking-[0.2em] hover:text-[#44ACFF] transition-colors mb-4">
                <ChevronLeft size={12} /> Back to Dashboard
             </Link>
-            <h1 className="text-4xl font-bold text-[#000080] uppercase">Job Applications</h1>
+            <h1 className="text-4xl font-bold text-[#44ACFF] uppercase">Job Applications</h1>
             <p className="text-neutral-500 font-medium">Review, parse, and rank candidates using DeepSeek AI.</p>
           </div>
           <button
             onClick={handleRank}
             disabled={ranking || !apps.length}
-            className="px-8 py-4 bg-[#D4AF37] text-white rounded-2xl text-xs font-bold uppercase tracking-widest hover:bg-[#B8962E] transition-all shadow-lg flex items-center gap-3 disabled:opacity-50"
+            className="px-8 py-4 bg-[#ECB65F] text-white rounded-2xl text-xs font-bold uppercase tracking-widest hover:bg-[#d4a04d] transition-all shadow-lg flex items-center gap-3 disabled:opacity-50"
           >
             <Brain size={18} className={ranking ? "animate-pulse" : ""} /> {ranking ? "Ranking..." : "Run AI Ranking"}
           </button>
@@ -69,9 +69,9 @@ export default function AdminApplications() {
               <div className="bg-white p-6 rounded-[32px] border border-neutral-100 shadow-sm flex items-center justify-between mb-2">
                  <div className="relative flex-1 max-w-sm">
                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 w-4 h-4" />
-                   <input type="text" placeholder="Search applicants..." className="w-full bg-neutral-50 border border-neutral-100 py-3 pl-12 pr-4 rounded-xl text-xs font-medium focus:outline-none focus:ring-1 focus:ring-[#000080]" />
+                   <input type="text" placeholder="Search applicants..." className="w-full bg-neutral-50 border border-neutral-100 py-3 pl-12 pr-4 rounded-xl text-xs font-medium focus:outline-none focus:ring-1 focus:ring-[#44ACFF]" />
                  </div>
-                 <button className="p-3 text-neutral-400 hover:text-[#000080] transition-all"><Filter size={18} /></button>
+                 <button className="p-3 text-neutral-400 hover:text-[#44ACFF] transition-all"><Filter size={18} /></button>
               </div>
 
               {loading ? (
@@ -84,16 +84,16 @@ export default function AdminApplications() {
                   onClick={() => setSelectedApp(app)}
                   className={cn(
                     "bg-white p-6 rounded-[32px] border transition-all cursor-pointer flex items-center justify-between group",
-                    selectedApp?.id === app.id ? "border-[#000080] shadow-md shadow-[#000080]/5" : "border-neutral-100 shadow-sm hover:border-neutral-300"
+                    selectedApp?.id === app.id ? "border-[#44ACFF] shadow-md shadow-[#44ACFF]/5" : "border-neutral-100 shadow-sm hover:border-neutral-300"
                   )}
                 >
                    <div className="flex items-center gap-6">
-                      <div className="w-12 h-12 rounded-2xl bg-neutral-50 flex items-center justify-center text-[#000080] font-bold text-xs uppercase">
+                      <div className="w-12 h-12 rounded-2xl bg-neutral-50 flex items-center justify-center text-[#44ACFF] font-bold text-xs uppercase">
                         {app.full_name.split(' ').map((n: string) => n[0]).join('')}
                       </div>
                       <div className="flex flex-col gap-1">
                         <h3 className="text-sm font-bold text-neutral-900 uppercase tracking-tight">{app.full_name}</h3>
-                        <p className="text-[10px] font-bold text-[#000080] uppercase tracking-widest">{app.jobs?.title}</p>
+                        <p className="text-[10px] font-bold text-[#44ACFF] uppercase tracking-widest">{app.jobs?.title}</p>
                         <div className="flex items-center gap-3 mt-1">
                           <span className="text-[9px] font-bold text-neutral-400 uppercase tracking-widest flex items-center gap-1">
                             <Calendar size={10} /> {new Date(app.created_at).toLocaleDateString()}
@@ -111,7 +111,7 @@ export default function AdminApplications() {
                           <span className="text-[8px] font-bold text-neutral-400 uppercase tracking-tighter">AI Match</span>
                         </div>
                       )}
-                      <div className="w-10 h-10 rounded-xl bg-neutral-50 flex items-center justify-center text-neutral-400 group-hover:text-[#000080] transition-all">
+                      <div className="w-10 h-10 rounded-xl bg-neutral-50 flex items-center justify-center text-neutral-400 group-hover:text-[#44ACFF] transition-all">
                          <ChevronRight size={18} />
                       </div>
                    </div>
@@ -133,15 +133,15 @@ export default function AdminApplications() {
                       <div className="flex flex-col gap-8">
                          <div className="flex items-center justify-between">
                             <div className="flex items-center gap-4">
-                               <div className="w-16 h-16 rounded-3xl bg-[#000080] text-[#D4AF37] flex items-center justify-center text-xl font-bold uppercase">
+                               <div className="w-16 h-16 rounded-3xl bg-[#44ACFF] text-[#ECB65F] flex items-center justify-center text-xl font-bold uppercase">
                                  {selectedApp.full_name[0]}
                                </div>
                                <div className="flex flex-col">
-                                 <h2 className="text-xl font-bold text-[#000080] uppercase">{selectedApp.full_name}</h2>
+                                 <h2 className="text-xl font-bold text-[#44ACFF] uppercase">{selectedApp.full_name}</h2>
                                  <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">{selectedApp.jobs?.title}</span>
                                </div>
                             </div>
-                            <button className="p-3 bg-neutral-50 text-neutral-400 rounded-2xl hover:text-[#000080] transition-all">
+                            <button className="p-3 bg-neutral-50 text-neutral-400 rounded-2xl hover:text-[#44ACFF] transition-all">
                                <Download size={20} />
                             </button>
                          </div>
@@ -165,11 +165,11 @@ export default function AdminApplications() {
                          </div>
 
                          {/* AI Insights Section */}
-                         <div className="bg-[#000080] p-8 rounded-[32px] text-white flex flex-col gap-4 relative overflow-hidden">
-                            <div className="absolute top-0 right-0 w-16 h-16 bg-[#D4AF37]/20 rounded-bl-3xl flex items-center justify-center">
-                               <Sparkles size={20} className="text-[#D4AF37]" />
+                         <div className="bg-[#44ACFF] p-8 rounded-[32px] text-white flex flex-col gap-4 relative overflow-hidden">
+                            <div className="absolute top-0 right-0 w-16 h-16 bg-[#ECB65F]/20 rounded-bl-3xl flex items-center justify-center">
+                               <Sparkles size={20} className="text-[#ECB65F]" />
                             </div>
-                            <h4 className="text-xs font-bold uppercase tracking-widest text-[#D4AF37]">AI Candidate Analysis</h4>
+                            <h4 className="text-xs font-bold uppercase tracking-widest text-[#ECB65F]">AI Candidate Analysis</h4>
                             {selectedApp.ai_score ? (
                               <div className="flex flex-col gap-4">
                                  <p className="text-xs text-blue-100/70 leading-relaxed font-medium">This candidate shows strong alignment with the pedagogical requirements. Previous experience in international schools is a key highlight.</p>
@@ -179,7 +179,7 @@ export default function AdminApplications() {
                                        <span>92%</span>
                                     </div>
                                     <div className="h-1 bg-white/10 rounded-full overflow-hidden">
-                                       <div className="h-full bg-[#D4AF37]" style={{ width: '92%' }} />
+                                       <div className="h-full bg-[#ECB65F]" style={{ width: '92%' }} />
                                     </div>
                                  </div>
                               </div>

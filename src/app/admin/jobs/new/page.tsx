@@ -56,10 +56,10 @@ export default function NewJob() {
       <div className="max-w-4xl mx-auto">
         <header className="flex justify-between items-end mb-12">
           <div className="flex flex-col gap-2">
-            <Link href="/admin/jobs" className="flex items-center gap-2 text-[10px] font-bold text-neutral-400 uppercase tracking-[0.2em] hover:text-[#000080] transition-colors mb-4">
+            <Link href="/admin/jobs" className="flex items-center gap-2 text-[10px] font-bold text-neutral-400 uppercase tracking-[0.2em] hover:text-[#44ACFF] transition-colors mb-4">
                <ChevronLeft size={12} /> Back to Jobs
             </Link>
-            <h1 className="text-4xl font-bold text-[#000080] uppercase">New Job Posting</h1>
+            <h1 className="text-4xl font-bold text-[#44ACFF] uppercase">New Job Posting</h1>
             <p className="text-neutral-500 font-medium">Create a new opportunity at Hannah Bennie Schools.</p>
           </div>
         </header>
@@ -73,7 +73,7 @@ export default function NewJob() {
                   required
                   type="text"
                   placeholder="e.g. Senior ICT Teacher"
-                  className="w-full bg-neutral-50 border border-neutral-100 p-5 rounded-2xl text-sm font-bold focus:outline-none focus:ring-1 focus:ring-[#000080]"
+                  className="w-full bg-neutral-50 border border-neutral-100 p-5 rounded-2xl text-sm font-bold focus:outline-none focus:ring-1 focus:ring-[#44ACFF]"
                   value={formData.title}
                   onChange={e => setFormData({...formData, title: e.target.value})}
                 />
@@ -81,7 +81,7 @@ export default function NewJob() {
                   type="button"
                   onClick={handleGenerateDescription}
                   disabled={generating}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-[#000080] text-white rounded-xl hover:bg-[#D4AF37] transition-all"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-[#44ACFF] text-white rounded-xl hover:bg-[#ECB65F] transition-all"
                 >
                   <Brain size={18} className={generating ? "animate-pulse" : ""} />
                 </button>
@@ -90,7 +90,7 @@ export default function NewJob() {
             <div className="flex flex-col gap-3">
               <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Department</label>
               <select
-                className="bg-neutral-50 border border-neutral-100 p-5 rounded-2xl text-sm font-bold focus:outline-none focus:ring-1 focus:ring-[#000080] appearance-none"
+                className="bg-neutral-50 border border-neutral-100 p-5 rounded-2xl text-sm font-bold focus:outline-none focus:ring-1 focus:ring-[#44ACFF] appearance-none"
                 value={formData.department}
                 onChange={e => setFormData({...formData, department: e.target.value})}
               >
@@ -111,7 +111,7 @@ export default function NewJob() {
             <div className="flex flex-col gap-3">
               <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Type</label>
               <select
-                className="bg-neutral-50 border border-neutral-100 p-5 rounded-2xl text-sm font-bold focus:outline-none focus:ring-1 focus:ring-[#000080] appearance-none"
+                className="bg-neutral-50 border border-neutral-100 p-5 rounded-2xl text-sm font-bold focus:outline-none focus:ring-1 focus:ring-[#44ACFF] appearance-none"
                 value={formData.type}
                 onChange={e => setFormData({...formData, type: e.target.value})}
               >
@@ -124,7 +124,7 @@ export default function NewJob() {
               <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Location</label>
               <input
                 type="text"
-                className="bg-neutral-50 border border-neutral-100 p-5 rounded-2xl text-sm font-bold focus:outline-none focus:ring-1 focus:ring-[#000080]"
+                className="bg-neutral-50 border border-neutral-100 p-5 rounded-2xl text-sm font-bold focus:outline-none focus:ring-1 focus:ring-[#44ACFF]"
                 value={formData.location}
                 onChange={e => setFormData({...formData, location: e.target.value})}
               />
@@ -134,7 +134,7 @@ export default function NewJob() {
               <input
                 type="text"
                 placeholder="e.g. 1.2M - 1.8M TZS"
-                className="bg-neutral-50 border border-neutral-100 p-5 rounded-2xl text-sm font-bold focus:outline-none focus:ring-1 focus:ring-[#000080]"
+                className="bg-neutral-50 border border-neutral-100 p-5 rounded-2xl text-sm font-bold focus:outline-none focus:ring-1 focus:ring-[#44ACFF]"
                 value={formData.salary_range}
                 onChange={e => setFormData({...formData, salary_range: e.target.value})}
               />
@@ -146,7 +146,7 @@ export default function NewJob() {
             <textarea
               required
               rows={12}
-              className="bg-neutral-50 border border-neutral-100 p-8 rounded-3xl text-sm font-medium focus:outline-none focus:ring-1 focus:ring-[#000080] resize-none leading-relaxed"
+              className="bg-neutral-50 border border-neutral-100 p-8 rounded-3xl text-sm font-medium focus:outline-none focus:ring-1 focus:ring-[#44ACFF] resize-none leading-relaxed"
               value={formData.description}
               onChange={e => setFormData({...formData, description: e.target.value})}
             />
@@ -157,7 +157,7 @@ export default function NewJob() {
             <input
               required
               type="date"
-              className="bg-neutral-50 border border-neutral-100 p-5 rounded-2xl text-sm font-bold focus:outline-none focus:ring-1 focus:ring-[#000080]"
+              className="bg-neutral-50 border border-neutral-100 p-5 rounded-2xl text-sm font-bold focus:outline-none focus:ring-1 focus:ring-[#44ACFF]"
               value={formData.deadline}
               onChange={e => setFormData({...formData, deadline: e.target.value})}
             />
@@ -166,7 +166,7 @@ export default function NewJob() {
           <button
             type="submit"
             disabled={saving}
-            className="w-full py-6 bg-[#000080] text-white rounded-3xl font-bold uppercase tracking-widest hover:bg-[#D4AF37] transition-all shadow-xl shadow-[#000080]/20 flex items-center justify-center gap-3"
+            className="w-full py-6 bg-[#44ACFF] text-white rounded-3xl font-bold uppercase tracking-widest hover:bg-[#ECB65F] transition-all shadow-xl shadow-[#44ACFF]/20 flex items-center justify-center gap-3"
           >
             <Save size={20} /> {saving ? 'Saving...' : 'Publish Job Posting'}
           </button>

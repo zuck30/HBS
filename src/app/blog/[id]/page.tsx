@@ -37,27 +37,27 @@ export default function BlogPostPage({ params }: { params: Promise<{ id: string 
   return (
     <main className="pt-16 bg-white min-h-screen font-sans">
       <article className="max-w-4xl mx-auto py-24 px-6">
-        <Link href="/blog" className="flex items-center gap-2 text-[10px] font-bold text-neutral-400 uppercase tracking-[0.2em] hover:text-[#000080] transition-colors mb-12">
+        <Link href="/blog" className="flex items-center gap-2 text-[10px] font-bold text-neutral-400 uppercase tracking-[0.2em] hover:text-[#44ACFF] transition-colors mb-12">
           <ChevronLeft size={12} /> Back to Journal
         </Link>
 
         <header className="flex flex-col gap-8 mb-16">
           <div className="flex items-center gap-4">
-            <span className="bg-[#D4AF37] text-white px-4 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full">
+            <span className="bg-[#ECB65F] text-white px-4 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full">
               {post.category || 'School Life'}
             </span>
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold text-[#000080] uppercase leading-[1.1]">
+          <h1 className="text-4xl md:text-6xl font-bold text-[#44ACFF] uppercase leading-[1.1]">
             {post.title}
           </h1>
           <div className="flex flex-wrap items-center gap-8 pt-8 border-t border-neutral-100">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-[#000080] text-[#D4AF37] flex items-center justify-center text-xs font-bold uppercase">
+              <div className="w-10 h-10 rounded-full bg-[#44ACFF] text-[#ECB65F] flex items-center justify-center text-xs font-bold uppercase">
                 {post.profiles?.full_name?.[0] || 'A'}
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Author</span>
-                <span className="text-xs font-bold text-[#000080]">{post.profiles?.full_name || 'HBS Admin'}</span>
+                <span className="text-xs font-bold text-[#44ACFF]">{post.profiles?.full_name || 'HBS Admin'}</span>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -66,7 +66,7 @@ export default function BlogPostPage({ params }: { params: Promise<{ id: string 
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Published</span>
-                <span className="text-xs font-bold text-[#000080]">{new Date(post.published_at).toLocaleDateString()}</span>
+                <span className="text-xs font-bold text-[#44ACFF]">{new Date(post.published_at).toLocaleDateString()}</span>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -75,7 +75,7 @@ export default function BlogPostPage({ params }: { params: Promise<{ id: string 
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Read Time</span>
-                <span className="text-xs font-bold text-[#000080]">5 min read</span>
+                <span className="text-xs font-bold text-[#44ACFF]">5 min read</span>
               </div>
             </div>
           </div>
@@ -87,7 +87,7 @@ export default function BlogPostPage({ params }: { params: Promise<{ id: string 
           </div>
         )}
 
-        <div className="prose prose-lg max-w-none prose-headings:text-[#000080] prose-headings:uppercase prose-p:text-neutral-600 prose-p:leading-relaxed font-medium">
+        <div className="prose prose-lg max-w-none prose-headings:text-[#44ACFF] prose-headings:uppercase prose-p:text-neutral-600 prose-p:leading-relaxed font-medium">
            <div className="whitespace-pre-wrap">{post.content}</div>
         </div>
 
@@ -97,7 +97,7 @@ export default function BlogPostPage({ params }: { params: Promise<{ id: string 
                <span key={tag} className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">#{tag}</span>
              ))}
            </div>
-           <button className="flex items-center gap-2 text-xs font-bold text-[#D4AF37] uppercase tracking-widest hover:text-[#000080] transition-colors">
+           <button className="flex items-center gap-2 text-xs font-bold text-[#ECB65F] uppercase tracking-widest hover:text-[#44ACFF] transition-colors">
               <Share2 size={16} /> Share Article
            </button>
         </footer>
