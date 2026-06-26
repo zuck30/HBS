@@ -1,52 +1,31 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono, Instrument_Serif } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { Navbar } from "@/components/Navbar";
-import { FinalCTAAndFooter } from "@/components/Footer";
-import ChatAgent from "@/components/ChatAgent";
+import { Footer } from "@/components/Footer";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin"],
-});
-
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-serif",
-  weight: "400",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Nawwi Wellness",
-  description: "Scent-led wellness brand from Tanzania",
-  icons: {
-    icon: "/HBSlogo.png",
-  },
+  title: "Hannah Bennie Schools | Nursery & Primary",
+  description: "Ignite curiosity. Grow potential. No.1 NECTA School in Dar es Salaam Region 2024.",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} antialiased`}
-      >
+      <body className={inter.className}>
         <LanguageProvider>
-          <div className="min-h-screen bg-white text-[#1F1F1F] selection:bg-[#b47878]/30">
-            <Navbar />
-            <main>{children}</main>
-            <FinalCTAAndFooter />
-            <ChatAgent />
-          </div>
+          <Navbar />
+          <main className="pt-16 min-h-screen">
+            {children}
+          </main>
+          <Footer />
         </LanguageProvider>
       </body>
     </html>

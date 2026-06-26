@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react'
-import { Menu, X, Globe, ShoppingCart, User, ArrowRight } from 'lucide-react'
+import { Menu, X, Globe, ArrowRight } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -17,15 +17,13 @@ export const Navbar = () => {
     { code: 'sw', name: 'SW' }
   ]
 
-  // Added Nawwi At Yours link right here
   const navLinks = [
-    { name: 'Shop', href: '/shop' },
-    { name: 'Nawwi At Yours', href: '/at-yours' },
-    { name: 'Our Story', href: '/story' },
-    { name: 'About Us', href: '/about' },
-    { name: 'Events', href: '/events' },
-    { name: 'Quiz', href: '/quiz' },
-    { name: 'Track Order', href: '/track' },
+    { name: t('nav.home'), href: '/' },
+    { name: t('nav.about'), href: '/about' },
+    { name: t('nav.programs'), href: '/programs' },
+    { name: t('nav.life'), href: '/life' },
+    { name: t('nav.careers'), href: '/careers' },
+    { name: t('nav.contact'), href: '/contact' },
   ]
 
   return (
@@ -35,7 +33,11 @@ export const Navbar = () => {
           
           <div className="flex items-stretch">
             <Link href="/" className="flex items-center gap-3 px-6 border-r border-neutral-200/80 hover:bg-neutral-50 transition-colors">
-              <img src="/HBSlogo.png" alt="Nawwi Logo" className="h-16 w-16 object-contain" />
+              <img src="/HBSlogo.png" alt="HBS Logo" className="h-12 w-12 object-contain" />
+              <div className="hidden sm:block leading-tight">
+                <div className="text-sm font-bold">Hannah Bennie</div>
+                <div className="text-[10px] text-neutral-500">Schools</div>
+              </div>
             </Link>
 
             <div className="hidden lg:flex items-stretch">
@@ -90,16 +92,8 @@ export const Navbar = () => {
               </AnimatePresence>
             </div>
 
-            <Link href="/shop/checkout" className="px-6 flex items-center gap-2 border-l border-neutral-200/80 text-black hover:bg-neutral-50 transition-colors">
-              <ShoppingCart size={18} />
-            </Link>
-
-            <Link href="/login" className="px-6 flex items-center gap-2 border-l border-neutral-200/80 text-black hover:bg-neutral-50 transition-colors">
-              <User size={18} />
-            </Link>
-            
-            <Link href="https://wa.me/255612078359" target="_blank" className="px-6 bg-neutral-950 text-white font-bold flex items-center justify-center hover:bg-neutral-900 border-l border-neutral-200/80 transition-colors gap-2 relative group">
-              <span>{t('nav.contact_sales')}</span>
+            <Link href="/contact" className="px-6 bg-neutral-950 text-white font-bold flex items-center justify-center hover:bg-neutral-900 border-l border-neutral-200/80 transition-colors gap-2 relative group">
+              <span>{t('nav.enroll')}</span>
               <ArrowRight className="w-4 h-4 stroke-[2.5px]" />
             </Link>
           </div>
@@ -132,20 +126,15 @@ export const Navbar = () => {
                   {link.name}
                 </Link>
               ))}
-              <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="px-6 py-4 hover:bg-neutral-50">Account</Link>
             </div>
             
             <div className="mt-auto bg-neutral-50 flex flex-col divide-y divide-neutral-200/80 border-t border-neutral-200/80">
-              <Link href="/shop" onClick={() => setIsMobileMenuOpen(false)} className="p-4 font-bold text-center text-black hover:bg-neutral-100 transition-colors">
-                {t('nav.start_building')}
-              </Link>
               <Link 
-                href="https://wa.me/255612078359"
-                target="_blank"
+                href="/contact"
                 onClick={() => setIsMobileMenuOpen(false)} 
                 className="p-4 font-bold text-center bg-neutral-950 text-white hover:bg-neutral-900 transition-colors"
               >
-                {t('nav.contact_sales')}
+                {t('nav.enroll')}
               </Link>
             </div>
           </motion.div>

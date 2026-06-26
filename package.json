@@ -1,5 +1,5 @@
 {
-  "name": "nawwi-next-app",
+  "name": "hbs-webapp",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -28,7 +28,7 @@
     "clsx": "^2.1.0",
     "framer-motion": "^11.0.8",
     "jspdf": "^4.2.1",
-    "lucide-react": "^1.17.0",
+    "lucide-react": "^1.21.0",
     "next": "latest",
     "qrcode": "^1.5.4",
     "react": "^19.0.0",

@@ -1,213 +1,89 @@
 'use client';
-
-import React, { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
-import { supabase } from '@/lib/supabase';
-import { ArrowLeft, Calendar, MapPin, Users, Ticket, CheckCircle2 } from 'lucide-react';
-import Link from 'next/link';
+import React from 'react';
 import { jsPDF } from 'jspdf';
-import QRCode from 'qrcode';
+import { QrCode, MapPin, Calendar, Clock, Download, ArrowRight } from 'lucide-react';
 
-export default function EventDetailPage() {
-  const { id } = useParams();
-  const router = useRouter();
-  const [event, setEvent] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [booking, setBooking] = useState(false);
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [quantity, setQuantity] = useState(1);
-  const [step, setStep] = useState(1); // 1: Info, 2: Book, 3: Success
-  const [ticketData, setTicketData] = useState<any>(null);
-
-  useEffect(() => {
-    async function fetchEvent() {
-      const { data } = await supabase.from('events').select('*').eq('id', id).single();
-      if (data) setEvent(data);
-      setLoading(false);
-    }
-    fetchEvent();
-  }, [id]);
-
-  const handleBooking = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setBooking(true);
-    try {
-      const res = await fetch('/api/booking', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          eventId: id,
-          email,
-          name,
-          quantity,
-          total: event.price * quantity,
-          paymentMethod: 'test_payment'
-        })
-      });
-      const data = await res.json();
-      if (data.success) {
-        setTicketData(data);
-        setStep(3);
-      }
-    } catch (err) {
-      alert('Booking failed');
-    } finally {
-      setBooking(false);
-    }
+export default function TicketPage() {
+  const ticketData = {
+    eventName: "HBS School Tour & Assessment Day",
+    date: "June 12, 2026",
+    time: "08:00 AM",
+    location: "Main Campus, Kigamboni",
+    ticketNumber: "HBS-2026-001",
+    attendee: "Parent User"
   };
 
-  const generatePDF = async () => {
-    const doc = new jsPDF({
-      orientation: 'p',
-      unit: 'mm',
-      format: [100, 150]
-    });
-
-    // Simple ticket layout
-    doc.setFont('helvetica', 'bold');
-    doc.text('NAWWI WELLNESS', 50, 15, { align: 'center' });
-    doc.setFontSize(10);
-    doc.text('OFFICIAL TICKET', 50, 20, { align: 'center' });
-
-    doc.setDrawColor(0);
-    doc.line(10, 25, 90, 25);
+  const downloadTicket = () => {
+    const doc = new jsPDF();
+    doc.setFont("courier", "bold");
+    doc.setFontSize(22);
+    doc.text('HANNAH BENNIE SCHOOLS', 105, 30, { align: 'center' });
 
     doc.setFontSize(12);
-    doc.text(event.title, 10, 35);
+    doc.text('OFFICIAL EVENT TICKET', 105, 40, { align: 'center' });
+
+    doc.setLineWidth(0.5);
+    doc.line(20, 45, 190, 45);
+
+    doc.setFontSize(10);
+    doc.text(`EVENT: ${ticketData.eventName}`, 20, 60);
+    doc.text(`DATE: ${ticketData.date}`, 20, 70);
+    doc.text(`TIME: ${ticketData.time}`, 20, 80);
+    doc.text(`LOCATION: ${ticketData.location}`, 20, 90);
+    doc.text(`TICKET #: ${ticketData.ticketNumber}`, 20, 100);
+    doc.text(`ATTENDEE: ${ticketData.attendee}`, 20, 110);
+
+    doc.line(20, 120, 190, 120);
     doc.setFontSize(8);
-    doc.text(new Date(event.date).toLocaleString(), 10, 42);
-    doc.text(event.venue, 10, 47);
+    doc.text('Please present this ticket at the entrance.', 105, 130, { align: 'center' });
+    doc.text('hbs.admin@hbs.ac.tz | +255 762 224 224', 105, 135, { align: 'center' });
 
-    doc.text(`Guest: ${name}`, 10, 60);
-    doc.text(`Ticket ID: ${ticketData.ticketNumber}`, 10, 65);
-
-    // QR Code
-    const qrDataUrl = await QRCode.toDataURL(ticketData.ticketNumber);
-    doc.addImage(qrDataUrl, 'PNG', 30, 80, 40, 40);
-
-    doc.save(`Nawwi-Ticket-${ticketData.ticketNumber}.pdf`);
+    doc.save(`HBS-Ticket-${ticketData.ticketNumber}.pdf`);
   };
 
-  if (loading) return <div className="pt-40 text-center font-serif text-2xl">Preparing the venue...</div>;
-  if (!event) return <div className="pt-40 text-center font-serif text-2xl">Event not found.</div>;
-
   return (
-    <div className="pt-32 pb-20 px-6 max-w-5xl mx-auto min-h-screen">
-      <Link href="/events" className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider mb-12 hover:text-[#b47878] transition-colors">
-        <ArrowLeft size={16} /> Back to Events
-      </Link>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
-        <div className="lg:col-span-2 space-y-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <h1 className="text-5xl md:text-6xl font-serif mb-8 leading-tight">{event.title}</h1>
-            <div className="flex flex-wrap gap-8 text-neutral-500">
-              <div className="flex items-center gap-2">
-                <Calendar size={18} className="text-[#b47878]" />
-                <span className="text-sm font-bold uppercase tracking-wider">{new Date(event.date).toLocaleDateString()}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <MapPin size={18} className="text-[#b47878]" />
-                <span className="text-sm font-bold uppercase tracking-wider">{event.venue}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Users size={18} className="text-[#b47878]" />
-                <span className="text-sm font-bold uppercase tracking-wider">{event.seats_remaining} seats left</span>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="prose prose-lg"
-          >
-            <p className="text-xl leading-relaxed text-gray-600 italic">
-              {event.description}
-            </p>
-          </motion.div>
+    <div className="font-mono pt-32 pb-20 px-6 bg-neutral-50 min-h-screen">
+      <div className="max-w-xl mx-auto bg-white border border-neutral-200 overflow-hidden">
+        <div className="bg-neutral-950 text-white p-8 text-center space-y-2">
+          <div className="text-[10px] font-bold uppercase tracking-[0.3em]">Official Entry</div>
+          <h1 className="text-3xl font-bold uppercase italic tracking-tighter">HBS Events</h1>
         </div>
 
-        <div className="lg:col-span-1">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="bg-white border border-neutral-100 p-8 rounded-3xl shadow-xl sticky top-32"
-          >
-            {step === 1 && (
-              <div className="space-y-6">
-                <div className="flex justify-between items-center pb-6 border-b border-neutral-100">
-                  <span className="text-neutral-400 font-bold uppercase tracking-widest text-xs">Price per guest</span>
-                  <span className="text-2xl font-serif">Tshs. {event.price}</span>
-                </div>
-                <button
-                  onClick={() => setStep(2)}
-                  disabled={event.seats_remaining <= 0}
-                  className="w-full bg-[#b47878] text-white py-5 rounded-full font-bold uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-black transition-colors"
-                >
-                  <Ticket size={20} />
-                  Book Your Seat
-                </button>
+        <div className="p-12 space-y-12">
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold uppercase italic tracking-tighter leading-none">{ticketData.eventName}</h2>
+            <div className="grid grid-cols-2 gap-8">
+              <div className="space-y-1">
+                <div className="text-[9px] font-bold uppercase tracking-widest text-neutral-400">Date</div>
+                <div className="text-xs font-bold uppercase">{ticketData.date}</div>
               </div>
-            )}
-
-            {step === 2 && (
-              <form onSubmit={handleBooking} className="space-y-6">
-                <h3 className="text-xl font-serif">Guest Details</h3>
-                <input
-                  required
-                  type="text"
-                  placeholder="Full Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full px-6 py-4 rounded-xl border border-neutral-100 outline-none focus:border-[#b47878] transition-colors"
-                />
-                <input
-                  required
-                  type="email"
-                  placeholder="Email Address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-6 py-4 rounded-xl border border-neutral-100 outline-none focus:border-[#b47878] transition-colors"
-                />
-                <div className="flex justify-between items-center py-4 border-t border-neutral-100">
-                  <span className="font-serif text-lg">Total</span>
-                  <span className="font-serif text-2xl">Tshs. {event.price}</span>
-                </div>
-                <button
-                  type="submit"
-                  disabled={booking}
-                  className="w-full bg-black text-white py-5 rounded-full font-bold uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-[#b47878] transition-colors"
-                >
-                  {booking ? 'Processing...' : 'Confirm & Pay'}
-                </button>
-              </form>
-            )}
-
-            {step === 3 && (
-              <div className="text-center space-y-6">
-                <div className="w-20 h-20 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto">
-                  <CheckCircle2 size={40} />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-serif mb-2">Booking Confirmed!</h3>
-                  <p className="text-sm text-gray-500">Your ticket has been sent to {email}.</p>
-                </div>
-                <button
-                  onClick={generatePDF}
-                  className="w-full border-2 border-black py-4 rounded-full font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all flex items-center justify-center gap-2"
-                >
-                  Download PDF Ticket
-                </button>
+              <div className="space-y-1">
+                <div className="text-[9px] font-bold uppercase tracking-widest text-neutral-400">Time</div>
+                <div className="text-xs font-bold uppercase">{ticketData.time}</div>
               </div>
-            )}
-          </motion.div>
+            </div>
+            <div className="space-y-1">
+              <div className="text-[9px] font-bold uppercase tracking-widest text-neutral-400">Location</div>
+              <div className="text-xs font-bold uppercase">{ticketData.location}</div>
+            </div>
+          </div>
+
+          <div className="flex justify-center p-8 bg-neutral-50 border border-neutral-100">
+            <QrCode className="w-32 h-32 text-neutral-300" />
+          </div>
+
+          <div className="space-y-4 pt-8 border-t border-neutral-100">
+            <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest">
+              <span className="text-neutral-400">Ticket Number</span>
+              <span>{ticketData.ticketNumber}</span>
+            </div>
+            <button
+              onClick={downloadTicket}
+              className="w-full py-5 bg-neutral-950 text-white font-bold uppercase text-xs tracking-widest hover:bg-neutral-800 transition-colors flex items-center justify-center gap-3"
+            >
+              Download PDF <Download className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </div>
     </div>

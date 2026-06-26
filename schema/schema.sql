@@ -1,94 +1,60 @@
--- Products (candles)
-CREATE TABLE IF NOT EXISTS products (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name TEXT NOT NULL,
-  description TEXT,
-  scent_notes TEXT[],
-  price DECIMAL(10,2) NOT NULL,
-  images TEXT[], -- Array of public URLs
-  stock INT NOT NULL DEFAULT 0,
+-- Drop old HBS tables if they exist
+DROP TABLE IF EXISTS blog_posts CASCADE;
+DROP TABLE IF EXISTS campus_events CASCADE;
+DROP TABLE IF EXISTS job_postings CASCADE;
+DROP TABLE IF EXISTS job_applications CASCADE;
+DROP TABLE IF EXISTS school_moderators CASCADE;
+
+-- Blog Posts
+CREATE TABLE blog_posts (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  title TEXT NOT NULL,
+  content TEXT NOT NULL,
   category TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+  author_id UUID,
+  image_url TEXT,
+  published_at TIMESTAMPTZ DEFAULT now(),
+  created_at TIMESTAMPTZ DEFAULT now()
 );
 
--- Events
-CREATE TABLE IF NOT EXISTS events (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+-- Campus Events
+CREATE TABLE campus_events (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   title TEXT NOT NULL,
   description TEXT,
-  date TIMESTAMP WITH TIME ZONE NOT NULL,
-  venue TEXT,
-  price DECIMAL(10,2) NOT NULL,
-  capacity INT NOT NULL,
-  seats_remaining INT NOT NULL,
-  image_url TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+  event_date DATE NOT NULL,
+  event_time TEXT,
+  location TEXT,
+  created_at TIMESTAMPTZ DEFAULT now()
 );
 
--- Orders
-CREATE TABLE IF NOT EXISTS orders (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  customer_email TEXT NOT NULL,
-  customer_name TEXT,
-  items JSONB NOT NULL, -- [{type: 'candle'|'event', product_id, quantity, price}]
-  total DECIMAL(10,2) NOT NULL,
-  status TEXT DEFAULT 'pending', -- pending, processing, ready, delivered, cancelled
-  payment_method TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+-- Job Postings
+CREATE TABLE job_postings (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  title TEXT NOT NULL,
+  description TEXT NOT NULL,
+  department TEXT,
+  status TEXT DEFAULT 'Active',
+  created_at TIMESTAMPTZ DEFAULT now()
 );
 
--- Tickets
-CREATE TABLE IF NOT EXISTS tickets (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  order_id UUID REFERENCES orders(id) ON DELETE CASCADE,
-  event_id UUID REFERENCES events(id) ON DELETE CASCADE,
-  ticket_number TEXT UNIQUE,
-  qr_code TEXT,
-  email_sent BOOLEAN DEFAULT FALSE,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+-- Job Applications
+CREATE TABLE job_applications (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  job_id UUID REFERENCES job_postings(id),
+  full_name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  cv_url TEXT,
+  ai_score INTEGER,
+  ai_summary TEXT,
+  created_at TIMESTAMPTZ DEFAULT now()
 );
 
--- Profiles (extends auth.users)
-CREATE TABLE IF NOT EXISTS profiles (
-  id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+-- Moderators
+CREATE TABLE school_moderators (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  full_name TEXT NOT NULL,
   email TEXT UNIQUE NOT NULL,
-  full_name TEXT,
-  role TEXT DEFAULT 'customer', -- 'admin' or 'customer'
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+  role TEXT DEFAULT 'Moderator',
+  created_at TIMESTAMPTZ DEFAULT now()
 );
-
--- Trigger to create profile on signup
-CREATE OR REPLACE FUNCTION public.handle_new_user()
-RETURNS TRIGGER AS $$
-BEGIN
-  INSERT INTO public.profiles (id, email, full_name, role)
-  VALUES (
-    NEW.id,
-    NEW.email,
-    NEW.raw_user_meta_data->>'full_name',
-    COALESCE(NEW.raw_user_meta_data->>'role', 'customer')
-  );
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
-
--- DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
-DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
-CREATE TRIGGER on_auth_user_created
-  AFTER INSERT ON auth.users
-  FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
-
--- Enable RLS
-ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
-
--- Policies
-CREATE POLICY "Public profiles are viewable by everyone." ON profiles
-  FOR SELECT USING (true);
-
-CREATE POLICY "Users can update own profile." ON profiles
-  FOR UPDATE USING (auth.uid() = id);
-
--- Admin Policy (Example: only admins can see all orders)
--- ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
--- CREATE POLICY "Admins can do everything on orders" ON orders
---   USING (EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin'));
