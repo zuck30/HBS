@@ -48,7 +48,7 @@ export default function EventsPage() {
         <div className="max-w-7xl mx-auto">
           {loading ? (
              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 animate-pulse">
-               {[1,2].map(i => <div key={i} className="h-64 bg-neutral-200 rounded-[40px]" />)}
+               {[1,2].map(i => <div key={i} className="h-64 bg-neutral-200" />)}
              </div>
           ) : upcomingEvents.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -56,7 +56,7 @@ export default function EventsPage() {
                 <Link
                   href={`/events/${event.id}`}
                   key={event.id}
-                  className="bg-white flex flex-col md:flex-row rounded-[40px] overflow-hidden border border-neutral-200 shadow-sm group hover:border-[#ECB65F] transition-all"
+                  className="bg-white flex flex-col md:flex-row border border-neutral-200 shadow-sm group hover:border-[#ECB65F] transition-all"
                 >
                   <div className="relative w-full md:w-2/5 aspect-video md:aspect-square overflow-hidden">
                     {event.image ? (
@@ -70,7 +70,7 @@ export default function EventsPage() {
                   <div className="p-10 flex flex-col justify-between flex-1">
                     <div className="flex flex-col gap-4">
                       <div className="flex items-center gap-4">
-                        <div className="flex flex-col items-center bg-[#44ACFF]/5 px-4 py-2 rounded-2xl">
+                        <div className="flex flex-col items-center bg-[#44ACFF]/5 px-4 py-2">
                           <span className="text-[10px] font-bold text-[#ECB65F] uppercase tracking-widest">{new Date(event.date).toLocaleString('default', { month: 'short' })}</span>
                           <span className="text-2xl font-bold text-[#44ACFF]">{new Date(event.date).getDate()}</span>
                         </div>
@@ -94,7 +94,7 @@ export default function EventsPage() {
               ))}
             </div>
           ) : (
-            <div className="bg-white p-24 rounded-[60px] border border-dashed border-neutral-200 text-center">
+            <div className="bg-white p-24 border border-dashed border-neutral-200 text-center">
                <p className="text-neutral-500 font-bold uppercase tracking-widest">No upcoming events scheduled.</p>
                <Link href="/contact" className="text-[#ECB65F] font-bold uppercase tracking-widest text-xs mt-4 block underline">Enquire about admissions →</Link>
             </div>
@@ -102,7 +102,6 @@ export default function EventsPage() {
         </div>
       </section>
 
-      {/* Past Events */}
       {pastEvents.length > 0 && (
         <section className="py-24 px-6 border-t border-neutral-100">
           <div className="max-w-7xl mx-auto">
@@ -110,7 +109,7 @@ export default function EventsPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 opacity-60">
               {pastEvents.map(event => (
                 <div key={event.id} className="flex flex-col gap-4">
-                  <div className="relative aspect-video rounded-3xl overflow-hidden grayscale">
+                  <div className="relative aspect-video overflow-hidden grayscale">
                     <Image src={event.image || '/HBSlogo.png'} alt={event.title} fill className="object-cover" />
                   </div>
                   <div className="flex flex-col gap-1">
