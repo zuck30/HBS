@@ -41,7 +41,7 @@ export default function BlogPage() {
           <div className="max-w-2xl flex flex-col gap-6">
             <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#ECB65F]">JOURNAL</span>
             <h1 className="text-4xl md:text-7xl font-bold text-[#44ACFF] uppercase leading-[0.9]">
-              What's happening at HBS.
+              What is happening at HBS.
             </h1>
           </div>
           <div className="w-full md:w-96 relative">
@@ -49,7 +49,7 @@ export default function BlogPage() {
             <input
               type="text"
               placeholder="Search articles..."
-              className="w-full bg-neutral-50 border border-neutral-200 py-4 pl-14 pr-6 rounded-2xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#ECB65F] transition-all"
+              className="w-full bg-neutral-50 border border-neutral-200 py-4 pl-14 pr-6 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#ECB65F] transition-all"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -61,15 +61,15 @@ export default function BlogPage() {
         <div className="max-w-7xl mx-auto">
           {loading ? (
              <div className="grid grid-cols-1 md:grid-cols-3 gap-12 animate-pulse">
-               {[1,2,3].map(i => <div key={i} className="h-96 bg-neutral-200 rounded-[40px]" />)}
+               {[1,2,3].map(i => <div key={i} className="h-96 bg-neutral-200" />)}
              </div>
           ) : filteredPosts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-              {filteredPosts.map((post, i) => (
+              {filteredPosts.map((post) => (
                 <Link
                   href={`/blog/${post.id}`}
                   key={post.id}
-                  className="flex flex-col bg-white rounded-[40px] overflow-hidden border border-neutral-200 shadow-sm group hover:border-[#ECB65F] transition-all"
+                  className="flex flex-col bg-white border border-neutral-200 shadow-sm group hover:border-[#ECB65F] transition-all"
                 >
                   <div className="relative aspect-video overflow-hidden">
                     {post.featured_image ? (
@@ -80,7 +80,7 @@ export default function BlogPage() {
                       </div>
                     )}
                     <div className="absolute top-6 left-6">
-                      <span className="bg-[#ECB65F] text-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full">
+                      <span className="bg-[#ECB65F] text-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest">
                         {post.category || 'School Life'}
                       </span>
                     </div>
@@ -97,7 +97,7 @@ export default function BlogPage() {
                     </div>
                     <div className="mt-auto pt-6 border-t border-neutral-50 flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-full bg-[#44ACFF]/10 flex items-center justify-center">
+                        <div className="w-6 h-6 bg-[#44ACFF]/10 flex items-center justify-center">
                           <User className="w-3 h-3 text-[#44ACFF]" />
                         </div>
                         <span className="text-[10px] font-bold uppercase tracking-widest text-[#44ACFF]">{post.profiles?.full_name || 'HBS Admin'}</span>
