@@ -169,9 +169,23 @@ const ChatAgent = () => {
         time: getTime()
       }]);
     } catch (err) {
+      console.error('Chat error:', err);
+      let errorMessage = "I'm sorry, I encountered an error. Please try again or contact us directly.";
+      
+
+      if (err instanceof Error) {
+        if (err.message.includes('timeout')) {
+          errorMessage = "The request is taking too long. Please try again in a moment.";
+        } else if (err.message.includes('API key')) {
+          errorMessage = "There's a configuration issue. Please contact support.";
+        } else if (err.message.includes('network')) {
+          errorMessage = "Network error. Please check your connection and try again.";
+        }
+      }
+      
       setMessages(prev => [...prev, {
         role: 'assistant',
-        text: "I'm sorry, I encountered an error. Please try again or contact us directly.",
+        text: errorMessage,
         time: getTime()
       }]);
     } finally {
@@ -188,6 +202,9 @@ const ChatAgent = () => {
       }]);
     }
   };
+
+
+  const CHAT_BG_COLOR = '#f5f5f5';
 
   return (
     <>
@@ -250,7 +267,8 @@ const ChatAgent = () => {
                 borderBottomRightRadius: 0,
                 border: 'none',
                 boxShadow: '0 -10px 40px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.06) inset',
-                background: 'rgba(255,255,255,0.55)',
+                // Fixed: Use hex color instead of rgba to avoid animation warning
+                background: CHAT_BG_COLOR,
                 backdropFilter: 'blur(40px)',
                 WebkitBackdropFilter: 'blur(40px)',
               }}
@@ -339,7 +357,7 @@ const ChatAgent = () => {
                 )}
               </div>
 
-              {/* Updated Input Area - Normal Rounded */}
+              {/* Input Area */}
               <div className="relative z-10 p-3 bg-white/90 border-t border-black/5 flex gap-2 shrink-0">
                 <div className="flex-1 flex items-center bg-white rounded-full border border-gray-200 px-4 py-1.5 focus-within:border-[#B331F1] focus-within:ring-2 focus-within:ring-[#B331F1]/20 transition-all">
                   <input

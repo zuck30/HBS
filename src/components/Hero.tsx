@@ -38,9 +38,6 @@ export const Hero = () => {
           transition={{ duration: 0.5 }}
           className="mb-4"
         >
-          <span className="bg-[#ECB65F] text-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full">
-            {t('hero.breaking')}
-          </span>
         </motion.div>
 
         <motion.h1
