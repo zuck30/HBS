@@ -5,7 +5,7 @@ import { OperationSection, DataScienceSection, WhySection } from '@/components/F
 
 export default function Home() {
   return (
-    <>
+    <main className="pt-16">
       <Hero />
       <TrustSection />
       <ServicesSection />
@@ -15,6 +15,6 @@ export default function Home() {
       <OperationSection />
       <DataScienceSection />
       <WhySection />
-    </>
+    </main>
   );
 }

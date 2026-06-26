@@ -1,0 +1,319 @@
+'use client';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { Briefcase, MapPin, Clock, DollarSign, Send, FileText } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
+import { useLanguage } from '@/context/LanguageContext';
+
+export default function CareersPage() {
+  const { t } = useLanguage();
+  const [jobs, setJobs] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedJob, setSelectedJob] = useState<any>(null);
+  const [isApplying, setIsApplying] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    coverLetter: ''
+  });
+  const [cvFile, setCvFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    fetchJobs();
+  }, []);
+
+  async function fetchJobs() {
+    setLoading(true);
+    const { data, error } = await supabase
+      .from('jobs')
+      .select('*')
+      .eq('is_active', true)
+      .order('created_at', { ascending: false });
+
+    if (!error && data) {
+      setJobs(data);
+    }
+    setLoading(false);
+  }
+
+  const handleApply = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!cvFile || !selectedJob) return;
+
+    setIsApplying(true);
+    // 1. Upload CV
+    const fileName = `${Date.now()}-${cvFile.name}`;
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from('cvs')
+      .upload(fileName, cvFile);
+
+    if (uploadError) {
+      alert('Failed to upload CV');
+      setIsApplying(false);
+      return;
+    }
+
+    // 2. Save Application
+    const { error: appError } = await supabase.from('job_applications').insert({
+      job_id: selectedJob.id,
+      full_name: formData.fullName,
+      email: formData.email,
+      phone: formData.phone,
+      cover_letter: formData.coverLetter,
+      cv_path: uploadData.path
+    });
+
+    if (appError) {
+      alert('Failed to submit application');
+    } else {
+      alert('Application submitted successfully!');
+      setFormData({ fullName: '', email: '', phone: '', coverLetter: '' });
+      setCvFile(null);
+      setSelectedJob(null);
+    }
+    setIsApplying(false);
+  };
+
+  return (
+    <main className="pt-16 bg-[#f6f5f1] min-h-screen font-sans">
+      {/* Hero */}
+      <section className="py-24 px-6 border-b border-neutral-200 bg-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-1/3 h-full opacity-10 pointer-events-none">
+          <Image src="/assets/careers-hero.png" alt="Careers" fill className="object-cover" />
+        </div>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4AF37] mb-4 block">CAREERS</span>
+          <h1 className="text-4xl md:text-7xl font-bold text-[#000080] uppercase leading-[0.9] mb-8 max-w-4xl">
+            Join our team. Help us build a world-class school.
+          </h1>
+          <p className="text-xl text-neutral-600 font-medium leading-relaxed max-w-3xl">
+            We're recruiting across multiple departments — teaching, finance, HR, ICT, transport, security, facilities, welfare, and more.
+          </p>
+        </div>
+      </section>
+
+      {/* AI Portal Intro */}
+      <section className="py-12 px-6">
+        <div className="max-w-7xl mx-auto bg-[#000080] rounded-[40px] p-10 text-white flex flex-col md:flex-row items-center justify-between gap-8">
+           <div className="flex flex-col gap-4 max-w-2xl">
+             <span className="bg-[#D4AF37] text-white px-4 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full self-start">AI-POWERED JOB PORTAL</span>
+             <h2 className="text-3xl font-bold uppercase">Our intelligent hiring system uses AI to match the right talent with the right opportunities.</h2>
+             <p className="text-blue-100 font-medium opacity-80">From job creation to candidate ranking, we leverage cutting-edge technology to build the best team.</p>
+           </div>
+           <div className="relative w-32 h-32 flex-shrink-0">
+              <div className="absolute inset-0 bg-[#D4AF37] rounded-full animate-pulse opacity-20" />
+              <div className="relative z-10 w-full h-full border-4 border-[#D4AF37] rounded-full flex items-center justify-center">
+                <Star className="text-[#D4AF37] w-12 h-12" />
+              </div>
+           </div>
+        </div>
+      </section>
+
+      <section className="py-24 px-6">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16">
+          {/* Jobs List */}
+          <div className="lg:col-span-7 flex flex-col gap-8">
+            <h2 className="text-2xl font-bold text-[#000080] uppercase tracking-widest border-b border-neutral-200 pb-4">Current Openings</h2>
+
+            {loading ? (
+              <div className="flex flex-col gap-4 animate-pulse">
+                {[1,2,3].map(i => <div key={i} className="h-40 bg-neutral-200 rounded-3xl" />)}
+              </div>
+            ) : jobs.length > 0 ? (
+              <div className="flex flex-col gap-6">
+                {jobs.map(job => (
+                  <div key={job.id} className="bg-white p-8 rounded-[40px] border border-neutral-200 shadow-sm flex flex-col gap-6 group hover:border-[#D4AF37] transition-all">
+                    <div className="flex justify-between items-start gap-4">
+                      <div className="flex flex-col gap-2">
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-[#D4AF37]">{job.department}</span>
+                        <h3 className="text-2xl font-bold text-[#000080] group-hover:text-[#D4AF37] transition-colors">{job.title}</h3>
+                      </div>
+                      <button
+                        onClick={() => setSelectedJob(job)}
+                        className="px-6 py-3 bg-[#000080] text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-[#D4AF37] transition-colors"
+                      >
+                        Apply Now
+                      </button>
+                    </div>
+                    <div className="flex flex-wrap gap-6">
+                       <div className="flex items-center gap-2 text-xs font-bold text-neutral-400 uppercase tracking-wide">
+                         <MapPin className="w-4 h-4 text-[#D4AF37]" /> {job.location}
+                       </div>
+                       <div className="flex items-center gap-2 text-xs font-bold text-neutral-400 uppercase tracking-wide">
+                         <Clock className="w-4 h-4 text-[#D4AF37]" /> {job.type}
+                       </div>
+                       {job.salary_range && (
+                         <div className="flex items-center gap-2 text-xs font-bold text-neutral-400 uppercase tracking-wide">
+                           <DollarSign className="w-4 h-4 text-[#D4AF37]" /> {job.salary_range}
+                         </div>
+                       )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="bg-white p-12 rounded-[40px] border border-neutral-200 text-center">
+                <p className="text-neutral-500 font-bold uppercase tracking-widest">No open positions at the moment.</p>
+              </div>
+            )}
+          </div>
+
+          {/* Process & Contact */}
+          <div className="lg:col-span-5 flex flex-col gap-8">
+            <div className="bg-white p-10 rounded-[40px] border border-neutral-200 flex flex-col gap-8 shadow-sm">
+              <h2 className="text-xl font-bold text-[#000080] uppercase tracking-widest">Application Process</h2>
+              <div className="flex flex-col gap-8">
+                {[
+                  { step: '1', title: 'Find your role', desc: 'Browse our open positions and find the role that matches your skills and experience.' },
+                  { step: '2', title: 'Submit your application', desc: 'Complete the application form and upload your CV (PDF only). Our AI will process your application.' },
+                  { step: '3', title: 'AI Evaluation', desc: 'Our intelligent system analyzes your CV against the job requirements and ranks all candidates based on relevant criteria.' },
+                  { step: '4', title: 'Get contacted', desc: 'Only shortlisted candidates will be contacted for interviews. We are an equal-opportunity employer.' }
+                ].map((s, i) => (
+                  <div key={i} className="flex gap-6">
+                    <span className="w-10 h-10 rounded-full bg-[#000080] text-white flex items-center justify-center flex-shrink-0 font-bold">{s.step}</span>
+                    <div className="flex flex-col gap-1">
+                      <h4 className="text-sm font-bold text-[#000080] uppercase">{s.title}</h4>
+                      <p className="text-xs text-neutral-500 font-medium leading-relaxed">{s.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-white p-10 rounded-[40px] border border-neutral-200 flex flex-col gap-6 shadow-sm">
+               <h2 className="text-xl font-bold text-[#000080] uppercase tracking-widest">Contact HR</h2>
+               <div className="flex flex-col gap-4 text-xs font-medium text-neutral-500">
+                 <p className="leading-relaxed">Applications are accepted through this portal or by email. No paper applications. No in-person visits or phone calls regarding job enquiries.</p>
+                 <div className="flex items-center gap-3 mt-4">
+                   <div className="w-8 h-8 rounded-full bg-[#D4AF37]/10 flex items-center justify-center text-[#D4AF37]">
+                     <Send className="w-4 h-4" />
+                   </div>
+                   <span className="font-bold text-[#000080]">hr.hbs.tz@gmail.com</span>
+                 </div>
+               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Application Modal */}
+      {selectedJob && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-[#000080]/80 backdrop-blur-sm">
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="bg-white w-full max-w-2xl rounded-[40px] overflow-hidden shadow-2xl relative"
+          >
+            <button
+              onClick={() => setSelectedJob(null)}
+              className="absolute top-8 right-8 text-neutral-400 hover:text-black font-bold uppercase text-[10px] tracking-widest"
+            >
+              Close [X]
+            </button>
+            <div className="p-10 flex flex-col gap-8">
+              <div className="flex flex-col gap-2">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-[#D4AF37]">Apply for</span>
+                <h2 className="text-3xl font-bold text-[#000080] uppercase">{selectedJob.title}</h2>
+              </div>
+
+              <form onSubmit={handleApply} className="flex flex-col gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Full Name</label>
+                    <input
+                      required
+                      type="text"
+                      placeholder="Jane Doe"
+                      className="bg-neutral-50 border border-neutral-100 p-4 rounded-2xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#D4AF37]"
+                      value={formData.fullName}
+                      onChange={e => setFormData({...formData, fullName: e.target.value})}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Email Address</label>
+                    <input
+                      required
+                      type="email"
+                      placeholder="jane@example.com"
+                      className="bg-neutral-50 border border-neutral-100 p-4 rounded-2xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#D4AF37]"
+                      value={formData.email}
+                      onChange={e => setFormData({...formData, email: e.target.value})}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Phone Number</label>
+                    <input
+                      required
+                      type="tel"
+                      placeholder="+255..."
+                      className="bg-neutral-50 border border-neutral-100 p-4 rounded-2xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#D4AF37]"
+                      value={formData.phone}
+                      onChange={e => setFormData({...formData, phone: e.target.value})}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Upload CV (PDF Only)</label>
+                    <div className="relative group">
+                      <input
+                        required
+                        type="file"
+                        accept=".pdf"
+                        className="absolute inset-0 opacity-0 cursor-pointer"
+                        onChange={e => setCvFile(e.target.files ? e.target.files[0] : null)}
+                      />
+                      <div className="bg-neutral-50 border border-dashed border-neutral-200 p-4 rounded-2xl text-sm font-medium flex items-center justify-center gap-2 group-hover:bg-[#D4AF37]/5 group-hover:border-[#D4AF37] transition-all">
+                        <FileText className="w-4 h-4 text-[#D4AF37]" />
+                        <span className="text-neutral-500">{cvFile ? cvFile.name : 'Choose File'}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Cover Letter (Optional)</label>
+                  <textarea
+                    rows={4}
+                    placeholder="Tell us why you are a great fit..."
+                    className="bg-neutral-50 border border-neutral-100 p-4 rounded-2xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#D4AF37]"
+                    value={formData.coverLetter}
+                    onChange={e => setFormData({...formData, coverLetter: e.target.value})}
+                  />
+                </div>
+
+                <p className="text-[10px] text-neutral-400 font-medium leading-relaxed italic">
+                  By submitting your application, you agree to our AI processing your data for recruitment purposes. Your information is secure and never shared.
+                </p>
+
+                <button
+                  disabled={isApplying}
+                  type="submit"
+                  className="w-full py-5 bg-[#000080] text-white rounded-2xl font-bold uppercase tracking-widest hover:bg-[#D4AF37] transition-all shadow-xl disabled:opacity-50"
+                >
+                  {isApplying ? 'Submitting...' : 'Submit Application'}
+                </button>
+              </form>
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </main>
+  );
+}
+
+function Star({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+    </svg>
+  );
+}
