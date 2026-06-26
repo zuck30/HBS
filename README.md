@@ -47,4 +47,32 @@ This application uses DeepSeek AI for:
 - **Admin**: [Staff Dashboard](/admin)
 
 
+<p align="center">
+    <img src="/screen/1.png" alt="UI-Screenshot" width="800">
+</p>
+
+<p align="center">
+    <img src="/screen/2.png" alt="UI-Screenshot" width="800">
+</p>
+
+<p align="center">
+    <img src="/screen/3.png" alt="UI-Screenshot" width="800">
+</p>
+
+<p align="center">
+    <img src="/screen/4.png" alt="UI-Screenshot" width="800">
+</p>
+
+<p align="center">
+    <img src="/screen/5.png" alt="UI-Screenshot" width="800">
+</p>
+
+<p align="center">
+    <img src="/screen/6.png" alt="UI-Screenshot" width="800">
+</p>
+
+<p align="center">
+    <img src="/screen/7.png" alt="UI-Screenshot" width="800">
+</p>
+
 > **Warning:** This software, HBS is protected under Apache 2.0 License. Violation of terms (including removing copyright notices or patent retaliation) will result in legal action. Read [LICENSE](LICENSE).
