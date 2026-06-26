@@ -4,6 +4,12 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 
+// Import with exact filenames from src/assets/
+import toddlerClass from '../assets/toddler-class.png';
+import preSchool from '../assets/pre-school.png';
+import primarySchool from '../assets/primary-school.png';
+import enrichment from '../assets/enrichment-activities.png';
+
 export default function ProgramsPage() {
   const { t } = useLanguage();
 
@@ -15,7 +21,7 @@ export default function ProgramsPage() {
       desc: 'A gentle, joyful introduction to school where wonder leads the way. Through sensory play, music, and story circles, toddlers build the motor, social, and language foundations that everything else grows from, supported by warm caregivers and predictable daily routines.',
       points: ['Sensory play', 'Music and movement', 'Story circles', 'Social skills', 'Daily routines', 'Caregiver partnerships'],
       schedule: 'Arrival and free play. Group circle. Snack. Sensory activity. Outdoor play. Lunch. Rest. Music. Story. Pickup',
-      image: '/assets/toddler-class.png'
+      image: toddlerClass
     },
     {
       title: 'PRE-SCHOOL',
@@ -24,7 +30,7 @@ export default function ProgramsPage() {
       desc: 'Carefully prepared activities turn play into purposeful learning. Children meet early literacy and numeracy through phonics, hands-on materials, and creative arts, building independence, concentration, and a genuine love of learning before they ever sit a formal lesson.',
       points: ['Early literacy', 'Early numeracy', 'Phonics', 'Fine motor', 'Creative arts', 'Outdoor learning'],
       schedule: 'Arrival and settling. Morning circle. Phonics and literacy. Snack and outdoor play. Numeracy activities. Creative arts. Lunch. Story and rest. Free choice play. Pickup',
-      image: '/assets/pre-school.png'
+      image: preSchool
     },
     {
       title: 'PRIMARY SCHOOL',
@@ -32,7 +38,7 @@ export default function ProgramsPage() {
       subtitle: 'Primary School: rigour, curiosity, and PSLE ready confidence.',
       desc: 'Our primary programme is fully aligned to NECTA and TIE standards, taught in small classes by qualified subject teachers. Daily practice, frequent feedback, and structured PSLE preparation are how our students reach 100 percent Daraja A, without losing the curiosity that makes learning a pleasure.',
       points: ['English', 'Kiswahili', 'Mathematics', 'Science', 'Social Studies', 'ICT', 'Religion', 'Civics'],
-      image: '/assets/primary-school.png'
+      image: primarySchool
     },
     {
       title: 'ENRICHMENT',
@@ -40,7 +46,7 @@ export default function ProgramsPage() {
       subtitle: 'Enrichment activities: talents found, talents grown.',
       desc: 'Beyond the core curriculum, a rich programme of clubs and activities helps every child discover what they love. From coding and robotics to chess, drama, and languages, enrichment is woven through the school week, building confidence, creativity, and well rounded young people.',
       points: ['Coding', 'Robotics', 'Public speaking', 'Chess', 'Drama', 'Choir', 'Dance', 'French', 'Mandarin'],
-      image: '/assets/enrichment-activities.png'
+      image: enrichment
     }
   ];
 
@@ -66,7 +72,14 @@ export default function ProgramsPage() {
             <div key={i} className={`flex flex-col ${i % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-16 items-center`}>
               <div className="w-full lg:w-1/2">
                 <div className="relative aspect-[4/5] overflow-hidden shadow-2xl">
-                  <Image src={program.image} alt={program.title} fill className="object-cover" />
+                  <Image 
+                    src={program.image} 
+                    alt={program.title} 
+                    fill 
+                    className="object-cover" 
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    priority={i === 0}
+                  />
                   <div className="absolute top-8 left-8">
                     <span className="bg-white/90 px-4 py-2 text-xs font-bold text-[#44ACFF] uppercase tracking-widest shadow-lg">
                       {program.age}
