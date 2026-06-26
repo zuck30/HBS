@@ -1,35 +1,59 @@
+# Hannah Bennie Schools (HBS) Web Application
 
 <p align="center">
-    <a href="https://github.com/Nawwi-Ltd/nawwi-core"><img src="https://img.shields.io/badge/status-active-brightgreen.svg"></a>
-    <a href="https://nextjs.org/"><img src="https://img.shields.io/badge/Next.js-16-000000.svg"></a>
+    <a href="#"><img src="https://img.shields.io/badge/status-active-brightgreen.svg"></a>
+    <a href="https://nextjs.org/"><img src="https://img.shields.io/badge/Next.js-15+-000000.svg"></a>
     <a href="https://react.dev/"><img src="https://img.shields.io/badge/React-19-61DAFB.svg"></a>
     <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.x-3178C6.svg"></a>
     <a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/Tailwind-4-38B2AC.svg"></a>
-    <a href="https://github.com/Antera-Ltd/Nawwi/graphs/contributors"><img src="https://img.shields.io/github/contributors/Nawwi-Ltd/nawwi-core?color=blue"></a>
-    <a href="https://github.com/Antera-Ltd/Nawwi/stargazers"><img src="https://img.shields.io/github/stars/Nawwi-Ltd/nawwi-core.svg?logo=github"></a>
-    <img src="https://visitor-badge.laobi.icu/badge?page_id=Antera-Ltd.Nawwi" alt="visitors"/>
 </p>
 
-![Banner](https://capsule-render.vercel.app/api?type=venom&height=200&color=0:FA520F,100:000000&text=Nawwi%20Wellness&textBg=false&desc=&descAlign=75&fontAlign=50&descAlignY=70&fontColor=ffffff)
+Hannah Bennie Schools is a leading Nursery and Primary school located in Dar es Salaam, Tanzania. This application serves as the digital hub for admissions, careers, and school management, powered by DeepSeek AI for intelligent recruitment and school assistance.
 
-<p align="center">
-    <strong>Nawwi Wellness. Website By Antera.</strong>
-</p>
-
-<h3>🚀 Quick Links</h3>
-
-<div align="left">
-    <a href="https://nawwiwellness.com"><img src="https://img.shields.io/badge/Visit%20Nawwi-00A98F?style=flat-square&logo=vercel&logoColor=white" alt="Visit Nawwi"></a>
-    <a href="mailto:nawwiwellness@gmail.com"><img src="https://img.shields.io/badge/Contact%20Us-30302f?style=flat-square&logo=gmail" alt="Contact"></a>
-    <a href="https://github.com/Nawwi-Ltd/Nawwi/issues"><img src="https://img.shields.io/badge/Report%20Bug-30302f?style=flat-square&logo=github" alt="Report Bug"></a>
-    <a href="https://github.com/Nawwi-Ltd/Nawwi/discussions"><img src="https://img.shields.io/badge/Discussions-30302f?style=flat-square&logo=github" alt="Discussions"></a>
-</div>
-
-<br>
-
-<p align="center">
-    <img src="src/assets/shot.png" alt="NawwiScreenshot" width="800">
-</p>
-
-> **Warning:** This software, Nawwi is protected under Apache 2.0 License. Violation of terms (including removing copyright notices or patent retaliation) will result in legal action. Read [LICENSE](LICENSE).
 ---
+
+## 🛠 Supabase Configuration
+
+To ensure all school functionalities (Admissions, Careers, Blogs, Events) work correctly, you must set up the following Storage Buckets in your Supabase project.
+
+### Required Storage Buckets
+
+| Bucket Name | Access Level | Description |
+| :--- | :--- | :--- |
+| **`cvs`** | Private / Auth Required | Stores PDF resumes for job applications. Only admins can view. |
+| **`blogs`** | Public | Stores featured images for school news and blog articles. |
+| **`events`** | Public | Stores promotional images for school events and tours. |
+| **`products`** | Public | General storage for school resources and media artifacts. |
+
+### Configuration Steps:
+1. Go to **Storage** in your Supabase Dashboard.
+2. Click **New Bucket** and create each of the buckets listed above.
+3. For `blogs`, `events`, and `products`, ensure "Public bucket" is toggled **ON**.
+4. For `cvs`, keep it **Private** to protect applicant data.
+5. **RLS Policies**: Ensure you create appropriate Row Level Security (RLS) policies to allow `INSERT` from authenticated users (for `cvs`) and `SELECT` for everyone (for public buckets).
+
+---
+
+## 🤖 AI Integration (DeepSeek)
+
+This application uses DeepSeek AI for:
+- **HBS School Assistant**: A smart chatbot that provides information about school programs and admissions.
+- **Candidate Ranking**: Automatically analyzes and ranks job applicants based on CV data.
+- **Job Generation**: Generates humanized job descriptions for the HBS team.
+
+Ensure you have your `DEEPSEEK_API_KEY` set in your Supabase Edge Function secrets:
+```bash
+supabase secrets set DEEPSEEK_API_KEY=your_key_here
+```
+
+---
+
+## 🚀 Quick Links
+
+- **Admissions**: [Contact Page](/contact)
+- **Careers**: [Join our team](/careers)
+- **Admin**: [Staff Dashboard](/admin)
+
+---
+
+> **Note:** This repository has been refactored from Nawwi Wellness to Hannah Bennie Schools (HBS). All legacy logic has been replaced with HBS-specific architecture and content.
