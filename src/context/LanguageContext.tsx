@@ -26,7 +26,6 @@ const translations: Record<Language, Record<string, string>> = {
     'footer.enquiries': 'General enquiries',
     'footer.hr': 'HR / Job applications',
     'footer.rights': 'All rights reserved.',
-    'hero.breaking': 'BREAKING: We\'re hiring',
     'hero.tagline': 'Ignite curiosity. Grow potential.',
     'hero.description': 'We enrich young minds and inspire children to be creative, mindful, and influential to their communities and the world.',
     'hero.book_visit': 'Book a visit',
