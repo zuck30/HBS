@@ -18,13 +18,13 @@ export default function AboutPage() {
     {
       id: '01',
       title: 'Great learning in English',
-      desc: 'An English-medium education that prepares children for the best secondary schools in Tanzania and beyond — taught with curiosity, exploration, and care.',
+      desc: 'An English-medium education that prepares children for the best secondary schools in Tanzania and beyond taught with curiosity, exploration, and care.',
       image: school1
     },
     {
       id: '02',
       title: 'Nourishing meals, every day',
-      desc: 'Wholesome breakfasts, balanced lunches, light afternoon snacks, and hearty suppers for boarders — dietitian-planned and prepared in a clean, welcoming kitchen.',
+      desc: 'Wholesome breakfasts, balanced lunches, light afternoon snacks, and hearty suppers for boarders dietitian-planned and prepared in a clean, welcoming kitchen.',
       image: kidsWithMeals
     },
     {
@@ -39,12 +39,12 @@ export default function AboutPage() {
     {
       id: '01',
       title: 'Our mission',
-      desc: 'To nurture curious, confident, and capable young learners through a world-class English-medium curriculum — taught with warmth, rigour, and care.'
+      desc: 'To nurture curious, confident, and capable young learners through a world-class English-medium curriculum taught with warmth, rigour, and care.'
     },
     {
       id: '02',
       title: 'Our vision',
-      desc: 'Every HBS child finishes primary school ready to thrive — academically, socially, and personally — anywhere in the world.'
+      desc: 'Every HBS child finishes primary school ready to thrive academically, socially, and personally anywhere in the world.'
     },
     {
       id: '03',
@@ -61,7 +61,7 @@ export default function AboutPage() {
           <div>
             <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#ECB65F] mb-4 block">ABOUT HBS</span>
             <h1 className="text-4xl md:text-7xl font-bold text-[#44ACFF] uppercase leading-[0.9] mb-8">
-              A school born from a need — not a business plan.
+              A school born from a need not a business plan.
             </h1>
             <p className="text-xl text-neutral-600 font-medium leading-relaxed max-w-xl">
               Hannah Bennie Schools was never started to make money. It was started because Kigamboni's children deserved a great English-medium school close to home.
@@ -92,7 +92,7 @@ export default function AboutPage() {
           />
           <div className="absolute inset-0 bg-black/20 flex flex-col justify-end p-12">
             <p className="text-white text-xs font-bold uppercase tracking-widest">Planted by hand. Shaped by patience.</p>
-            <h3 className="text-white text-4xl font-bold uppercase">THE ORIGINAL HBS LAWN — KIGAMBONI, 2015.</h3>
+            <h3 className="text-white text-4xl font-bold uppercase">THE ORIGINAL HBS LAWN KIGAMBONI, 2015.</h3>
           </div>
         </div>
       </section>
