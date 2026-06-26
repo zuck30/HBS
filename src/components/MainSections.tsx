@@ -22,7 +22,7 @@ export const TrustSection = () => {
   const slides = [
     {
       image: school1,
-      title: 'Enrichment Activities',
+      title: 'Exceptional Learning Spaces',
       subtitle: 'World-class classrooms & laboratories',
       description: 'State-of-the-art learning spaces designed to inspire curiosity and foster academic growth.'
     },
