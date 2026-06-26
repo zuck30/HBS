@@ -5,10 +5,14 @@ import Image from 'next/image';
 import { ChevronLeft, ChevronRight, Pause, Play, Maximize2 } from 'lucide-react';
 
 // Import HBS images
-import school1 from '../assets/school-1.png';
+import school1 from '../assets/enrichment-activities.png';
 import school2 from '../assets/school-2.png';
 import football from '../assets/sports-club.png';
-import pools from '../assets/shot.png';
+import pools from '../assets/hbs-sport.png';
+import toddlerClass from '../assets/toddler-class.png';
+import preSchool from '../assets/tab-6.jpg';
+import primarySchool from '../assets/primary-school.png';
+import classrooms from '../assets/Classrooms-designed-for-learning.png';
 
 export const TrustSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -18,35 +22,51 @@ export const TrustSection = () => {
   const slides = [
     {
       image: school1,
-      title: 'Academic Excellence',
+      title: 'Enrichment Activities',
       subtitle: 'World-class classrooms & laboratories',
-      description: 'State-of-the-art learning spaces designed to inspire curiosity and foster academic growth.',
-      stats: '15+ Classrooms',
-      color: '#44ACFF'
+      description: 'State-of-the-art learning spaces designed to inspire curiosity and foster academic growth.'
     },
     {
       image: school2,
       title: 'Beautiful Campus',
       subtitle: 'A serene environment for learning',
-      description: 'Lush green spaces and thoughtfully designed buildings create the perfect atmosphere for education.',
-      stats: '5 Acres',
-      color: '#ECB65F'
+      description: 'Lush green spaces and thoughtfully designed buildings create the perfect atmosphere for education.'
     },
     {
       image: football,
       title: 'Sports & Recreation',
       subtitle: 'Where champions are made',
-      description: 'Full-size football pitch, two swimming pools, and modern playground facilities for all ages.',
-      stats: '3 Sports Facilities',
-      color: '#6D9E51'
+      description: 'Full-size football pitch, two swimming pools, and modern playground facilities for all ages.'
     },
     {
       image: pools,
       title: 'Swimming Pools',
       subtitle: 'Professional aquatic facilities',
-      description: 'Two regulation-size pools with trained instructors for both recreation and competitive swimming.',
-      stats: '2 Pools',
-      color: '#B331F1'
+      description: 'Two regulation-size pools with trained instructors for both recreation and competitive swimming.'
+    },
+    {
+      image: toddlerClass,
+      title: 'Toddler Program',
+      subtitle: 'Early years foundation',
+      description: 'Nurturing environment for our youngest learners aged 18 months to 3 years.'
+    },
+    {
+      image: preSchool,
+      title: 'Pre-School',
+      subtitle: 'Building strong foundations',
+      description: 'Engaging curriculum for children aged 3 to 6 years, preparing them for primary education.'
+    },
+    {
+      image: primarySchool,
+      title: 'Primary School',
+      subtitle: 'Excellence in education',
+      description: 'Comprehensive primary education for children aged 6 to 14 years.'
+    },
+    {
+      image: classrooms,
+      title: 'Modern Classrooms',
+      subtitle: 'Designed for learning',
+      description: 'Spacious, well-equipped classrooms that foster collaborative and independent learning.'
     }
   ];
 
@@ -132,12 +152,13 @@ export const TrustSection = () => {
                   fill
                   className="object-cover"
                   priority
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
               </motion.div>
             </AnimatePresence>
 
-            {/* Content Overlay - Removed colored line */}
+            {/* Content Overlay */}
             <AnimatePresence mode="wait">
               <motion.div
                 key={`content-${currentIndex}`}
@@ -156,17 +177,6 @@ export const TrustSection = () => {
                 <p className="text-white/80 text-base md:text-lg max-w-2xl font-light">
                   {slides[currentIndex].description}
                 </p>
-                <div className="mt-4 flex items-center gap-4">
-                  <div className="flex items-center gap-2">
-                    <div 
-                      className="w-2 h-2 rounded-full"
-                      style={{ background: slides[currentIndex].color }}
-                    />
-                    <span className="text-white/60 text-sm font-medium">
-                      {slides[currentIndex].stats}
-                    </span>
-                  </div>
-                </div>
               </motion.div>
             </AnimatePresence>
 
@@ -210,24 +220,19 @@ export const TrustSection = () => {
                 whileTap={{ scale: 0.95 }}
                 className={`relative w-20 h-14 md:w-24 md:h-16 rounded-xl overflow-hidden flex-shrink-0 transition-all ${
                   currentIndex === index 
-                    ? 'ring-2 ring-offset-2 ring-offset-white' 
+                    ? 'ring-2 ring-[#44ACFF] ring-offset-2 ring-offset-white' 
                     : 'opacity-50 hover:opacity-80'
                 }`}
-                style={{ 
-                  ringColor: currentIndex === index ? slide.color : 'transparent'
-                } as React.CSSProperties}
               >
                 <Image
                   src={slide.image}
                   alt={slide.title}
                   fill
                   className="object-cover"
+                  sizes="(max-width: 768px) 80px, 96px"
                 />
                 {currentIndex === index && (
-                  <div 
-                    className="absolute bottom-0 left-0 right-0 h-0.5"
-                    style={{ background: slide.color }}
-                  />
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#44ACFF]" />
                 )}
               </motion.button>
             ))}
@@ -235,14 +240,14 @@ export const TrustSection = () => {
 
           {/* Progress Bar */}
           <div className="flex justify-center gap-2 mt-4">
-            {slides.map((slide, index) => (
+            {slides.map((_, index) => (
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
                 className="relative h-1 rounded-full transition-all duration-300"
                 style={{
                   width: currentIndex === index ? '32px' : '16px',
-                  background: currentIndex === index ? slide.color : '#E5E7EB'
+                  background: currentIndex === index ? '#44ACFF' : '#E5E7EB'
                 }}
               >
                 {currentIndex === index && (
@@ -250,8 +255,7 @@ export const TrustSection = () => {
                     initial={{ width: 0 }}
                     animate={{ width: '100%' }}
                     transition={{ duration: 4, ease: 'linear' }}
-                    className="absolute inset-0 rounded-full"
-                    style={{ background: slide.color }}
+                    className="absolute inset-0 rounded-full bg-[#44ACFF]"
                   />
                 )}
               </button>
@@ -351,13 +355,6 @@ export const ServicesSection = () => {
               Carefully designed for every stage of early learning. From toddler explorations to the foundations of upper primary, our programs grow with your child.
             </p>
 
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              className="px-8 py-3.5 bg-[#44ACFF] text-white rounded-full text-sm font-medium hover:bg-[#3b9ae0] transition-colors shadow-md uppercase tracking-widest font-bold"
-            >
-              Explore Programs
-            </motion.button>
           </motion.div>
 
           <motion.div
@@ -391,6 +388,7 @@ export const ServicesSection = () => {
           className="lg:col-span-7 grid grid-cols-3 grid-rows-3 gap-3 aspect-square w-full max-w-xl mx-auto"
         >
 
+          {/* Grow - Decorative element */}
           <motion.div variants={itemVariants} className="bg-[#ECB65F] opacity-90 rounded-none flex items-center justify-center p-4 relative overflow-hidden group">
             <motion.div 
               whileHover={{ scale: 1.1, rotate: 180 }}
@@ -401,34 +399,63 @@ export const ServicesSection = () => {
             </motion.div>
           </motion.div>
 
+          {/* Toddler Class - using toddlerClass image from slides */}
           <motion.div variants={itemVariants} className="col-span-2 relative overflow-hidden bg-gray-100 group rounded-none">
-            <Image src="/assets/toddler-class.png" alt="Toddler Class" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+            <Image 
+              src={toddlerClass} 
+              alt="Toddler Class" 
+              fill 
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" 
+              sizes="(max-width: 768px) 50vw, 33vw" 
+            />
             <motion.span whileHover={{ y: -2, scale: 1.05 }} className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-medium tracking-wide shadow-sm text-black pointer-events-none uppercase font-bold">
               18MO – 3YRS
             </motion.span>
           </motion.div>
 
+          {/* Pre-School - using preSchool image from slides */}
           <motion.div variants={itemVariants} className="row-span-2 relative overflow-hidden bg-gray-100 group rounded-none">
-            <Image src="/assets/pre-school.png" alt="Preschool" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+            <Image 
+              src={preSchool} 
+              alt="Preschool" 
+              fill 
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" 
+              sizes="(max-width: 768px) 33vw, 25vw" 
+            />
             <motion.span whileHover={{ y: -2, scale: 1.05 }} className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-medium tracking-wide shadow-sm text-black pointer-events-none uppercase font-bold">
               3 – 6 YRS
             </motion.span>
           </motion.div>
 
+          {/* Primary School - using primarySchool image from slides */}
           <motion.div variants={itemVariants} className="col-span-2 relative overflow-hidden bg-gray-100 group rounded-none">
-            <Image src="/assets/primary-school.png" alt="Primary School" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+            <Image 
+              src={primarySchool} 
+              alt="Primary School" 
+              fill 
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" 
+              sizes="(max-width: 768px) 50vw, 33vw" 
+            />
             <motion.span whileHover={{ y: -2, scale: 1.05 }} className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-medium tracking-wide shadow-sm text-black pointer-events-none uppercase font-bold">
               6 – 14 YRS
             </motion.span>
           </motion.div>
 
+          {/* Enrichment Activities - using school1 image from slides */}
           <motion.div variants={itemVariants} className="relative overflow-hidden bg-gray-100 group rounded-none">
-            <Image src="/assets/enrichment-activities.png" alt="Enrichment" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+            <Image 
+              src={school1} 
+              alt="Enrichment" 
+              fill 
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" 
+              sizes="(max-width: 768px) 33vw, 25vw" 
+            />
             <motion.span whileHover={{ y: -2, scale: 1.05 }} className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-medium tracking-wide shadow-sm text-black pointer-events-none uppercase font-bold">
               All Ages
             </motion.span>
           </motion.div>
 
+          {/* Decorative star */}
           <motion.div
             variants={itemVariants}
             whileHover={{ rotate: 90, scale: 1.1 }}
@@ -443,10 +470,18 @@ export const ServicesSection = () => {
             </motion.span>
           </motion.div>
 
+          {/* Classrooms - using classrooms image from slides */}
           <motion.div variants={itemVariants} className="relative overflow-hidden bg-gray-100 group rounded-none">
-            <Image src="/assets/Classrooms-designed-for-learning.png" alt="Classrooms" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+            <Image 
+              src={classrooms} 
+              alt="Classrooms" 
+              fill 
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" 
+              sizes="(max-width: 768px) 33vw, 25vw" 
+            />
           </motion.div>
 
+          {/* Decorative circles */}
           <motion.div variants={itemVariants} className="bg-[#6D9E51] flex items-center justify-center relative overflow-hidden group">
             <motion.div
               whileHover={{ x: 20, scale: 1.1 }}

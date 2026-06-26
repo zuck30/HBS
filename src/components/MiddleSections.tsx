@@ -5,14 +5,56 @@ import { ArrowUpRight, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
+// Import images
+import school1 from '../assets/school-1.png';
+import school2 from '../assets/kid-in-library.png';
+import football from '../assets/sports-club.png';
+import pools from '../assets/hbs-sport.png';
+import toddlerClass from '../assets/toddler-class.png';
+import preSchool from '../assets/tab-6.jpg';
+import primarySchool from '../assets/primary-school.png';
+import classrooms from '../assets/Classrooms-designed-for-learning.png';
+import culturalHeritage from '../assets/cultural-heritage.png';
+import kidsMeals from '../assets/kids-with-meals.png';
+
 export const CommunicationSection = () => {
   const sections = [
-    { name: 'Nursery Classrooms', count: '01', href: '/life' },
-    { name: 'Modern Library', count: '02', href: '/life' },
-    { name: 'Computer Labs', count: '03', href: '/life' },
-    { name: 'Sports Courts', count: '04', href: '/life' },
-    { name: 'Swimming Pools', count: '05', href: '/life' },
-    { name: 'Dining Hall', count: '06', href: '/life' },
+    { 
+      name: 'Nursery Classrooms', 
+      count: '01', 
+      href: '/life',
+      image: toddlerClass 
+    },
+    { 
+      name: 'Modern Library', 
+      count: '02', 
+      href: '/life',
+      image: school2 
+    },
+    { 
+      name: 'Computer Labs', 
+      count: '03', 
+      href: '/life',
+      image: classrooms 
+    },
+    { 
+      name: 'Sports Courts', 
+      count: '04', 
+      href: '/life',
+      image: football 
+    },
+    { 
+      name: 'Swimming Pools', 
+      count: '05', 
+      href: '/life',
+      image: pools 
+    },
+    { 
+      name: 'Dining Hall', 
+      count: '06', 
+      href: '/life',
+      image: kidsMeals 
+    },
   ];
 
   return (
@@ -37,13 +79,23 @@ export const CommunicationSection = () => {
               key={i}
               className="group p-8 border-r border-b border-neutral-200 flex flex-col justify-between aspect-[4/3] bg-[#fcfcfc] hover:bg-white transition-all duration-300 relative overflow-hidden"
             >
-              <div className="flex items-start justify-between">
+              {/* Background Image */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500">
+                <Image
+                  src={section.image}
+                  alt={section.name}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+
+              <div className="flex items-start justify-between relative z-10">
                 <span className="font-mono text-xs text-neutral-300 group-hover:text-neutral-900 transition-colors duration-300 font-medium">
                   {section.count}
                 </span>
               </div>
 
-              <div className="flex items-end justify-between mt-auto">
+              <div className="flex items-end justify-between mt-auto relative z-10">
                 <h3 className="text-lg font-medium text-neutral-900 tracking-tight uppercase">
                   {section.name}
                 </h3>
@@ -83,7 +135,7 @@ export const ApplicationSection = () => {
           <div className="lg:col-span-7 flex flex-col justify-between group cursor-pointer">
             <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-50 border border-neutral-200">
               <Image
-                src="/assets/cultural-heritage.png"
+                src={culturalHeritage}
                 alt="Festivals"
                 fill
                 className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 ease-in-out"
@@ -93,7 +145,7 @@ export const ApplicationSection = () => {
               <div>
                 <h3 className="text-xl font-medium text-neutral-900 tracking-tight uppercase">Performing Arts & Festivals</h3>
                 <p className="text-neutral-500 text-sm font-light mt-2 max-w-md leading-relaxed">
-                  Students celebrate their heritage while learning to appreciate others — building well-rounded global citizens.
+                  Students celebrate their heritage while learning to appreciate others building well-rounded global citizens.
                 </p>
               </div>
               <span className="text-xs font-medium text-neutral-400 bg-neutral-50 px-2.5 py-1 border border-neutral-200 rounded uppercase">Annual</span>
@@ -103,7 +155,7 @@ export const ApplicationSection = () => {
           <div className="lg:col-span-5 flex flex-col justify-between group cursor-pointer lg:pt-20">
             <div className="relative aspect-[4/5] w-full overflow-hidden bg-neutral-50 border border-neutral-200">
               <Image
-                src="/assets/kids-with-meals.png"
+                src={kidsMeals}
                 alt="Meals"
                 fill
                 className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 ease-in-out"
@@ -164,7 +216,7 @@ export const DataIntelligenceSection = () => {
             </h2>
 
             <p className="text-neutral-500 text-sm leading-relaxed font-light">
-              We layer inquiry-based learning and modern pedagogy on top of the national curriculum — drawing on leading international approaches.
+              We layer inquiry-based learning and modern pedagogy on top of the national curriculum drawing on leading international approaches.
             </p>
           </div>
 
