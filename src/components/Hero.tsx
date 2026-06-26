@@ -4,23 +4,29 @@ import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
+import Image from 'next/image';
+import heroImage from '../assets/hero.png';
 
 export const Hero = () => {
   const { t } = useLanguage();
-  const heroBackgroundUrl = '/assets/school-1.png';
 
   return (
     <section className="relative min-h-screen w-full bg-[#f6f5f1] font-sans antialiased overflow-hidden flex flex-col justify-center items-center px-6 selection:bg-[#44ACFF] selection:text-white">
+      {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${heroBackgroundUrl})` }}
+        <Image
+          src={heroImage}
+          alt="HBS Campus"
+          fill
+          className="object-cover"
+          priority
+          sizes="100vw"
+          quality={100}
         />
-
         <div className="absolute inset-0 bg-white/85 backdrop-blur-[1px]" />
       </div>
 
-
+      {/* Grid Pattern Overlay */}
       <div className="absolute inset-0 z-10 opacity-[0.07] pointer-events-none" style={{
         backgroundImage: `
           linear-gradient(to right, #000 1px, transparent 1px),
@@ -30,15 +36,14 @@ export const Hero = () => {
         backgroundPosition: 'center center'
       }} />
 
-
+      {/* Content */}
       <div className="relative z-20 max-w-4xl mx-auto text-center flex flex-col items-center justify-center">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="mb-4"
-        >
-        </motion.div>
+        />
 
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
@@ -50,7 +55,6 @@ export const Hero = () => {
           <span className="text-[#44ACFF]">Established Dar es Salaam</span>
         </motion.h1>
 
-
         <motion.p
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -59,7 +63,6 @@ export const Hero = () => {
         >
           {t('hero.tagline')} {t('hero.description')}
         </motion.p>
-
 
         <motion.div
           initial={{ opacity: 0, y: 15 }}
