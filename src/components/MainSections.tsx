@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { ChevronLeft, ChevronRight, Pause, Play, Maximize2 } from 'lucide-react';
 
 // Import HBS images
-import school1 from '../assets/enrichment-activities.png';
+import school1 from '../assets/practical-hands-on.png';
 import school2 from '../assets/school-2.png';
 import football from '../assets/sports-club.png';
 import pools from '../assets/hbs-sport.png';
