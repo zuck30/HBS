@@ -4,14 +4,13 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Lock, Mail, UserPlus, LogIn } from 'lucide-react';
+import { Lock, Mail, LogIn } from 'lucide-react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [isRegistering, setIsRegistering] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -34,50 +33,35 @@ export default function LoginPage() {
     checkUser();
   }, [router]);
 
-  const handleAuth = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
-    if (isRegistering) {
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-      });
-      if (error) {
-        setError(error.message);
-        setLoading(false);
-      } else {
-        alert('Check your email for confirmation link!');
-        setIsRegistering(false);
-        setLoading(false);
-      }
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      setError(error.message);
+      setLoading(false);
     } else {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', user.id)
+          .single();
 
-      if (error) {
-        setError(error.message);
-        setLoading(false);
-      } else {
-        const { data: { user } } = await supabase.auth.getUser();
-        if (user) {
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('role')
-            .eq('id', user.id)
-            .single();
-
-          if (['super_admin', 'admin', 'moderator'].includes(profile?.role)) {
-            router.push('/admin');
-          } else {
-            router.push('/');
-          }
+        if (['super_admin', 'admin', 'moderator'].includes(profile?.role)) {
+          router.push('/admin');
         } else {
           router.push('/');
         }
+      } else {
+        router.push('/');
       }
     }
   };
@@ -87,15 +71,17 @@ export default function LoginPage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-md w-full bg-white p-10 rounded-[40px] shadow-2xl border border-neutral-100"
+        className="max-w-md w-full bg-white p-10 shadow-2xl border border-neutral-200"
       >
         <div className="flex flex-col items-center mb-10 text-center">
           <img src="/HBSlogo.png" alt="HBS Logo" className="h-16 w-auto mb-6" />
-          <h1 className="text-2xl font-bold text-[#44ACFF] uppercase tracking-tight">{isRegistering ? 'Create Your Account' : 'Welcome Back'}</h1>
+          <h1 className="text-2xl font-bold text-[#44ACFF] uppercase tracking-tight">
+            Welcome Back
+          </h1>
           <p className="text-xs text-neutral-400 font-medium uppercase tracking-widest mt-2">HBS Admin Portal</p>
         </div>
 
-        <form onSubmit={handleAuth} className="space-y-6">
+        <form onSubmit={handleLogin} className="space-y-6">
           <div className="space-y-2">
             <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Email Address</label>
             <div className="relative">
@@ -105,7 +91,7 @@ export default function LoginPage() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-12 pr-6 py-4 rounded-2xl border border-neutral-100 outline-none focus:ring-1 focus:ring-[#44ACFF] transition-all bg-neutral-50 font-medium text-sm"
+                className="w-full pl-12 pr-6 py-4 border border-neutral-200 outline-none focus:ring-1 focus:ring-[#44ACFF] transition-all bg-neutral-50 font-medium text-sm"
                 placeholder="you@hbs.ac.tz"
               />
             </div>
@@ -120,7 +106,7 @@ export default function LoginPage() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-12 pr-6 py-4 rounded-2xl border border-neutral-100 outline-none focus:ring-1 focus:ring-[#44ACFF] transition-all bg-neutral-50 font-medium text-sm"
+                className="w-full pl-12 pr-6 py-4 border border-neutral-200 outline-none focus:ring-1 focus:ring-[#44ACFF] transition-all bg-neutral-50 font-medium text-sm"
                 placeholder="••••••••"
               />
             </div>
@@ -131,22 +117,13 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#44ACFF] text-white py-5 rounded-2xl font-bold uppercase tracking-widest hover:bg-[#ECB65F] transition-all shadow-xl shadow-[#44ACFF]/10 flex items-center justify-center gap-2"
+            className="w-full bg-[#44ACFF] text-white py-5 font-bold uppercase tracking-widest hover:bg-[#ECB65F] transition-all shadow-xl flex items-center justify-center gap-2"
           >
-            {isRegistering ? <UserPlus size={18} /> : <LogIn size={18} />}
-            {loading ? 'Processing...' : (isRegistering ? 'Register' : 'Login')}
+            <LogIn size={18} />
+            {loading ? 'Processing...' : 'Login'}
           </button>
         </form>
-
-        <div className="mt-8 pt-6 border-t border-neutral-50 text-center">
-          <button
-            onClick={() => setIsRegistering(!isRegistering)}
-            className="text-[10px] font-bold text-[#ECB65F] hover:underline uppercase tracking-widest"
-          >
-            {isRegistering ? 'Already have an account? Login' : 'Need an account? Contact Super Admin'}
-          </button>
-        </div>
       </motion.div>
     </div>
   );
-}
+} 

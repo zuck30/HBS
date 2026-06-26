@@ -4,11 +4,12 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 
-// Import with exact filenames from src/assets/
-import toddlerClass from '../assets/toddler-class.png';
-import preSchool from '../assets/pre-school.png';
-import primarySchool from '../assets/primary-school.png';
-import enrichment from '../assets/enrichment-activities.png';
+// Import with correct path from src/app/programs/ to src/assets/
+import toddlerClass from '../../assets/toddler-class.png';
+import preSchool from '../../assets/tab-6.jpg';
+import primarySchool from '../../assets/primary-school.png';
+import enrichmentActivities from '../../assets/enrichment-activities.png';
+import kidsInClass from '../../assets/kids-in-class-with-computer.png';
 
 export default function ProgramsPage() {
   const { t } = useLanguage();
@@ -46,7 +47,15 @@ export default function ProgramsPage() {
       subtitle: 'Enrichment activities: talents found, talents grown.',
       desc: 'Beyond the core curriculum, a rich programme of clubs and activities helps every child discover what they love. From coding and robotics to chess, drama, and languages, enrichment is woven through the school week, building confidence, creativity, and well rounded young people.',
       points: ['Coding', 'Robotics', 'Public speaking', 'Chess', 'Drama', 'Choir', 'Dance', 'French', 'Mandarin'],
-      image: enrichment
+      image: enrichmentActivities
+    },
+    {
+      title: 'AI LITERACY & COMPUTER',
+      age: 'ALL AGES',
+      subtitle: 'AI Literacy: preparing students for a digital future.',
+      desc: 'In a world shaped by artificial intelligence, we believe every child deserves to understand how it works and how to use it responsibly. Our AI and computer literacy programme introduces students to fundamental concepts in machine learning, digital ethics, and practical computing skills from coding basics to understanding how AI impacts our daily lives. Students learn to think critically about technology, ask the right questions, and become informed, responsible creators in an AI-powered world.',
+      points: ['AI fundamentals', 'Machine learning basics', 'Digital ethics', 'Coding and programming', 'Robotics', 'Data privacy', 'Critical thinking', 'Future careers'],
+      image: kidsInClass
     }
   ];
 

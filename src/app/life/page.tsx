@@ -4,6 +4,16 @@ import Image from 'next/image';
 import { Check } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
+// Import all images from assets
+import classrooms from '../../assets/Classrooms-designed-for-learning.png';
+import kidInLibrary from '../../assets/kid-in-library.png';
+import kidsInClass from '../../assets/kids-in-class-with-computer.png';
+import sportsClub from '../../assets/sports-club.png';
+import culturalHeritage from '../../assets/cultural-heritage.png';
+import kidsWithMeals from '../../assets/kids-with-meals.png';
+import schoolBus from '../../assets/school-bus.png';
+import dorms from '../../assets/dorms.png';
+
 export default function LifePage() {
   const { t } = useLanguage();
 
@@ -13,56 +23,56 @@ export default function LifePage() {
       subtitle: 'Classrooms designed for learning.',
       desc: 'Spacious, well organised rooms with a limited number of students per class. The open layout encourages movement, collaboration, and meaningful interactions, so every child is seen and every session counts.',
       points: ['Open layout', 'Low ratio', 'Bright and airy'],
-      image: '/assets/Classrooms-designed-for-learning.png'
+      image: classrooms
     },
     {
       title: 'LIBRARY',
       subtitle: 'A library that loves curiosity.',
       desc: 'Soft carpets, cosy seating, and child friendly tables surround a diverse collection of storybooks for every age. It is where a lifelong love of reading begins, with quiet corners for one and story circles for many.',
       points: ['Reading culture', 'All ages', 'Storytime'],
-      image: '/assets/kid-in-library.png'
+      image: kidInLibrary
     },
     {
       title: 'TECHNOLOGY',
       subtitle: 'Technology that opens doors.',
       desc: 'STEM labs, computer rooms, and smart boards bring learning to life. Kid friendly hardware and interactive software prepare students for a digital future, introduced thoughtfully, without losing the magic of childhood.',
       points: ['Smart boards', 'Robotics lab', 'Digital skills'],
-      image: '/assets/kids-in-class-with-computer.png'
+      image: kidsInClass
     },
     {
       title: 'ACTIVE LIFE',
       subtitle: 'Sports, clubs, and performing arts.',
       desc: 'Courts, a football field, a half Olympic swimming pool, and indoor game areas keep bodies moving. Music, drama, and dance programmes help students discover talents, build confidence, and grow into well rounded people.',
       points: ['Football', 'Swimming', 'Music'],
-      image: '/assets/sports-club.png'
+      image: sportsClub
     },
     {
       title: 'COMMUNITY',
       subtitle: 'Cultural heritage and community.',
       desc: 'Through festivals, language programmes, music, dance, and storytelling, we instil identity and global awareness. Students celebrate their own heritage while learning to appreciate others, growing into confident global citizens.',
       points: ['Festivals', 'Languages', 'Performing arts'],
-      image: '/assets/cultural-heritage.png'
+      image: culturalHeritage
     },
     {
       title: 'DINING',
       subtitle: 'Nutritious meals for growing minds.',
       desc: 'Wholesome breakfasts, balanced lunches, light afternoon snacks, and hearty suppers for boarders. Every dish is prepared with quality ingredients in a clean, welcoming dining area.',
       points: ['HACCP', 'Dietitian planned', 'Fresh daily'],
-      image: '/assets/kids-with-meals.png'
+      image: kidsWithMeals
     },
     {
       title: 'TRANSPORT',
       subtitle: 'Safe school transport.',
       desc: 'Well maintained vehicles and trained staff make every ride to and from school comfortable and secure, so parents have peace of mind and students arrive ready to learn.',
       points: ['LATRA compliant', 'Trained drivers', 'Door to door'],
-      image: '/assets/school-bus.png'
+      image: schoolBus
     },
     {
       title: 'BOARDING',
       subtitle: 'Comfortable boarding.',
       desc: 'Spacious dormitories with cosy bedding, personal storage, and a peaceful atmosphere for rest and study. Dedicated supervision fosters independence, discipline, and personal growth, making boarding life supportive and enjoyable.',
       points: ['24/7 supervision', 'Study spaces', 'Home like'],
-      image: '/assets/dorms.png'
+      image: dorms
     }
   ];
 
@@ -101,7 +111,13 @@ export default function LifePage() {
           {sections.map((section, i) => (
             <div key={i} className="flex flex-col bg-white border border-neutral-200 group">
               <div className="relative aspect-video overflow-hidden">
-                <Image src={section.image} alt={section.title} fill className="object-cover transition-transform group-hover:scale-110 duration-700" />
+                <Image 
+                  src={section.image} 
+                  alt={section.title} 
+                  fill 
+                  className="object-cover transition-transform group-hover:scale-110 duration-700" 
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
                 <div className="absolute top-8 left-8">
                   <span className="bg-[#ECB65F] text-white px-4 py-1 text-[10px] font-bold uppercase tracking-widest">
                     {section.title}
