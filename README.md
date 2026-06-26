@@ -41,7 +41,23 @@ This application uses DeepSeek AI for:
 - **Candidate Ranking**: Automatically analyzes and ranks job applicants based on CV data.
 - **Job Generation**: Generates humanized job descriptions for the HBS team.
 
-Ensure you have your `DEEPSEEK_API_KEY` set in your Supabase Edge Function secrets:
+### Environment Setup
+
+#### 1. Frontend Environment (`.env`)
+Create a `.env` file in the root directory based on `.env.example`:
+```bash
+NEXT_PUBLIC_SUPABASE_URL=...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+NEXT_PUBLIC_CHAT_API_URL=...
+NEXT_PUBLIC_RANK_API_URL=...
+NEXT_PUBLIC_GENERATE_JOB_API_URL=...
+DEEPSEEK_API_KEY=...
+BREVO_API_KEY=...
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+```
+
+#### 2. Supabase Secrets
+Ensure your DeepSeek key is available to the Edge Functions:
 ```bash
 supabase secrets set DEEPSEEK_API_KEY=your_key_here
 ```
