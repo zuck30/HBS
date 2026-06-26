@@ -11,15 +11,15 @@ export default function ContactPage() {
   const faqs = [
     {
       q: 'How do I apply?',
-      a: 'Start by sending an enquiry through the form above or by calling our office. We\'ll invite your child for a friendly assessment visit, then guide you through registration and the documents we need.'
+      a: 'Start by sending an enquiry through the form above or by calling our office. We will invite your child for a friendly assessment visit, then guide you through registration and the documents we need.'
     },
     {
       q: 'What is your fee structure?',
-      a: 'Fees vary by programme and by day or boarding place. Our admissions team will share a current fee schedule and any available payment plans during your enquiry — just let us know which programme you\'re interested in.'
+      a: 'Fees vary by programme and by day or boarding place. Our admissions team will share a current fee schedule and any available payment plans during your enquiry: just let us know which programme you are interested in.'
     },
     {
       q: 'Do you offer boarding?',
-      a: 'Yes. We offer comfortable, supervised boarding with cosy dormitories, balanced meals, and structured study time — alongside our day options. Boarding helps build independence in a safe, home-like setting.'
+      a: 'Yes. We offer comfortable, supervised boarding with cosy dormitories, balanced meals, and structured study time: alongside our day options. Boarding helps build independence in a safe, home-like setting.'
     },
     {
       q: 'What ages do you accept?',
@@ -27,7 +27,7 @@ export default function ContactPage() {
     },
     {
       q: 'Can I visit before applying?',
-      a: 'Absolutely and we encourage it. Book a visit and you\'ll meet our teachers and walk through the classrooms, library, and play spaces. Seeing a school day in person is the best way to decide if HBS is right for your family.'
+      a: 'Absolutely and we encourage it. Book a visit and you will meet our teachers and walk through the classrooms, library, and play spaces. Seeing a school day in person is the best way to decide if HBS is right for your family.'
     }
   ];
 
@@ -37,7 +37,7 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto flex flex-col items-center text-center gap-6">
           <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#ECB65F]">ADMISSIONS</span>
           <h1 className="text-4xl md:text-7xl font-bold text-[#44ACFF] uppercase leading-[0.9] max-w-4xl">
-            Let's talk — we'd love to meet your family.
+            Let is talk: we would love to meet your family.
           </h1>
           <p className="text-xl text-neutral-600 font-medium leading-relaxed max-w-3xl">
             Book a visit, ask a question, or apply for admission.
@@ -51,7 +51,7 @@ export default function ContactPage() {
           <div className="lg:col-span-5 flex flex-col gap-12">
             <div className="flex flex-col gap-8">
               <div className="flex gap-6 group">
-                <div className="w-12 h-12 rounded-2xl bg-[#44ACFF] text-[#ECB65F] flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                <div className="w-12 h-12 bg-[#44ACFF] text-[#ECB65F] flex items-center justify-center flex-shrink-0 group-hover:bg-[#ECB65F] group-hover:text-[#44ACFF] transition-all">
                   <MapPin className="w-6 h-6" />
                 </div>
                 <div className="flex flex-col gap-2">
@@ -64,7 +64,7 @@ export default function ContactPage() {
               </div>
 
               <div className="flex gap-6 group">
-                <div className="w-12 h-12 rounded-2xl bg-[#44ACFF] text-[#ECB65F] flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                <div className="w-12 h-12 bg-[#44ACFF] text-[#ECB65F] flex items-center justify-center flex-shrink-0 group-hover:bg-[#ECB65F] group-hover:text-[#44ACFF] transition-all">
                   <Phone className="w-6 h-6" />
                 </div>
                 <div className="flex flex-col gap-2">
@@ -78,7 +78,7 @@ export default function ContactPage() {
               </div>
 
               <div className="flex gap-6 group">
-                <div className="w-12 h-12 rounded-2xl bg-[#44ACFF] text-[#ECB65F] flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                <div className="w-12 h-12 bg-[#44ACFF] text-[#ECB65F] flex items-center justify-center flex-shrink-0 group-hover:bg-[#ECB65F] group-hover:text-[#44ACFF] transition-all">
                   <Mail className="w-6 h-6" />
                 </div>
                 <div className="flex flex-col gap-2">
@@ -90,7 +90,7 @@ export default function ContactPage() {
               </div>
 
               <div className="flex gap-6 group">
-                <div className="w-12 h-12 rounded-2xl bg-[#44ACFF] text-[#ECB65F] flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                <div className="w-12 h-12 bg-[#44ACFF] text-[#ECB65F] flex items-center justify-center flex-shrink-0 group-hover:bg-[#ECB65F] group-hover:text-[#44ACFF] transition-all">
                   <Clock className="w-6 h-6" />
                 </div>
                 <div className="flex flex-col gap-2">
@@ -104,8 +104,7 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="bg-[#44ACFF] p-10 rounded-[40px] text-white flex flex-col gap-6 relative overflow-hidden">
-               <div className="absolute top-0 right-0 w-32 h-32 bg-[#ECB65F]/20 rounded-bl-[100px]" />
+            <div className="bg-[#44ACFF] p-10 text-white flex flex-col gap-6">
                <h3 className="text-2xl font-bold uppercase">Frequently asked questions</h3>
                <div className="flex flex-col gap-4">
                  {faqs.map((faq, i) => (
@@ -130,38 +129,38 @@ export default function ContactPage() {
 
           {/* Form Side */}
           <div className="lg:col-span-7">
-            <div className="bg-white p-12 rounded-[60px] shadow-sm border border-neutral-100 flex flex-col gap-10">
+            <div className="bg-white p-12 shadow-sm border border-neutral-200 flex flex-col gap-10">
               <div className="flex flex-col gap-2">
                 <h2 className="text-3xl font-bold text-[#44ACFF] uppercase">Send us an enquiry</h2>
-                <p className="text-neutral-500 font-medium">We'll get back to you as soon as possible.</p>
+                <p className="text-neutral-500 font-medium">We will get back to you as soon as possible.</p>
               </div>
 
               <form className="flex flex-col gap-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="flex flex-col gap-3">
                     <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">First Name</label>
-                    <input type="text" className="bg-neutral-50 border border-neutral-100 p-5 rounded-3xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#ECB65F]" placeholder="John" />
+                    <input type="text" className="bg-neutral-50 border border-neutral-200 p-5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#ECB65F]" placeholder="Shadrack" />
                   </div>
                   <div className="flex flex-col gap-3">
                     <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">Last Name</label>
-                    <input type="text" className="bg-neutral-50 border border-neutral-100 p-5 rounded-3xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#ECB65F]" placeholder="Doe" />
+                    <input type="text" className="bg-neutral-50 border border-neutral-200 p-5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#ECB65F]" placeholder="Mwalyanga" />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="flex flex-col gap-3">
                     <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">Email Address</label>
-                    <input type="email" className="bg-neutral-50 border border-neutral-100 p-5 rounded-3xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#ECB65F]" placeholder="john@example.com" />
+                    <input type="email" className="bg-neutral-50 border border-neutral-200 p-5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#ECB65F]" placeholder="john@example.com" />
                   </div>
                   <div className="flex flex-col gap-3">
                     <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">Phone Number</label>
-                    <input type="tel" className="bg-neutral-50 border border-neutral-100 p-5 rounded-3xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#ECB65F]" placeholder="+255..." />
+                    <input type="tel" className="bg-neutral-50 border border-neutral-200 p-5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#ECB65F]" placeholder="+255..." />
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-3">
                   <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">Reason for enquiry</label>
-                  <select className="bg-neutral-50 border border-neutral-100 p-5 rounded-3xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#ECB65F] appearance-none">
+                  <select className="bg-neutral-50 border border-neutral-200 p-5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#ECB65F] appearance-none">
                     <option>Admissions</option>
                     <option>Visit / Tour</option>
                     <option>Careers</option>
@@ -172,14 +171,14 @@ export default function ContactPage() {
 
                 <div className="flex flex-col gap-3">
                   <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">Message</label>
-                  <textarea rows={6} className="bg-neutral-50 border border-neutral-100 p-5 rounded-3xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#ECB65F] resize-none" placeholder="Tell us more about your enquiry..." />
+                  <textarea rows={6} className="bg-neutral-50 border border-neutral-200 p-5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#ECB65F] resize-none" placeholder="Tell us more about your enquiry..." />
                 </div>
 
                 <div className="flex flex-col gap-6">
                   <p className="text-[10px] text-neutral-400 font-medium leading-relaxed italic">
                     By sending this enquiry you agree that HBS may contact you about your request. We never share your details.
                   </p>
-                  <button className="w-full py-6 bg-[#44ACFF] text-white rounded-3xl font-bold uppercase tracking-widest hover:bg-[#ECB65F] transition-all shadow-xl flex items-center justify-center gap-3 group">
+                  <button className="w-full py-6 bg-[#44ACFF] text-white font-bold uppercase tracking-widest hover:bg-[#ECB65F] transition-all shadow-xl flex items-center justify-center gap-3 group">
                     Send Enquiry
                     <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                   </button>
