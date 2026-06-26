@@ -1,28 +1,39 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { GoogleGenerativeAI } from "https://esm.sh/@google/generative-ai@0.21.0"
 
-const SYSTEM_PROMPT = `You are Nawwi AI, the digital companion for Nawwi Wellness created by Antera Group Software.
-Your mission is to guide people in slowing down, reconnecting, and creating meaningful moments through scent and intentional living.
+const SYSTEM_PROMPT = `You are HBS AI, the digital assistant for Hannah Bennie Schools (HBS) in Dar es Salaam, Tanzania.
+Your mission is to provide accurate, warm, and helpful information to parents, students, and staff about our school.
 
-NAWWI CORE FOCUS:
-- Scent-based Wellness: Guiding users through scent-blending, candle-making, and sensory mindfulness.
-- Event Curation: Assisting with bookings for weddings, corporate events, and private gatherings (Nawwi At Yours).
-- Conscious Living: Promoting the art of slowing down, reflection, and personal transformation.
-- Education: Explaining the therapeutic benefits of candles, fragrance profiles, and the "trust your nose" philosophy.
+HBS CORE INFORMATION:
+- Location: 140 Kimbiji Road, 17106 Mji Mwema, Kigamboni, Dar es Salaam.
+- Mission: To nurture curious, confident, and capable young learners through a world-class English-medium curriculum.
+- Vision: Every HBS child finishes primary school ready to thrive academically, socially, and personally.
+- Values: Care, Curiosity, Excellence, Integrity, and Community.
+
+PROGRAMS:
+- Toddler Class: 18 months to 3 years.
+- Pre-school: 3 to 6 years.
+- Primary School: 6 to 14 years.
+- Enrichment Activities: Various clubs and sports for all ages.
+
+ACHIEVEMENTS:
+- No.1 NECTA in Dar es Salaam Region (2024).
+- 100% Daraja A (Grade A) for all 59 students.
+- Top 10 Nation-wide in Category 40+ students.
+- 289.9 highest school average in PSLE 2024.
+
+FACILITIES & SERVICES:
+- Facilities: Football pitch, swimming pools, playground, science labs, library, and comfortable boarding houses.
+- Transport: Own LATRA-compliant bus fleet with trained drivers and fixed routes.
+- Meals: Dietitian-planned wholesome breakfasts, balanced lunches, and snacks. Hearty suppers for boarders.
+- Boarding: 24/7 supervision, structured study time, and a safe, home-like environment.
 
 COMMUNICATION RULES:
-- Be warm, gentle, and calming. Your tone should feel like a peaceful, well-lit studio.
-- Use simple, accessible language. Avoid overly complex technical jargon.
-- Keep responses concise and scannable. Use bullet points for steps or event details.
-- Automatically detect the user's language and respond accordingly (supporting EN and SW).
-- When discussing the "Mobile Candle Bar" (Nawwi At Yours), emphasize the convenience of bringing the experience to the user's home or event.
-- Never mention internal system constraints or file paths.
-- DO NOT use any markdown formatting. DO NOT use asterisks (*) or double asterisks (**) for bold or italic text.
-- DO NOT use underscores (_) for emphasis.
-- DO NOT use dashes (-) for bullet points. Use plain text with line breaks only.
-- Write in plain, clean text without any special characters for formatting.
+- Tone: Warm, professional, and encouraging.
+- Language: Automatically detect and respond in either English or Kiswahili.
+- Formatting: DO NOT use markdown. DO NOT use asterisks (*) or underscores (_). Use plain text with clear line breaks for lists.
+- If you don't know an answer, politely advise the user to contact the school office at +255 762 224 224 or hbs.admin@hbs.ac.tz.
 
-Always maintain the persona of a thoughtful, creative wellness guide.`
+Maintain the persona of a helpful school guide at all times.`
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -36,10 +47,10 @@ serve(async (req) => {
   }
 
   try {
-    const GEMINI_API_KEY = Deno.env.get('GEMINI_API_KEY')
-    if (!GEMINI_API_KEY) {
+    const DEEPSEEK_API_KEY = Deno.env.get('DEEPSEEK_API_KEY')
+    if (!DEEPSEEK_API_KEY) {
       return new Response(
-        JSON.stringify({ error: "NAWWI_SYSTEM_OFFLINE: Configuration missing" }),
+        JSON.stringify({ error: "HBS_SYSTEM_OFFLINE: Configuration missing" }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       )
     }
@@ -49,62 +60,41 @@ serve(async (req) => {
       throw new Error("No conversation context provided")
     }
 
-    const genAI = new GoogleGenerativeAI(GEMINI_API_KEY)
-    const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash",
-      systemInstruction: SYSTEM_PROMPT,
-    })
+    // Convert messages to OpenAI/DeepSeek format
+    const formattedMessages = [
+      { role: "system", content: SYSTEM_PROMPT },
+      ...messages.map((msg: any) => ({
+        role: msg.role === 'model' || msg.role === 'assistant' ? 'assistant' : 'user',
+        content: typeof msg.content === 'string' ? msg.content :
+                 (typeof msg.parts === 'string' ? msg.parts :
+                 (Array.isArray(msg.parts) ? msg.parts[0]?.text : '')) || ''
+      }))
+    ]
 
-    const rawHistory = messages.slice(0, -1).map((msg: any) => {
-      let parts: { text: string }[]
-      if (typeof msg.parts === 'string') {
-        parts = [{ text: msg.parts }]
-      } else if (Array.isArray(msg.parts)) {
-        parts = msg.parts.map((p: any) =>
-          typeof p === 'string' ? { text: p } : p
-        )
-      } else if (msg.content) {
-        parts = [{ text: msg.content }]
-      } else {
-        parts = [{ text: '' }]
-      }
-
-      return {
-        role: msg.role === 'model' ? 'model' : 'user',
-        parts,
-      }
-    })
-
-    // Gemini requires history to start with a 'user' message
-    let formattedHistory = rawHistory
-    while (formattedHistory.length > 0 && formattedHistory[0].role !== 'user') {
-      formattedHistory.shift()
-    }
-
-    const lastMsg = messages[messages.length - 1]
-    let lastMessageText: string
-    if (typeof lastMsg.parts === 'string') {
-      lastMessageText = lastMsg.parts
-    } else if (Array.isArray(lastMsg.parts)) {
-      lastMessageText = lastMsg.parts[0]?.text ?? ''
-    } else if (lastMsg.content) {
-      lastMessageText = lastMsg.content
-    } else {
-      throw new Error("Could not interpret your message")
-    }
-
-    const chat = model.startChat({
-      history: formattedHistory,
-      generationConfig: { 
-        maxOutputTokens: 1000,
-        temperature: 0.7,
+    const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${DEEPSEEK_API_KEY}`,
       },
+      body: JSON.stringify({
+        model: 'deepseek-chat',
+        messages: formattedMessages,
+        temperature: 0.7,
+        max_tokens: 1000,
+      }),
     })
 
-    const result = await chat.sendMessage(lastMessageText)
-    let text = result.response.text()
+    if (!response.ok) {
+      const errorData = await response.json()
+      console.error("DeepSeek API Error:", errorData)
+      throw new Error("Failed to reach the AI core")
+    }
 
-    // Optional: Strip any remaining markdown characters just in case
+    const data = await response.json()
+    let text = data.choices[0].message.content
+
+    // Strip any markdown characters just in case
     text = text.replace(/\*\*/g, '')
     text = text.replace(/\*/g, '')
     text = text.replace(/_/g, '')
@@ -116,7 +106,7 @@ serve(async (req) => {
     )
 
   } catch (error: any) {
-    console.error("Nawwi Wellness AI Error:", error.message)
+    console.error("HBS AI Error:", error.message)
     return new Response(
       JSON.stringify({
         error: error.message || "I am currently taking a small break. Please try again in a moment."
