@@ -16,7 +16,7 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
 });
 
-const instrumentSerif = Instrument_Serif({
+const instrumentSerif = Instrument_Serif({ 
   variable: "--font-serif",
   weight: "400",
   subsets: ["latin"],
