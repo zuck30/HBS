@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FileText, Search, Filter, ChevronLeft, ChevronRight, Download, Brain, User, Mail, Phone, Calendar, Sparkles } from 'lucide-react';
+import { FileText, Search, Filter, ChevronLeft, ChevronRight, Download, Brain, User, Mail, Phone, Calendar } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { deepseekRankCandidates } from '@/lib/deepseek';
 import Link from 'next/link';
@@ -373,7 +373,7 @@ export default function AdminApplications() {
                          {/* AI Insights Section */}
                          <div className="bg-[#44ACFF] p-6 rounded-sm text-white flex flex-col gap-3 relative overflow-hidden">
                             <div className="absolute top-0 right-0 w-16 h-16 bg-[#ECB65F]/20 rounded-bl-full flex items-center justify-center">
-                               <Sparkles size={18} className="text-[#ECB65F]" />
+                               <Brain size={18} className="text-[#ECB65F]" />
                             </div>
                             <h4 className="text-[10px] font-bold uppercase tracking-widest text-[#ECB65F]">AI Candidate Analysis</h4>
                             
