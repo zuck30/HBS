@@ -46,38 +46,68 @@ export default function CareersPage() {
 
   const handleApply = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!cvFile || !selectedJob) return;
-
-    setIsApplying(true);
-    const fileName = `${Date.now()}-${cvFile.name}`;
-    const { data: uploadData, error: uploadError } = await supabase.storage
-      .from('cvs')
-      .upload(fileName, cvFile);
-
-    if (uploadError) {
-      alert('Failed to upload CV');
-      setIsApplying(false);
+    if (!cvFile || !selectedJob) {
+      alert('Please select a CV file');
       return;
     }
 
-    const { error: appError } = await supabase.from('job_applications').insert({
-      job_id: selectedJob.id,
-      full_name: formData.fullName,
-      email: formData.email,
-      phone: formData.phone,
-      cover_letter: formData.coverLetter,
-      cv_path: uploadData.path
-    });
-
-    if (appError) {
-      alert('Failed to submit application');
-    } else {
-      alert('Application submitted successfully!');
-      setFormData({ fullName: '', email: '', phone: '', coverLetter: '' });
-      setCvFile(null);
-      setSelectedJob(null);
+    // Validate file type
+    if (cvFile.type !== 'application/pdf') {
+      alert('Please upload a PDF file only');
+      return;
     }
-    setIsApplying(false);
+
+    // Validate file size (max 5MB)
+    if (cvFile.size > 5 * 1024 * 1024) {
+      alert('File size must be less than 5MB');
+      return;
+    }
+
+    setIsApplying(true);
+    
+    try {
+      const fileName = `${Date.now()}-${cvFile.name.replace(/\s/g, '_')}`;
+      
+      // Upload CV to Supabase Storage (private bucket)
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('cvs')
+        .upload(fileName, cvFile, {
+          cacheControl: '3600',
+          upsert: false
+        });
+
+      if (uploadError) {
+        console.error('Upload error details:', uploadError);
+        alert(`Failed to upload CV: ${uploadError.message}`);
+        setIsApplying(false);
+        return;
+      }
+
+      // Submit application with the file path
+      const { error: appError } = await supabase.from('job_applications').insert({
+        job_id: selectedJob.id,
+        full_name: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        cover_letter: formData.coverLetter,
+        cv_path: fileName // Store the filename
+      });
+
+      if (appError) {
+        console.error('Application error details:', appError);
+        alert('Failed to submit application: ' + appError.message);
+      } else {
+        alert('Application submitted successfully!');
+        setFormData({ fullName: '', email: '', phone: '', coverLetter: '' });
+        setCvFile(null);
+        setSelectedJob(null);
+      }
+    } catch (error) {
+      console.error('Unexpected error:', error);
+      alert('An unexpected error occurred. Please try again.');
+    } finally {
+      setIsApplying(false);
+    }
   };
 
   return (
@@ -155,7 +185,7 @@ export default function CareersPage() {
                          )}
                       </div>
 
-                      {/* Job Description - Expandable */}
+                      {/* Job Description */}
                       {job.description && (
                         <div className="mt-2">
                           <button
