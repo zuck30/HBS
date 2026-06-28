@@ -202,9 +202,7 @@ export const WhySection = () => {
                 </p>
               </div>
 
-              <div className="flex justify-end mt-4">
-                <div className="w-1.5 h-1.5 bg-neutral-200 group-hover:bg-[#B331F1] transition-colors duration-300" />
-              </div>
+
             </div>
           ))}
         </div>
