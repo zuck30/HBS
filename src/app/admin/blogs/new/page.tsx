@@ -35,8 +35,8 @@ export default function NewBlogPost() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] p-12 font-sans">
-      <div className="max-w-5xl mx-auto">
+    <div className="min-h-screen bg-[#f8f9fa] font-sans selection:bg-[#44ACFF] selection:text-white pt-20">
+      <div className="max-w-7xl mx-auto px-6">
         <header className="flex justify-between items-end mb-12">
           <div className="flex flex-col gap-2">
             <Link href="/admin/blogs" className="flex items-center gap-2 text-[10px] font-bold text-neutral-400 uppercase tracking-[0.2em] hover:text-[#44ACFF] transition-colors mb-4">
@@ -47,16 +47,16 @@ export default function NewBlogPost() {
           </div>
         </header>
 
-        <form onSubmit={handleSave} className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-           <div className="lg:col-span-8 flex flex-col gap-8">
-              <div className="bg-white p-10 rounded-[40px] shadow-sm border border-neutral-100 flex flex-col gap-8">
+        <form onSubmit={handleSave} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+           <div className="lg:col-span-2 flex flex-col gap-8">
+              <div className="bg-white p-8 rounded-sm border border-neutral-100 shadow-sm flex flex-col gap-6">
                  <div className="flex flex-col gap-3">
                     <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Article Title</label>
                     <input
                       required
                       type="text"
                       placeholder="e.g. HBS Ranks No.1 in NECTA 2024"
-                      className="w-full bg-neutral-50 border border-neutral-100 p-5 rounded-2xl text-xl font-bold text-[#44ACFF] focus:outline-none focus:ring-1 focus:ring-[#44ACFF]"
+                      className="w-full bg-neutral-50 border border-neutral-200 p-4 rounded-sm text-lg font-bold text-[#44ACFF] focus:outline-none focus:ring-1 focus:ring-[#44ACFF]"
                       value={formData.title}
                       onChange={e => setFormData({...formData, title: e.target.value})}
                     />
@@ -67,7 +67,7 @@ export default function NewBlogPost() {
                       required
                       rows={20}
                       placeholder="Write your article here..."
-                      className="w-full bg-neutral-50 border border-neutral-100 p-8 rounded-3xl text-sm font-medium focus:outline-none focus:ring-1 focus:ring-[#44ACFF] resize-none leading-relaxed"
+                      className="w-full bg-neutral-50 border border-neutral-200 p-6 rounded-sm text-sm font-medium focus:outline-none focus:ring-1 focus:ring-[#44ACFF] resize-none leading-relaxed"
                       value={formData.content}
                       onChange={e => setFormData({...formData, content: e.target.value})}
                     />
@@ -75,14 +75,14 @@ export default function NewBlogPost() {
               </div>
            </div>
 
-           <div className="lg:col-span-4 flex flex-col gap-8">
-              <div className="bg-white p-8 rounded-[40px] shadow-sm border border-neutral-100 flex flex-col gap-8">
+           <div className="lg:col-span-1 flex flex-col gap-6">
+              <div className="bg-white p-8 rounded-sm border border-neutral-100 shadow-sm flex flex-col gap-6">
                  <h3 className="text-sm font-bold text-[#44ACFF] uppercase tracking-widest border-b border-neutral-50 pb-4">Publishing Options</h3>
 
                  <div className="flex flex-col gap-3">
                     <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Status</label>
                     <select
-                      className="bg-neutral-50 border border-neutral-100 p-4 rounded-2xl text-xs font-bold focus:outline-none focus:ring-1 focus:ring-[#44ACFF] appearance-none"
+                      className="bg-neutral-50 border border-neutral-200 p-4 rounded-sm text-xs font-bold focus:outline-none focus:ring-1 focus:ring-[#44ACFF] appearance-none"
                       value={formData.status}
                       onChange={e => setFormData({...formData, status: e.target.value})}
                     >
@@ -94,7 +94,7 @@ export default function NewBlogPost() {
                  <div className="flex flex-col gap-3">
                     <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Category</label>
                     <select
-                      className="bg-neutral-50 border border-neutral-100 p-4 rounded-2xl text-xs font-bold focus:outline-none focus:ring-1 focus:ring-[#44ACFF] appearance-none"
+                      className="bg-neutral-50 border border-neutral-200 p-4 rounded-sm text-xs font-bold focus:outline-none focus:ring-1 focus:ring-[#44ACFF] appearance-none"
                       value={formData.category}
                       onChange={e => setFormData({...formData, category: e.target.value})}
                     >
@@ -113,7 +113,7 @@ export default function NewBlogPost() {
                        <input
                          type="text"
                          placeholder="https://..."
-                         className="w-full bg-neutral-50 border border-neutral-100 py-4 pl-12 pr-6 rounded-2xl text-xs font-medium focus:outline-none focus:ring-1 focus:ring-[#44ACFF]"
+                         className="w-full bg-neutral-50 border border-neutral-200 py-4 pl-12 pr-6 rounded-sm text-xs font-medium focus:outline-none focus:ring-1 focus:ring-[#44ACFF]"
                          value={formData.featured_image}
                          onChange={e => setFormData({...formData, featured_image: e.target.value})}
                        />
@@ -123,7 +123,7 @@ export default function NewBlogPost() {
                  <button
                   type="submit"
                   disabled={saving}
-                  className="w-full py-5 bg-[#44ACFF] text-white rounded-2xl font-bold uppercase tracking-widest hover:bg-[#ECB65F] transition-all shadow-xl shadow-[#44ACFF]/20 flex items-center justify-center gap-3"
+                  className="w-full py-4 bg-[#44ACFF] text-white rounded-sm font-bold uppercase tracking-widest hover:bg-[#ECB65F] transition-all shadow-sm flex items-center justify-center gap-3"
                  >
                    <Save size={18} /> {saving ? 'Saving...' : 'Save Article'}
                  </button>
