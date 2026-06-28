@@ -117,12 +117,11 @@ export default function AdminApplications() {
       const arrayBuffer = await fileData.arrayBuffer();
       const { text, parsedData, wordCount } = await parseCVAction(arrayBuffer);
       
-      const uniqueWords = new Set(text.toLowerCase().split(/\s+/)).size;
       const lines = text.split('\n').filter((line: string) => line.trim().length > 0);
+      const uniqueWords = new Set(text.toLowerCase().split(/\s+/)).size;
       
-      // Calculate a more meaningful score based on AI parsed data if available
-      let score = Math.min(Math.round((wordCount / 100) + (uniqueWords / 50) + (lines.length / 10)), 100);
-      
+      const score = Math.min(Math.round((wordCount / 100) + (uniqueWords / 50) + (lines.length / 10)), 100);
+
       const { error } = await supabase
         .from('job_applications')
         .update({ 
