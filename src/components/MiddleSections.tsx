@@ -202,7 +202,6 @@ export const DataIntelligenceSection = () => {
                 <h4 className="text-sm font-medium text-neutral-800 group-hover:text-neutral-900 transition-colors tracking-tight uppercase">
                   {v.title}
                 </h4>
-                <div className="w-1.5 h-1.5 bg-neutral-200 group-hover:bg-[#ECB65F] transition-colors duration-300" />
               </div>
             </div>
           ))}
