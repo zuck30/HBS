@@ -63,10 +63,8 @@ export default function AdminApplications() {
       const jobApps = apps.filter(a => a.job_id === selectedApp.job_id);
       const jobDesc = jobApps[0]?.jobs?.description || '';
 
-      // Get insights from DeepSeek
       const insights = await deepseekRankCandidates(jobDesc, jobApps);
       
-      // Save insights to the database
       const { error } = await supabase
         .from('candidate_rankings')
         .insert({
@@ -104,7 +102,6 @@ export default function AdminApplications() {
         return;
       }
 
-      // Get the CV from storage
       const { data: fileData, error: fileError } = await supabase.storage
         .from('cvs')
         .download(cvPath);
@@ -116,27 +113,38 @@ export default function AdminApplications() {
         return;
       }
 
-      // Read the file content
       const text = await fileData.text();
       
-      // Simple text parsing to extract information
-      const lines = text.split('\n').filter(line => line.trim());
-      const extractedData = {
-        skills: extractSkills(text),
-        experience: extractExperience(text),
-        education: extractEducation(text),
-        extractedText: text.substring(0, 1000)
-      };
+      const lines = text.split('\n').filter(line => line.trim().length > 0);
+      const wordCount = text.split(/\s+/).length;
+      const uniqueWords = new Set(text.toLowerCase().split(/\s+/)).size;
+      
+      const yearsMatches = text.match(/(\d+)\s*(?:years?|yrs?)/gi);
+      const experience = yearsMatches ? yearsMatches.join(', ') : 'Not specified';
+      
+      const emailMatches = text.match(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g);
+      const phoneMatches = text.match(/(?:\+?255|0)[\s\-]?[67]\d{7,8}/g);
+      
+      const degreeMatches = text.match(/\b(Bachelor|Master|PhD|Diploma|Certificate|BSc|BA|MSc|MA|PGCE|QTS)\b/gi);
+      const education = degreeMatches ? degreeMatches.join(', ') : 'Not specified';
+      
+      const score = Math.min(Math.round((wordCount / 100) + (uniqueWords / 50) + (lines.length / 10)), 100);
 
-      // Generate AI score based on content analysis
-      const aiScore = calculateAIScore(text);
-
-      // Update the application with parsed data
       const { error } = await supabase
         .from('job_applications')
         .update({ 
-          ai_score: aiScore,
-          parsed_data: extractedData
+          ai_score: score,
+          parsed_data: {
+            lines: lines.length,
+            wordCount: wordCount,
+            uniqueWords: uniqueWords,
+            experience: experience,
+            email: emailMatches ? emailMatches[0] : null,
+            phone: phoneMatches ? phoneMatches[0] : null,
+            education: education,
+            hasEmail: emailMatches ? true : false,
+            hasPhone: phoneMatches ? true : false
+          }
         })
         .eq('id', selectedApp.id);
 
@@ -144,7 +152,7 @@ export default function AdminApplications() {
         console.error('Error updating application:', error);
         alert('Failed to save parsed CV data');
       } else {
-        alert('CV parsed successfully! AI score updated to ' + aiScore + '%');
+        alert('CV parsed successfully! AI score updated to ' + score + '%');
         await fetchApplications();
         const updatedApp = apps.find(a => a.id === selectedApp.id);
         if (updatedApp) setSelectedApp(updatedApp);
@@ -155,47 +163,6 @@ export default function AdminApplications() {
     }
     
     setParsing(false);
-  };
-
-  // Simple extraction functions (you can make these more sophisticated)
-  const extractSkills = (text: string): string[] => {
-    const skills = [];
-    const skillKeywords = ['python', 'javascript', 'react', 'node', 'teaching', 'curriculum', 'management', 'leadership', 'communication', 'problem-solving', 'teamwork', 'organization', 'planning'];
-    const lowerText = text.toLowerCase();
-    
-    skillKeywords.forEach(skill => {
-      if (lowerText.includes(skill)) {
-        skills.push(skill.charAt(0).toUpperCase() + skill.slice(1));
-      }
-    });
-    
-    return skills.length > 0 ? skills : ['Communication', 'Teamwork', 'Problem Solving'];
-  };
-
-  const extractExperience = (text: string): string => {
-    const match = text.match(/(\d+)\s*(?:years?|yrs?)/i);
-    if (match) {
-      return match[1] + '+ years';
-    }
-    return '3+ years';
-  };
-
-  const extractEducation = (text: string): string => {
-    const degrees = ['Bachelor', 'Master', 'PhD', 'Diploma', 'Certificate', 'Degree'];
-    for (const degree of degrees) {
-      if (text.toLowerCase().includes(degree.toLowerCase())) {
-        return degree + '\'s Degree';
-      }
-    }
-    return 'Bachelor\'s Degree';
-  };
-
-  const calculateAIScore = (text: string): number => {
-    // Simple scoring based on text length and content richness
-    const lengthScore = Math.min(text.length / 1000, 30);
-    const keywordScore = Math.min(text.split(' ').filter(w => w.length > 6).length / 20, 30);
-    const diversityScore = Math.min(new Set(text.toLowerCase().split(' ')).size / 100, 40);
-    return Math.round(Math.min(lengthScore + keywordScore + diversityScore, 100));
   };
 
   const handleDownloadCV = async () => {
@@ -284,7 +251,6 @@ export default function AdminApplications() {
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-           {/* List */}
            <div className="lg:col-span-7 flex flex-col gap-4">
               <div className="bg-white p-4 rounded-sm border border-neutral-100 shadow-sm flex items-center justify-between">
                  <div className="relative flex-1 max-w-sm">
@@ -358,7 +324,6 @@ export default function AdminApplications() {
               )}
            </div>
 
-           {/* Detail Panel */}
            <div className="lg:col-span-5">
               <AnimatePresence mode="wait">
                  {selectedApp ? (
@@ -409,7 +374,6 @@ export default function AdminApplications() {
                             </div>
                          </div>
 
-                         {/* AI Insights Section */}
                          <div className="bg-[#44ACFF] p-6 rounded-sm text-white flex flex-col gap-3 relative overflow-hidden">
                             <div className="absolute top-0 right-0 w-16 h-16 bg-[#ECB65F]/20 rounded-bl-full flex items-center justify-center">
                                <Brain size={18} className="text-[#ECB65F]" />
@@ -440,9 +404,12 @@ export default function AdminApplications() {
                                   <div className="mt-2 p-3 bg-white/10 rounded-sm">
                                     <p className="text-[9px] font-bold uppercase tracking-widest text-[#ECB65F] mb-1">Parsed Data</p>
                                     <div className="text-xs text-blue-100/90 leading-relaxed">
-                                      <p><strong>Skills:</strong> {selectedApp.parsed_data.skills?.join(', ') || 'N/A'}</p>
+                                      <p><strong>Word Count:</strong> {selectedApp.parsed_data.wordCount || 'N/A'}</p>
+                                      <p><strong>Unique Words:</strong> {selectedApp.parsed_data.uniqueWords || 'N/A'}</p>
                                       <p><strong>Experience:</strong> {selectedApp.parsed_data.experience || 'N/A'}</p>
                                       <p><strong>Education:</strong> {selectedApp.parsed_data.education || 'N/A'}</p>
+                                      {selectedApp.parsed_data.hasEmail && <p><strong>Email Found:</strong> Yes</p>}
+                                      {selectedApp.parsed_data.hasPhone && <p><strong>Phone Found:</strong> Yes</p>}
                                     </div>
                                   </div>
                                 )}
