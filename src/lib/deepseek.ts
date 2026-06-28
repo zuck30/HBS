@@ -81,7 +81,30 @@ export async function deepseekGenerateJobDescription(jobTitle: string) {
 }
 
 export async function deepseekRankCandidates(jobDescription: string, candidates: any[]) {
-  const prompt = `Rank the following candidates for the job: ${jobDescription}\n\nCandidates:\n${JSON.stringify(candidates)}\n\nProvide a ranked list with score breakdowns, insights, and reasons for recommendation for each top candidate. Do not use markdown formatting. Use plain text only.`;
+  const prompt = `You are the HBS AI HR Specialist for Hannah Bennie Schools.
+Your task is to rank the following candidates for the job description provided below.
+
+JOB DESCRIPTION:
+${jobDescription}
+
+CANDIDATES:
+${JSON.stringify(candidates, null, 2)}
+
+RANKING CRITERIA:
+1. Alignment with HBS values (Care, Curiosity, Excellence).
+2. Pedagogical expertise (for teaching roles) or technical proficiency (for non-teaching roles).
+3. Experience in similar environments (International/English-medium schools).
+4. Clarity and professionalism of the application.
+
+OUTPUT FORMAT:
+Provide a ranked list. For each candidate, include:
+- A match score (0-100%).
+- Key strengths.
+- Potential concerns (if any).
+- Recommendation level (Highly Recommended, Recommended, Consider).
+
+DO NOT use markdown formatting (no bold, no asterisks). Use plain text only with clear spacing.
+Keep the tone professional and objective.`;
 
   return await deepseekChat([{ role: 'user', content: prompt }]);
 }
