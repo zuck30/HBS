@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FileText, Search, Filter, ChevronLeft, ChevronRight, Download, Brain, User, Mail, Phone, Calendar } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { deepseekRankCandidates } from '@/lib/deepseek';
+import { parseCVAction } from '@/lib/cv-parser';
 import Link from 'next/link';
 
 export default function AdminApplications() {
@@ -113,37 +114,24 @@ export default function AdminApplications() {
         return;
       }
 
-      const text = await fileData.text();
+      const arrayBuffer = await fileData.arrayBuffer();
+      const { text, parsedData, wordCount } = await parseCVAction(arrayBuffer);
       
-      const lines = text.split('\n').filter(line => line.trim().length > 0);
-      const wordCount = text.split(/\s+/).length;
       const uniqueWords = new Set(text.toLowerCase().split(/\s+/)).size;
+      const lines = text.split('\n').filter((line: string) => line.trim().length > 0);
       
-      const yearsMatches = text.match(/(\d+)\s*(?:years?|yrs?)/gi);
-      const experience = yearsMatches ? yearsMatches.join(', ') : 'Not specified';
+      // Calculate a more meaningful score based on AI parsed data if available
+      let score = Math.min(Math.round((wordCount / 100) + (uniqueWords / 50) + (lines.length / 10)), 100);
       
-      const emailMatches = text.match(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g);
-      const phoneMatches = text.match(/(?:\+?255|0)[\s\-]?[67]\d{7,8}/g);
-      
-      const degreeMatches = text.match(/\b(Bachelor|Master|PhD|Diploma|Certificate|BSc|BA|MSc|MA|PGCE|QTS)\b/gi);
-      const education = degreeMatches ? degreeMatches.join(', ') : 'Not specified';
-      
-      const score = Math.min(Math.round((wordCount / 100) + (uniqueWords / 50) + (lines.length / 10)), 100);
-
       const { error } = await supabase
         .from('job_applications')
         .update({ 
           ai_score: score,
           parsed_data: {
-            lines: lines.length,
-            wordCount: wordCount,
-            uniqueWords: uniqueWords,
-            experience: experience,
-            email: emailMatches ? emailMatches[0] : null,
-            phone: phoneMatches ? phoneMatches[0] : null,
-            education: education,
-            hasEmail: emailMatches ? true : false,
-            hasPhone: phoneMatches ? true : false
+            ...parsedData,
+            wordCount,
+            uniqueWords,
+            lines: lines.length
           }
         })
         .eq('id', selectedApp.id);
@@ -408,8 +396,10 @@ export default function AdminApplications() {
                                       <p><strong>Unique Words:</strong> {selectedApp.parsed_data.uniqueWords || 'N/A'}</p>
                                       <p><strong>Experience:</strong> {selectedApp.parsed_data.experience || 'N/A'}</p>
                                       <p><strong>Education:</strong> {selectedApp.parsed_data.education || 'N/A'}</p>
-                                      {selectedApp.parsed_data.hasEmail && <p><strong>Email Found:</strong> Yes</p>}
-                                      {selectedApp.parsed_data.hasPhone && <p><strong>Phone Found:</strong> Yes</p>}
+                                      {selectedApp.parsed_data.skills && (
+                                        <p><strong>Skills:</strong> {Array.isArray(selectedApp.parsed_data.skills) ? selectedApp.parsed_data.skills.join(', ') : selectedApp.parsed_data.skills}</p>
+                                      )}
+                                      {selectedApp.parsed_data.summary && <p className="mt-1 italic">"{selectedApp.parsed_data.summary}"</p>}
                                     </div>
                                   </div>
                                 )}
