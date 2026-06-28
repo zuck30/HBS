@@ -78,7 +78,7 @@ export default function CareersPage() {
     <main className="pt-16 bg-[#f6f5f1] min-h-screen font-sans">
       <section className="py-24 px-6 border-b border-neutral-200 bg-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-1/3 h-full opacity-10 pointer-events-none">
-          <Image src="/assets/careers-hero.png" alt="Careers" fill className="object-cover" />
+          <Image src="/src/assets/careers-hero.png" alt="Careers" fill className="object-cover" />
         </div>
         <div className="max-w-7xl mx-auto relative z-10">
           <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#ECB65F] mb-4 block">CAREERS</span>
@@ -217,7 +217,7 @@ export default function CareersPage() {
                     <input
                       required
                       type="text"
-                      placeholder="Jane Doe"
+                      placeholder="Anna Msia"
                       className="bg-neutral-50 border border-neutral-100 p-4 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#ECB65F]"
                       value={formData.fullName}
                       onChange={e => setFormData({...formData, fullName: e.target.value})}
@@ -228,7 +228,7 @@ export default function CareersPage() {
                     <input
                       required
                       type="email"
-                      placeholder="jane@example.com"
+                      placeholder="anna@example.com"
                       className="bg-neutral-50 border border-neutral-100 p-4 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#ECB65F]"
                       value={formData.email}
                       onChange={e => setFormData({...formData, email: e.target.value})}
