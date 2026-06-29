@@ -66,6 +66,22 @@ export default function AdminApplications() {
 
       const insights = await deepseekRankCandidates(jobDesc, jobApps);
       
+      // Try to extract the score for the selected candidate to sync it with ai_score
+      const escapeRegExp = (string: string) => string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const escapedName = escapeRegExp(selectedApp.full_name);
+      // Look for candidate name then Match Score: XX or XX% or XX/100
+      const scoreRegex = new RegExp(`${escapedName}[\\s\\S]*?(?:Match Score|MATCH SCORE):?\\s*(\\d+)(?:%|/100)?`, 'i');
+      const scoreMatch = insights.match(scoreRegex);
+
+      let newScore = selectedApp.ai_score;
+      if (scoreMatch && scoreMatch[1]) {
+        newScore = parseInt(scoreMatch[1]);
+        await supabase
+          .from('job_applications')
+          .update({ ai_score: newScore })
+          .eq('id', selectedApp.id);
+      }
+
       const { error } = await supabase
         .from('candidate_rankings')
         .insert({
@@ -77,14 +93,18 @@ export default function AdminApplications() {
 
       if (error) {
         console.error('Error saving insights:', error);
-        alert('Ranking complete but failed to save insights to database. Error: ' + error.message);
+        alert('Ranking complete but failed to save insights to database.');
       } else {
-        alert('Ranking complete! AI insights have been saved to the database.');
+        alert('Ranking complete! AI Match Score updated to ' + newScore + '%');
       }
       
       await fetchApplications();
+      if (selectedApp) {
+        setSelectedApp((prev: any) => ({ ...prev, ai_score: newScore }));
+      }
       
     } catch (e) {
+      console.error('Ranking error:', e);
       alert('Ranking failed: ' + (e as Error).message);
     }
     
@@ -122,16 +142,18 @@ export default function AdminApplications() {
       
       const score = Math.min(Math.round((wordCount / 100) + (uniqueWords / 50) + (lines.length / 10)), 100);
 
+      const updatedParsedData = {
+        ...parsedData,
+        wordCount,
+        uniqueWords,
+        lines: lines.length
+      };
+
       const { error } = await supabase
         .from('job_applications')
         .update({ 
           ai_score: score,
-          parsed_data: {
-            ...parsedData,
-            wordCount,
-            uniqueWords,
-            lines: lines.length
-          }
+          parsed_data: updatedParsedData
         })
         .eq('id', selectedApp.id);
 
@@ -139,10 +161,15 @@ export default function AdminApplications() {
         console.error('Error updating application:', error);
         alert('Failed to save parsed CV data');
       } else {
-        alert('CV parsed successfully! AI score updated to ' + score + '%');
-        await fetchApplications();
-        const updatedApp = apps.find(a => a.id === selectedApp.id);
-        if (updatedApp) setSelectedApp(updatedApp);
+        alert('CV parsed successfully! Profile strength score: ' + score + '%');
+
+        // Update local state immediately
+        setApps(prevApps => prevApps.map(a =>
+          a.id === selectedApp.id
+            ? { ...a, ai_score: score, parsed_data: updatedParsedData }
+            : a
+        ));
+        setSelectedApp((prev: any) => ({ ...prev, ai_score: score, parsed_data: updatedParsedData }));
       }
     } catch (error) {
       console.error('Parse error:', error);
@@ -391,10 +418,10 @@ export default function AdminApplications() {
                                   <div className="mt-2 p-3 bg-white/10 rounded-sm">
                                     <p className="text-[9px] font-bold uppercase tracking-widest text-[#ECB65F] mb-1">Parsed Data</p>
                                     <div className="text-xs text-blue-100/90 leading-relaxed">
-                                      <p><strong>Word Count:</strong> {selectedApp.parsed_data.wordCount || 'N/A'}</p>
-                                      <p><strong>Unique Words:</strong> {selectedApp.parsed_data.uniqueWords || 'N/A'}</p>
-                                      <p><strong>Experience:</strong> {selectedApp.parsed_data.experience || 'N/A'}</p>
-                                      <p><strong>Education:</strong> {selectedApp.parsed_data.education || 'N/A'}</p>
+                                      <p><strong>Word Count:</strong> {selectedApp.parsed_data.wordCount ?? 'N/A'}</p>
+                                      <p><strong>Unique Words:</strong> {selectedApp.parsed_data.uniqueWords ?? 'N/A'}</p>
+                                      <p><strong>Experience:</strong> {selectedApp.parsed_data.experience ?? 'N/A'}{typeof selectedApp.parsed_data.experience === 'number' ? ' years' : ''}</p>
+                                      <p><strong>Education:</strong> {selectedApp.parsed_data.education ?? 'N/A'}</p>
                                       {selectedApp.parsed_data.skills && (
                                         <p><strong>Skills:</strong> {Array.isArray(selectedApp.parsed_data.skills) ? selectedApp.parsed_data.skills.join(', ') : selectedApp.parsed_data.skills}</p>
                                       )}

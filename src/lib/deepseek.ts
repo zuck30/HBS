@@ -29,7 +29,7 @@ function cleanMarkdown(text: string): string {
 }
 
 // DeepSeek API call with timeout and retry logic
-export async function deepseekChat(messages: { role: string; content: string }[]) {
+export async function deepseekChat(messages: { role: string; content: string }[], clean: boolean = true) {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 15000);
 
@@ -60,8 +60,8 @@ export async function deepseekChat(messages: { role: string; content: string }[]
     const data = await response.json();
     const rawContent = data.choices[0].message.content;
     
-    // Clean the markdown before returning
-    return cleanMarkdown(rawContent);
+    // Clean the markdown before returning if requested
+    return clean ? cleanMarkdown(rawContent) : rawContent;
   } catch (error: any) {
     clearTimeout(timeoutId);
     
