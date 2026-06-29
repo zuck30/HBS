@@ -12,21 +12,26 @@ export async function parseCVAction(arrayBuffer: ArrayBuffer) {
 
     // Use AI to extract structured data from the text
     const prompt = `Extract structured information from the following CV text.
-    Provide the result in JSON format with the following fields:
+    Strictly follow these rules:
+    1. Extract only what is present in the text.
+    2. DO NOT assume or hallucinate teaching-related skills (like "Curriculum Development") if the candidate is applying for a technical role, unless they are explicitly in the text.
+    3. Provide the result in VALID JSON format.
+
+    JSON fields:
     - full_name
     - email
     - phone
-    - education (summary)
-    - experience (years of experience as a number)
+    - education (brief summary)
+    - experience (number of years)
     - skills (list of strings)
     - summary (brief professional summary)
 
     CV TEXT:
-    ${text.substring(0, 4000)} // Limit text size for API
+    ${text.substring(0, 4000)}
 
     Response must be ONLY the JSON object, no other text.`;
 
-    const aiResponse = await deepseekChat([{ role: 'user', content: prompt }]);
+    const aiResponse = await deepseekChat([{ role: 'user', content: prompt }], false);
 
     // Attempt to parse JSON from AI response
     let parsedData = {};
